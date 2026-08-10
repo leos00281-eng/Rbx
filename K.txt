@@ -3,7 +3,7 @@
         "Key": "test",
         "HWID": "*",               
         "Expires": 1786388217
-    }
+    }, 
     {
         "Key": "vulnsec",
         "HWID": "1b6a39f81f3cda441e22a7b74a4000b463aee19a07e05c880bea09245ef11ed8",
