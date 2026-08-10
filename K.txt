@@ -23,6 +23,10 @@
          "Key": "test",
          "HWID": "*",
          "Expires": 1786385947
+    }, 
+    {
+         "Key": "bola",
+         "HWID": "*",
+         "Expires": 1786385947
      }
-
 ]
