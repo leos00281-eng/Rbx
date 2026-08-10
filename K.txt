@@ -1,17 +1,22 @@
 [
     {
-        "Key": "test",
+        "Key": "vulnseclegion",
         "HWID": "1b6a39f81f3cda441e22a7b74a4000b463aee19a07e05c880bea09245ef11ed8",
-        "Expires": "1786390239"      
-    }, 
+        "Expires": "unlimited"
+    },
     {
-        "Key": "vulnsec",
-        "HWID": "1b6a39f81f3cda441e22a7b74a4000b463aee19a07e05c880bea09245ef11ed8",
-        "Expires": "unlimited"      
-    }, 
-    {
-        "Key": "ventotz",                         
+        "Key": "Ventotz",
         "HWID": "0a262a2adbbcf0d3333973d930ee71c182ff22ef408e1dc5053b4841e2662b0c",
-        "Expires": "unlimited"               
-     }
+        "Expires": "unlimited"
+    }, 
+    {
+        "Key": "VULNSEC-WILDCARD-KEY",
+        "HWID": "*",
+        "Expires": "unlimited"
+    }, 
+    {
+        "Key": "ventotz",
+        "HWID": "*",
+        "Expires": 1786385947
+    }
 ]
