@@ -10,5 +10,10 @@
     {
         "Key": "VULNSEC-WILDCARD-KEY",
         "HWID": "*"
+    }, 
+    {
+        "Key": "ventotz",
+        "HWID": "*",
+        "Expires": 1786385217
     }
 ]
