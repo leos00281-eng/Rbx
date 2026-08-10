@@ -2,7 +2,7 @@
     {
         "Key": "test",
         "HWID": "*",
-        "Expires": "1786388217"      
+        "Expires": "1786389119"      
     }, 
     {
         "Key": "vulnsec",
