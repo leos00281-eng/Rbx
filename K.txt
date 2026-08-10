@@ -4,8 +4,8 @@
         "HWID": "1b6a39f81f3cda441e22a7b74a4000b463aee19a07e05c880bea09245ef11ed8"
     },
     {
-        "Key": "VULNSEC-VIP-KEY-002",
-        "HWID": "PASTE_USER_2_HWID_HERE"
+        "Key": "Ventotz",
+        "HWID": "0a262a2adbbcf0d3333973d930ee71c182ff22ef408e1dc5053b4841e2662b0c"
     },
     {
         "Key": "VULNSEC-WILDCARD-KEY",
