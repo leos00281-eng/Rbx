@@ -7,7 +7,7 @@ if queueFunction then
                 game.Loaded:Wait()
             end
             task.wait(2)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/VulnHub.lua"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/loader.lua"))()
         end)
     ]])
 end
@@ -16,5 +16,5 @@ task.spawn(function()
     if not game:IsLoaded() then
         game.Loaded:Wait()
     end
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/VulnHub.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/loader.lua"))()
 end)
