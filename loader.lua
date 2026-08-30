@@ -28,8 +28,23 @@ local v_zY2 = {
     {Name = "Jerk Off R6", URL = "https://pastefy.app/wa3v2Vgm/raw", IsR6 = true}
 }
 
-local v_xW1 = v_0vB:WaitForChild("PlayerGui"):FindFirstChild("Vulnsec_Hub_Gui")
-if v_xW1 then v_xW1:Destroy() end
+-- FIXED: Clean up duplicate GUIs across both PlayerGui and protected UI containers (gethui)
+local function cleanupExistingGui()
+    local v_oldPlayerGui = v_0vB:WaitForChild("PlayerGui"):FindFirstChild("Vulnsec_Hub_Gui")
+    if v_oldPlayerGui then 
+        v_oldPlayerGui:Destroy() 
+    end
+
+    if gethui then
+        for _, v_child in ipairs(gethui():GetChildren()) do
+            if v_child.Name == "Vulnsec_Hub_Gui" then
+                v_child:Destroy()
+            end
+        end
+    end
+end
+
+cleanupExistingGui()
 
 local v_mQ5 = Instance.new("ScreenGui")
 v_mQ5.Name = "Vulnsec_Hub_Gui"
