@@ -1,3 +1,10 @@
+-- // Prevent duplicate execution on auto-exec
+if gethui() and gethui():FindFirstChild("Vulnsec_Hub_Gui") then
+    return
+elseif game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Vulnsec_Hub_Gui") then
+    return
+end
+
 local v_9xQ = game:GetService("Players")
 local v_4pK = game:GetService("TweenService")
 local v_8sL = game:GetService("UserInputService")
@@ -28,6 +35,7 @@ local v_zY2 = {
     {Name = "Jerk Off R6", URL = "https://pastefy.app/wa3v2Vgm/raw", IsR6 = true}
 }
 
+-- Cleanup any stale instances just in case
 local v_xW1 = v_0vB:WaitForChild("PlayerGui"):FindFirstChild("Vulnsec_Hub_Gui")
 if v_xW1 then v_xW1:Destroy() end
 
@@ -1659,21 +1667,6 @@ local v_fbCrn = Instance.new("UICorner")
 v_fbCrn.CornerRadius = UDim.new(1,0)
 v_fbCrn.Parent = v_fbBtn
 
-local v_fbStk = Instance.new("UIStroke")
-v_fbStk.Color = Color3.fromRGB(28,28,32)
-v_fbStk.Thickness = 1
-v_fbStk.Parent = v_fbBtn
-
-local v_fbLab = Instance.new("TextLabel")
-v_fbLab.Size = UDim2.new(1,-8,0,24)
-v_fbLab.Position = UDim2.new(0,0,0,54)
-v_fbLab.BackgroundTransparency = 1
-v_fbLab.Text = "Facebook"
-v_fbLab.TextColor3 = Color3.fromRGB(0,180,255)
-v_fbLab.Font = Enum.Font.Code
-v_fbLab.TextSize = 10
-v_fbLab.Parent = v_pAbot
-
 v_pW7(v_fbBtn.MouseButton1Click:Connect(function()
     pcall(function()
         if setclipboard then
@@ -1683,10 +1676,7 @@ v_pW7(v_fbBtn.MouseButton1Click:Connect(function()
     pcall(function()
         v_1cF:OpenBrowserWindow("https://www.facebook.com/vulnsec.legion")
     end)
-    local v_temp = v_fbLab.Text
-    v_fbLab.Text = "Link Copied!"
-    task.wait(1.5)
-    v_fbLab.Text = v_temp
+    v_notify("Link Copied & Opened!", Color3.fromRGB(0, 255, 200))
 end))
 
 local function v_makeDraggable(v_dragTarget, v_moveTarget)
