@@ -1,3 +1,16 @@
+if queue_on_teleport then
+    pcall(function()
+        local scriptUrl = "https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/loader.lua"
+        queue_on_teleport([[
+            task.wait(1.5)
+            if not game:IsLoaded() then
+                game.Loaded:Wait()
+            end
+            loadstring(game:HttpGet("]] .. scriptUrl .. [["))()
+        ]])
+    end)
+end
+
 local v_a1 = game:GetService("Players")
 local v_b2 = game:GetService("TweenService")
 local v_c3 = game:GetService("UserInputService")
@@ -12,23 +25,6 @@ local v_i9 = v_a1.LocalPlayer
 local v_j0 = true
 local v_k1 = {}
 local v_l2 = {}
-
-local queueFunction = syn and syn.queue_on_teleport or queue_on_teleport or (flux and flux.queue_on_teleport)
-if queueFunction then
-    pcall(function()
-        queueFunction([[
-            task.spawn(function()
-                if not game:IsLoaded() then
-                    game.Loaded:Wait()
-                end
-                task.wait(3)
-                pcall(function()
-                    loadstring(game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/loader.lua"))()
-                end)
-            end)
-        ]])
-    end)
-end
 
 local function v_m3(conn)
     table.insert(v_k1, conn)
