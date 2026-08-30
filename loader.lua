@@ -1,1051 +1,1038 @@
-if queue_on_teleport then
-    pcall(function()
-        local scriptUrl = "https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/loader.lua"
-        queue_on_teleport([[
-            task.wait(1.5)
-            if not game:IsLoaded() then
-                game.Loaded:Wait()
-            end
-            loadstring(game:HttpGet("]] .. scriptUrl .. [["))()
-        ]])
-    end)
+local v_9xQ = game:GetService("Players")
+local v_4pK = game:GetService("TweenService")
+local v_8sL = game:GetService("UserInputService")
+local v_2mR = game:GetService("RunService")
+local v_5wN = game:GetService("Workspace")
+local v_7hZ = game:GetService("Lighting")
+local v_3bX = game:GetService("MarketplaceService")
+local v_1cF = game:GetService("GuiService")
+local v_6jK = game:GetService("SoundService")
+
+local v_0vB = v_9xQ.LocalPlayer
+local v_fX9 = true
+local v_dL2 = {}
+local v_hN4 = {}
+
+local function v_pW7(v_r1)
+    table.insert(v_dL2, v_r1)
+    return v_r1
 end
 
-local v_a1 = game:GetService("Players")
-local v_b2 = game:GetService("TweenService")
-local v_c3 = game:GetService("UserInputService")
-local v_d4 = game:GetService("RunService")
-local v_e5 = game:GetService("Workspace")
-local v_f6 = game:GetService("Lighting")
-local v_g7 = game:GetService("MarketplaceService")
-local v_h8 = game:GetService("GuiService")
-local SoundService = game:GetService("SoundService")
-
-local v_i9 = v_a1.LocalPlayer
-local v_j0 = true
-local v_k1 = {}
-local v_l2 = {}
-
-local function v_m3(conn)
-    table.insert(v_k1, conn)
-    return conn
+local function v_kL8(v_r1)
+    table.insert(v_hN4, v_r1)
+    return v_r1
 end
 
-local function v_n4(conn)
-    table.insert(v_l2, conn)
-    return conn
-end
-
-local v_o5 = {
+local v_zY2 = {
     {Name = "Jerk Off R15", URL = "https://pastefy.app/YZoglOyJ/raw", IsR6 = false},
     {Name = "Jerk Off R6", URL = "https://pastefy.app/wa3v2Vgm/raw", IsR6 = true}
 }
 
-local v_p6 = v_i9:WaitForChild("PlayerGui"):FindFirstChild("Vulnsec_Hub_Gui")
-if v_p6 then v_p6:Destroy() end
+local v_xW1 = v_0vB:WaitForChild("PlayerGui"):FindFirstChild("Vulnsec_Hub_Gui")
+if v_xW1 then v_xW1:Destroy() end
 
-local v_q7 = Instance.new("ScreenGui")
-v_q7.Name = "Vulnsec_Hub_Gui"
-v_q7.ResetOnSpawn = false
-v_q7.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local v_mQ5 = Instance.new("ScreenGui")
+v_mQ5.Name = "Vulnsec_Hub_Gui"
+v_mQ5.ResetOnSpawn = false
+v_mQ5.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 if syn and syn.protect_gui then 
-    syn.protect_gui(v_q7) 
+    syn.protect_gui(v_mQ5) 
 elseif gethui then
-    v_q7.Parent = gethui()
+    v_mQ5.Parent = gethui()
 else
-    v_q7.Parent = v_i9:WaitForChild("PlayerGui")
+    v_mQ5.Parent = v_0vB:WaitForChild("PlayerGui")
 end
 
-local v_r8 = Instance.new("Frame")
-v_r8.Name = "MainFrame"
-v_r8.Size = UDim2.new(0, 480, 0, 330) 
-v_r8.Position = UDim2.new(0.5, -240, 0.5, -200)
-v_r8.BackgroundColor3 = Color3.fromRGB(15, 15, 18)
-v_r8.BorderSizePixel = 0
-v_r8.ClipsDescendants = false
-v_r8.Visible = true
-v_r8.Parent = v_q7
+local v_qL3 = Instance.new("Frame")
+v_qL3.Name = "MainFrame"
+v_qL3.Size = UDim2.new(0, 480, 0, 330) 
+v_qL3.Position = UDim2.new(0.5, -240, 0.5, -200)
+v_qL3.BackgroundColor3 = Color3.fromRGB(15, 15, 18)
+v_qL3.BorderSizePixel = 0
+v_qL3.ClipsDescendants = false
+v_qL3.Visible = true
+v_qL3.Parent = v_mQ5
 
-local v_s9 = Instance.new("UICorner")
-v_s9.CornerRadius = UDim.new(0, 14)
-v_s9.Parent = v_r8
+local v_bV9 = Instance.new("UICorner")
+v_bV9.CornerRadius = UDim.new(0, 14)
+v_bV9.Parent = v_qL3
 
-local v_t0 = Instance.new("UIStroke")
-v_t0.Color = Color3.fromRGB(0, 180, 255)
-v_t0.Thickness = 1.5
-v_t0.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-v_t0.Parent = v_r8
+local v_nC2 = Instance.new("UIStroke")
+v_nC2.Color = Color3.fromRGB(0, 180, 255)
+v_nC2.Thickness = 1.5
+v_nC2.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+v_nC2.Parent = v_qL3
 
-local v_u1 = Instance.new("Frame")
-v_u1.Name = "NotificationContainer"
-v_u1.Size = UDim2.new(0, 240, 1, -40)
-v_u1.Position = UDim2.new(1, -250, 0, 20)
-v_u1.BackgroundTransparency = 1
-v_u1.Parent = v_q7
+local v_tX6 = Instance.new("Frame")
+v_tX6.Name = "NotificationContainer"
+v_tX6.Size = UDim2.new(0, 240, 1, -40)
+v_tX6.Position = UDim2.new(1, -250, 0, 20)
+v_tX6.BackgroundTransparency = 1
+v_tX6.Parent = v_mQ5
 
-local v_u2 = Instance.new("UIListLayout")
-v_u2.VerticalAlignment = Enum.VerticalAlignment.Bottom
-v_u2.SortOrder = Enum.SortOrder.LayoutOrder
-v_u2.Padding = UDim.new(0, 6)
-v_u2.Parent = v_u1
+local v_jM1 = Instance.new("UIListLayout")
+v_jM1.VerticalAlignment = Enum.VerticalAlignment.Bottom
+v_jM1.SortOrder = Enum.SortOrder.LayoutOrder
+v_jM1.Padding = UDim.new(0, 6)
+v_jM1.Parent = v_tX6
 
-local function v_u3(v_u4, v_u5)
-    if not v_j0 then return end
-    local v_u6 = Instance.new("Frame")
-    v_u6.Size = UDim2.new(1, 0, 0, 0)
-    v_u6.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
-    v_u6.BorderSizePixel = 0
-    v_u6.ClipsDescendants = true
-    v_u6.Parent = v_u1
+local function v_notify(v_mTxt, v_mCol)
+    if not v_fX9 then return end
+    local v_box = Instance.new("Frame")
+    v_box.Size = UDim2.new(1, 0, 0, 0)
+    v_box.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+    v_box.BorderSizePixel = 0
+    v_box.ClipsDescendants = true
+    v_box.Parent = v_tX6
 
-    local v_u7 = Instance.new("UICorner")
-    v_u7.CornerRadius = UDim.new(0, 6)
-    v_u7.Parent = v_u6
+    local v_crn = Instance.new("UICorner")
+    v_crn.CornerRadius = UDim.new(0, 6)
+    v_crn.Parent = v_box
 
-    local v_u8 = Instance.new("UIStroke")
-    v_u8.Color = v_u5 or Color3.fromRGB(0, 180, 255)
-    v_u8.Thickness = 1.5
-    v_u8.Parent = v_u6
+    local v_stk = Instance.new("UIStroke")
+    v_stk.Color = v_mCol or Color3.fromRGB(0, 180, 255)
+    v_stk.Thickness = 1.5
+    v_stk.Parent = v_box
 
-    local v_u9 = Instance.new("TextLabel")
-    v_u9.Size = UDim2.new(1, -16, 1, 0)
-    v_u9.Position = UDim2.new(0, 8, 0, 0)
-    v_u9.BackgroundTransparency = 1
-    v_u9.Text = v_u4
-    v_u9.TextColor3 = Color3.fromRGB(255, 255, 255)
-    v_u9.Font = Enum.Font.GothamMedium
-    v_u9.TextSize = 11
-    v_u9.TextXAlignment = Enum.TextXAlignment.Left
-    v_u9.TextWrapped = true
-    v_u9.Parent = v_u6
+    local v_lbl = Instance.new("TextLabel")
+    v_lbl.Size = UDim2.new(1, -16, 1, 0)
+    v_lbl.Position = UDim2.new(0, 8, 0, 0)
+    v_lbl.BackgroundTransparency = 1
+    v_lbl.Text = v_mTxt
+    v_lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+    v_lbl.Font = Enum.Font.GothamMedium
+    v_lbl.TextSize = 11
+    v_lbl.TextXAlignment = Enum.TextXAlignment.Left
+    v_lbl.TextWrapped = true
+    v_lbl.Parent = v_box
 
-    v_b2:Create(v_u6, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, 36)}):Play()
+    v_4pK:Create(v_box, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, 36)}):Play()
 
     task.spawn(function()
         task.wait(2.5)
-        if v_u6 and v_u6.Parent then
-            local v_tw = v_b2:Create(v_u6, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = UDim2.new(1, 0, 0, 0)})
+        if v_box and v_box.Parent then
+            local v_tw = v_4pK:Create(v_box, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = UDim2.new(1, 0, 0, 0)})
             v_tw:Play()
             v_tw.Completed:Connect(function()
-                if v_u6 then v_u6:Destroy() end
+                if v_box then v_box:Destroy() end
             end)
         end
     end)
 end
 
-v_m3(task.spawn(function()
-    while v_j0 and v_r8 and v_r8.Parent do
-        local v_v1 = v_b2:Create(v_t0, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Thickness = 2.5, Color = Color3.fromRGB(0, 255, 200)})
-        v_v1:Play()
-        v_v1.Completed:Wait()
-        if not v_j0 then break end
-        local v_v2 = v_b2:Create(v_t0, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Thickness = 1.5, Color = Color3.fromRGB(0, 150, 255)})
-        v_v2:Play()
-        v_v2.Completed:Wait()
+v_pW7(task.spawn(function()
+    while v_fX9 and v_qL3 and v_qL3.Parent do
+        local v_tw1 = v_4pK:Create(v_nC2, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Thickness = 2.5, Color = Color3.fromRGB(0, 255, 200)})
+        v_tw1:Play()
+        v_tw1.Completed:Wait()
+        if not v_fX9 then break end
+        local v_tw2 = v_4pK:Create(v_nC2, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Thickness = 1.5, Color = Color3.fromRGB(0, 150, 255)})
+        v_tw2:Play()
+        v_tw2.Completed:Wait()
     end
 end))
 
-local v_v3 = Instance.new("Frame")
-v_v3.Name = "TopBar"
-v_v3.Size = UDim2.new(1, 0, 0, 38)
-v_v3.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
-v_v3.BorderSizePixel = 0
-v_v3.Parent = v_r8
+local v_pBar = Instance.new("Frame")
+v_pBar.Name = "TopBar"
+v_pBar.Size = UDim2.new(1, 0, 0, 38)
+v_pBar.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
+v_pBar.BorderSizePixel = 0
+v_pBar.Parent = v_qL3
 
-local v_v4 = Instance.new("UICorner")
-v_v4.CornerRadius = UDim.new(0, 14)
-v_v4.Parent = v_v3
+local v_pCrn = Instance.new("UICorner")
+v_pCrn.CornerRadius = UDim.new(0, 14)
+v_pCrn.Parent = v_pBar
 
-local v_v5 = Instance.new("Frame")
-v_v5.Size = UDim2.new(1, 0, 0, 14)
-v_v5.Position = UDim2.new(0, 0, 1, -14)
-v_v5.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
-v_v5.BorderSizePixel = 0
-v_v5.Parent = v_v3
+local v_pExt = Instance.new("Frame")
+v_pExt.Size = UDim2.new(1, 0, 0, 14)
+v_pExt.Position = UDim2.new(0, 0, 1, -14)
+v_pExt.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
+v_pExt.BorderSizePixel = 0
+v_pExt.Parent = v_pBar
 
-local v_v6 = Instance.new("TextLabel")
-v_v6.Size = UDim2.new(0, 200, 1, 0)
-v_v6.Position = UDim2.new(0, 16, 0, 0)
-v_v6.BackgroundTransparency = 1
-v_v6.Text = "VULNSEC HUB"
-v_v6.TextColor3 = Color3.fromRGB(255, 255, 255)
-v_v6.Font = Enum.Font.GothamBold
-v_v6.TextSize = 13
-v_v6.TextXAlignment = Enum.TextXAlignment.Left
-v_v6.Parent = v_v3
+local v_pTit = Instance.new("TextLabel")
+v_pTit.Size = UDim2.new(0, 200, 1, 0)
+v_pTit.Position = UDim2.new(0, 16, 0, 0)
+v_pTit.BackgroundTransparency = 1
+v_pTit.Text = "VULNSEC HUB"
+v_pTit.TextColor3 = Color3.fromRGB(255, 255, 255)
+v_pTit.Font = Enum.Font.GothamBold
+v_pTit.TextSize = 13
+v_pTit.TextXAlignment = Enum.TextXAlignment.Left
+v_pTit.Parent = v_pBar
 
-local v_v7 = Instance.new("TextButton")
-v_v7.Size = UDim2.new(0, 18, 0, 18)
-v_v7.Position = UDim2.new(1, -26, 0.5, -9)
-v_v7.BackgroundColor3 = Color3.fromRGB(250, 70, 70)
-v_v7.Text = "×"
-v_v7.TextColor3 = Color3.fromRGB(255, 255, 255)
-v_v7.Font = Enum.Font.GothamBold
-v_v7.TextSize = 14
-v_v7.Parent = v_v3
+local v_btnClose = Instance.new("TextButton")
+v_btnClose.Size = UDim2.new(0, 18, 0, 18)
+v_btnClose.Position = UDim2.new(1, -26, 0.5, -9)
+v_btnClose.BackgroundColor3 = Color3.fromRGB(250, 70, 70)
+v_btnClose.Text = "×"
+v_btnClose.TextColor3 = Color3.fromRGB(255, 255, 255)
+v_btnClose.Font = Enum.Font.GothamBold
+v_btnClose.TextSize = 14
+v_btnClose.Parent = v_pBar
 
-local v_v8 = Instance.new("UICorner")
-v_v8.CornerRadius = UDim.new(0, 4)
-v_v8.Parent = v_v7
+local v_cCrn = Instance.new("UICorner")
+v_cCrn.CornerRadius = UDim.new(0, 4)
+v_cCrn.Parent = v_btnClose
 
-local v_v9 = Instance.new("TextButton")
-v_v9.Size = UDim2.new(0, 18, 0, 18)
-v_v9.Position = UDim2.new(1, -48, 0.5, -9)
-v_v9.BackgroundColor3 = Color3.fromRGB(250, 180, 50)
-v_v9.Text = "−"
-v_v9.TextColor3 = Color3.fromRGB(255, 255, 255)
-v_v9.Font = Enum.Font.GothamBold
-v_v9.TextSize = 14
-v_v9.Parent = v_v3
+local v_btnMin = Instance.new("TextButton")
+v_btnMin.Size = UDim2.new(0, 18, 0, 18)
+v_btnMin.Position = UDim2.new(1, -48, 0.5, -9)
+v_btnMin.BackgroundColor3 = Color3.fromRGB(250, 180, 50)
+v_btnMin.Text = "−"
+v_btnMin.TextColor3 = Color3.fromRGB(255, 255, 255)
+v_btnMin.Font = Enum.Font.GothamBold
+v_btnMin.TextSize = 14
+v_btnMin.Parent = v_pBar
 
-local v_w0 = Instance.new("UICorner")
-v_w0.CornerRadius = UDim.new(0, 4)
-v_w0.Parent = v_v9
+local v_mCrn = Instance.new("UICorner")
+v_mCrn.CornerRadius = UDim.new(0, 4)
+v_mCrn.Parent = v_btnMin
 
-local v_w1 = Instance.new("ImageButton")
-v_w1.Name = "DragBubble"
-v_w1.Size = UDim2.new(0, 44, 0, 44)
-v_w1.Position = UDim2.new(0.05, 0, 0.2, 0)
-v_w1.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
-v_w1.Visible = false
-v_w1.Parent = v_q7
+local v_bubBtn = Instance.new("ImageButton")
+v_bubBtn.Name = "DragBubble"
+v_bubBtn.Size = UDim2.new(0, 44, 0, 44)
+v_bubBtn.Position = UDim2.new(0.05, 0, 0.2, 0)
+v_bubBtn.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
+v_bubBtn.Visible = false
+v_bubBtn.Parent = v_mQ5
 
-local v_w2 = false
+local v_hasCustom = false
 pcall(function()
     if typeof(isfile) == "function" and typeof(writefile) == "function" and typeof(getcustomasset) == "function" then
-        local v_w3 = "Vulnsec_Bubble_Logo.png"
-        if not isfile(v_w3) then
-            local v_w4, v_w5 = pcall(function()
+        local v_fName = "Vulnsec_Bubble_Logo.png"
+        if not isfile(v_fName) then
+            local v_ok, v_dat = pcall(function()
                 return game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/56Tryup.png")
             end)
-            if v_w4 and v_w5 then
-                writefile(v_w3, v_w5)
+            if v_ok and v_dat then
+                writefile(v_fName, v_dat)
             end
         end
-        v_w1.Image = getcustomasset(v_w3)
-        v_w2 = true
+        v_bubBtn.Image = getcustomasset(v_fName)
+        v_hasCustom = true
     end
 end)
 
-if not v_w2 then
-    v_w1.Image = "rbxassetid://106037704812001" 
+if not v_hasCustom then
+    v_bubBtn.Image = "rbxassetid://106037704812001" 
 end
 
-local v_w6 = Instance.new("UICorner")
-v_w6.CornerRadius = UDim.new(1, 0)
-v_w6.Parent = v_w1
+local v_bCrn = Instance.new("UICorner")
+v_bCrn.CornerRadius = UDim.new(1, 0)
+v_bCrn.Parent = v_bubBtn
 
-local v_w7 = Instance.new("UIStroke")
-v_w7.Color = Color3.fromRGB(0, 180, 255)
-v_w7.Thickness = 1.5
-v_w7.Parent = v_w1
+local v_bStk = Instance.new("UIStroke")
+v_bStk.Color = Color3.fromRGB(0, 180, 255)
+v_bStk.Thickness = 1.5
+v_bStk.Parent = v_bubBtn
 
-local v_w8 = Instance.new("Frame")
-v_w8.Size = UDim2.new(1, 0, 1, -38)
-v_w8.Position = UDim2.new(0, 0, 0, 38)
-v_w8.BackgroundTransparency = 1
-v_w8.Parent = v_r8
+local v_cWrap = Instance.new("Frame")
+v_cWrap.Size = UDim2.new(1, 0, 1, -38)
+v_cWrap.Position = UDim2.new(0, 0, 0, 38)
+v_cWrap.BackgroundTransparency = 1
+v_cWrap.Parent = v_qL3
 
-v_m3(v_v9.MouseButton1Click:Connect(function()
-    v_b2:Create(v_r8, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0), Position = UDim2.new(0.5, 0, 0.5, -35)}):Play()
+v_pW7(v_btnMin.MouseButton1Click:Connect(function()
+    v_4pK:Create(v_qL3, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0), Position = UDim2.new(0.5, 0, 0.5, -35)}):Play()
     task.wait(0.23)
-    v_r8.Visible = false
-    v_w1.Visible = true
-    v_w1.Size = UDim2.new(0,0,0,0)
-    v_b2:Create(v_w1, TweenInfo.new(0.35, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {Size = UDim2.new(0, 44, 0, 44)}):Play()
+    v_qL3.Visible = false
+    v_bubBtn.Visible = true
+    v_bubBtn.Size = UDim2.new(0,0,0,0)
+    v_4pK:Create(v_bubBtn, TweenInfo.new(0.35, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {Size = UDim2.new(0, 44, 0, 44)}):Play()
 end))
 
-v_m3(v_w1.MouseButton1Click:Connect(function()
-    v_w1.Visible = false
-    v_r8.Visible = true
-    v_b2:Create(v_r8, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 480, 0, 330), Position = UDim2.new(0.5, -240, 0.5, -200)}):Play()
+v_pW7(v_bubBtn.MouseButton1Click:Connect(function()
+    v_bubBtn.Visible = false
+    v_qL3.Visible = true
+    v_4pK:Create(v_qL3, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 480, 0, 330), Position = UDim2.new(0.5, -240, 0.5, -200)}):Play()
 end))
 
-local v_x1 = Instance.new("Frame")
-v_x1.Size = UDim2.new(0, 120, 1, 0)
-v_x1.BackgroundColor3 = Color3.fromRGB(11, 11, 14)
-v_x1.BorderSizePixel = 0
-v_x1.Parent = v_w8
+local v_sList = Instance.new("Frame")
+v_sList.Size = UDim2.new(0, 120, 1, 0)
+v_sList.BackgroundColor3 = Color3.fromRGB(11, 11, 14)
+v_sList.BorderSizePixel = 0
+v_sList.Parent = v_cWrap
 
-local v_x2 = Instance.new("UICorner")
-v_x2.CornerRadius = UDim.new(0, 14)
-v_x2.Parent = v_x1
+local v_sCrn = Instance.new("UICorner")
+v_sCrn.CornerRadius = UDim.new(0, 14)
+v_sCrn.Parent = v_sList
 
-local v_x3 = Instance.new("Frame")
-v_x3.Size = UDim2.new(0, 15, 1, 0)
-v_x3.Position = UDim2.new(1, -15, 0, 0)
-v_x3.BackgroundColor3 = Color3.fromRGB(11, 11, 14)
-v_x3.BorderSizePixel = 0
-v_x3.Parent = v_x1
+local v_sFix1 = Instance.new("Frame")
+v_sFix1.Size = UDim2.new(0, 15, 1, 0)
+v_sFix1.Position = UDim2.new(1, -15, 0, 0)
+v_sFix1.BackgroundColor3 = Color3.fromRGB(11, 11, 14)
+v_sFix1.BorderSizePixel = 0
+v_sFix1.Parent = v_sList
 
-local v_x4 = Instance.new("Frame")
-v_x4.Size = UDim2.new(1, 0, 0, 15)
-v_x4.BackgroundColor3 = Color3.fromRGB(11, 11, 14)
-v_x4.BorderSizePixel = 0
-v_x4.Parent = v_x1
+local v_sFix2 = Instance.new("Frame")
+v_sFix2.Size = UDim2.new(1, 0, 0, 15)
+v_sFix2.BackgroundColor3 = Color3.fromRGB(11, 11, 14)
+v_sFix2.BorderSizePixel = 0
+v_sFix2.Parent = v_sList
 
-local v_x5 = Instance.new("ImageLabel")
-v_x5.Size = UDim2.new(0, 52, 0, 52)
-v_x5.Position = UDim2.new(0.5, -26, 0, 12)
-v_x5.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
-v_x5.Parent = v_x1
+local v_avPic = Instance.new("ImageLabel")
+v_avPic.Size = UDim2.new(0, 52, 0, 52)
+v_avPic.Position = UDim2.new(0.5, -26, 0, 12)
+v_avPic.BackgroundColor3 = Color3.fromRGB(22, 22, 26)
+v_avPic.Parent = v_sList
 
-local v_x6 = Instance.new("UICorner")
-v_x6.CornerRadius = UDim.new(1, 0)
-v_x6.Parent = v_x5
+local v_aCrn = Instance.new("UICorner")
+v_aCrn.CornerRadius = UDim.new(1, 0)
+v_aCrn.Parent = v_avPic
 
-local v_x7 = Instance.new("UIStroke")
-v_x7.Color = Color3.fromRGB(35, 35, 40)
-v_x7.Thickness = 1
-v_x7.Parent = v_x5
+local v_aStk = Instance.new("UIStroke")
+v_aStk.Color = Color3.fromRGB(35, 35, 40)
+v_aStk.Thickness = 1
+v_aStk.Parent = v_avPic
 
 pcall(function()
-    v_x5.Image = v_a1:GetUserThumbnailAsync(v_i9.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+    v_avPic.Image = v_9xQ:GetUserThumbnailAsync(v_0vB.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
 end)
 
-local v_x8 = Instance.new("TextLabel")
-v_x8.Size = UDim2.new(1, -16, 0, 16)
-v_x8.Position = UDim2.new(0, 8, 0, 70)
-v_x8.BackgroundTransparency = 1
-v_x8.Text = "@" .. v_i9.DisplayName
-v_x8.TextColor3 = Color3.fromRGB(180, 180, 185)
-v_x8.Font = Enum.Font.GothamMedium
-v_x8.TextSize = 10
-v_x8.TextScaled = true
-v_x8.Parent = v_x1
+local v_uLab = Instance.new("TextLabel")
+v_uLab.Size = UDim2.new(1, -16, 0, 16)
+v_uLab.Position = UDim2.new(0, 8, 0, 70)
+v_uLab.BackgroundTransparency = 1
+v_uLab.Text = "@" .. v_0vB.DisplayName
+v_uLab.TextColor3 = Color3.fromRGB(180, 180, 185)
+v_uLab.Font = Enum.Font.GothamMedium
+v_uLab.TextSize = 10
+v_uLab.TextScaled = true
+v_uLab.Parent = v_sList
 
-local v_x9 = Instance.new("Frame")
-v_x9.Size = UDim2.new(1, 0, 0, 160)
-v_x9.Position = UDim2.new(0, 0, 0, 92)
-v_x9.BackgroundTransparency = 1
-v_x9.Parent = v_x1
+local v_bCon = Instance.new("Frame")
+v_bCon.Size = UDim2.new(1, 0, 0, 160)
+v_bCon.Position = UDim2.new(0, 0, 0, 92)
+v_bCon.BackgroundTransparency = 1
+v_bCon.Parent = v_sList
 
-local v_y1 = Instance.new("UIListLayout")
-v_y1.Padding = UDim.new(0, 4)
-v_y1.HorizontalAlignment = Enum.HorizontalAlignment.Center
-v_y1.Parent = v_x9
+local v_bLay = Instance.new("UIListLayout")
+v_bLay.Padding = UDim.new(0, 4)
+v_bLay.HorizontalAlignment = Enum.HorizontalAlignment.Center
+v_bLay.Parent = v_bCon
 
-local v_y2 = Instance.new("Folder")
-v_y2.Name = "Pages"
-v_y2.Parent = v_w8
+local v_pFold = Instance.new("Folder")
+v_pFold.Name = "Pages"
+v_pFold.Parent = v_cWrap
 
-local function v_y3(v_y4)
-    local v_y5 = Instance.new("ScrollingFrame")
-    v_y5.Name = v_y4 .. "Page"
-    v_y5.Size = UDim2.new(1, -132, 1, -20)
-    v_y5.Position = UDim2.new(0, 126, 0, 10)
-    v_y5.BackgroundTransparency = 1
-    v_y5.CanvasSize = UDim2.new(0, 0, 0, 0)
-    v_y5.ScrollBarThickness = 3
-    v_y5.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-    v_y5.Visible = false
-    v_y5.Parent = v_y2
+local function v_mkPage(v_name)
+    local v_scr = Instance.new("ScrollingFrame")
+    v_scr.Name = v_name .. "Page"
+    v_scr.Size = UDim2.new(1, -132, 1, -20)
+    v_scr.Position = UDim2.new(0, 126, 0, 10)
+    v_scr.BackgroundTransparency = 1
+    v_scr.CanvasSize = UDim2.new(0, 0, 0, 0)
+    v_scr.ScrollBarThickness = 3
+    v_scr.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+    v_scr.Visible = false
+    v_scr.Parent = v_pFold
 
-    local v_y6 = Instance.new("UIListLayout")
-    v_y6.Padding = UDim.new(0, 6)
-    v_y6.SortOrder = Enum.SortOrder.LayoutOrder
-    v_y6.Parent = v_y5
+    local v_lay = Instance.new("UIListLayout")
+    v_lay.Padding = UDim.new(0, 6)
+    v_lay.SortOrder = Enum.SortOrder.LayoutOrder
+    v_lay.Parent = v_scr
 
-    v_m3(v_y6:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-        v_y5.CanvasSize = UDim2.new(0, 0, 0, v_y6.AbsoluteContentSize.Y + 15)
+    v_pW7(v_lay:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        v_scr.CanvasSize = UDim2.new(0, 0, 0, v_lay.AbsoluteContentSize.Y + 15)
     end))
 
-    return v_y5
+    return v_scr
 end
 
-local v_y7 = v_y3("Main")
-local v_y8 = v_y3("Custom")
-local v_y9 = v_y3("Teleport")
-local v_z1 = v_y3("Boombox")
-local v_z2 = v_y3("BoomboxIDs")
-local v_z3 = v_y3("UpdateLogs")
-local v_z4 = v_y3("About")
+local v_pMain = v_mkPage("Main")
+local v_pCust = v_mkPage("Custom")
+local v_pTele = v_mkPage("Teleport")
+local v_pBoom = v_mkPage("Boombox")
+local v_pBIDs = v_mkPage("BoomboxIDs")
+local v_pLogs = v_mkPage("UpdateLogs")
+local v_pAbot = v_mkPage("About")
 
-local v_z5 = nil
+local v_currTab = nil
 
-local function v_z6(v_y4, v_z7)
-    local v_z8 = Instance.new("TextButton")
-    v_z8.Size = UDim2.new(0, 106, 0, 22)
-    v_z8.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-    v_z8.Text = v_y4
-    v_z8.TextColor3 = Color3.fromRGB(160, 160, 165)
-    v_z8.Font = Enum.Font.GothamMedium
-    v_z8.TextSize = 10
-    v_z8.Parent = v_x9
+local function v_addTab(v_title, v_targetPage)
+    local v_btn = Instance.new("TextButton")
+    v_btn.Size = UDim2.new(0, 106, 0, 22)
+    v_btn.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+    v_btn.Text = v_title
+    v_btn.TextColor3 = Color3.fromRGB(160, 160, 165)
+    v_btn.Font = Enum.Font.GothamMedium
+    v_btn.TextSize = 10
+    v_btn.Parent = v_bCon
 
-    local v_z9 = Instance.new("UICorner")
-    v_z9.CornerRadius = UDim.new(0, 6)
-    v_z9.Parent = v_z8
+    local v_crn = Instance.new("UICorner")
+    v_crn.CornerRadius = UDim.new(0, 6)
+    v_crn.Parent = v_btn
 
-    local v_aa1 = Instance.new("UIStroke")
-    v_aa1.Color = Color3.fromRGB(28, 28, 32)
-    v_aa1.Thickness = 1
-    v_aa1.Parent = v_z8
+    local v_stk = Instance.new("UIStroke")
+    v_stk.Color = Color3.fromRGB(28, 28, 32)
+    v_stk.Thickness = 1
+    v_stk.Parent = v_btn
 
-    v_m3(v_z8.MouseButton1Click:Connect(function()
-        if v_z5 == v_z8 then return end
+    v_pW7(v_btn.MouseButton1Click:Connect(function()
+        if v_currTab == v_btn then return end
         
-        if v_z5 then
-            v_b2:Create(v_z5, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(20, 20, 24), TextColor3 = Color3.fromRGB(160, 160, 165)}):Play()
-            local v_aa2 = v_z5:FindFirstChildOfClass("UIStroke")
-            if v_aa2 then v_b2:Create(v_aa2, TweenInfo.new(0.2), {Color = Color3.fromRGB(28, 28, 32)}):Play() end
+        if v_currTab then
+            v_4pK:Create(v_currTab, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(20, 20, 24), TextColor3 = Color3.fromRGB(160, 160, 165)}):Play()
+            local v_ostk = v_currTab:FindFirstChildOfClass("UIStroke")
+            if v_ostk then v_4pK:Create(v_ostk, TweenInfo.new(0.2), {Color = Color3.fromRGB(28, 28, 32)}):Play() end
         end
         
-        for _, v_aa3 in pairs(v_y2:GetChildren()) do v_aa3.Visible = false end
+        for _, v_child in pairs(v_pFold:GetChildren()) do v_child.Visible = false end
         
-        v_z5 = v_z8
-        v_z7.Visible = true
+        v_currTab = v_btn
+        v_targetPage.Visible = true
         
-        v_b2:Create(v_z8, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(28, 28, 35), TextColor3 = Color3.fromRGB(0, 255, 200)}):Play()
-        v_b2:Create(v_aa1, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+        v_4pK:Create(v_btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(28, 28, 35), TextColor3 = Color3.fromRGB(0, 255, 200)}):Play()
+        v_4pK:Create(v_stk, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 180, 255)}):Play()
     end))
     
-    if v_y4 == "Main Scripts" then
-        v_z5 = v_z8
-        v_z7.Visible = true
-        v_z8.BackgroundColor3 = Color3.fromRGB(28, 28, 35)
-        v_z8.TextColor3 = Color3.fromRGB(0, 255, 200)
-        v_aa1.Color = Color3.fromRGB(0, 180, 255)
+    if v_title == "Main Scripts" then
+        v_currTab = v_btn
+        v_targetPage.Visible = true
+        v_btn.BackgroundColor3 = Color3.fromRGB(28, 28, 35)
+        v_btn.TextColor3 = Color3.fromRGB(0, 255, 200)
+        v_stk.Color = Color3.fromRGB(0, 180, 255)
     end
 end
 
-v_z6("Main Scripts", v_y7)
-v_z6("Custom Scripts", v_y8)
-v_z6("Teleport", v_y9)
-v_z6("Boombox Logger", v_z1)
-v_z6("Boombox IDs", v_z2)
-v_z6("Update Logs", v_z3)
-v_z6("About Script", v_z4)
+v_addTab("Main Scripts", v_pMain)
+v_addTab("Custom Scripts", v_pCust)
+v_addTab("Teleport", v_pTele)
+v_addTab("Boombox Logger", v_pBoom)
+v_addTab("Boombox IDs", v_pBIDs)
+v_addTab("Update Logs", v_pLogs)
+v_addTab("About Script", v_pAbot)
 
-local v_aa4 = Instance.new("TextLabel")
-v_aa4.Size = UDim2.new(1, 0, 0, 25)
-v_aa4.Position = UDim2.new(0, 0, 1, -25)
-v_aa4.BackgroundTransparency = 1
-v_aa4.Text = "12:00:00 AM"
-v_aa4.TextColor3 = Color3.fromRGB(0, 255, 200)
-v_aa4.Font = Enum.Font.Code
-v_aa4.TextSize = 11
-v_aa4.Parent = v_x1
+local v_clockLab = Instance.new("TextLabel")
+v_clockLab.Size = UDim2.new(1, 0, 0, 25)
+v_clockLab.Position = UDim2.new(0, 0, 1, -25)
+v_clockLab.BackgroundTransparency = 1
+v_clockLab.Text = "12:00:00 AM"
+v_clockLab.TextColor3 = Color3.fromRGB(0, 255, 200)
+v_clockLab.Font = Enum.Font.Code
+v_clockLab.TextSize = 11
+v_clockLab.Parent = v_sList
 
-v_m3(task.spawn(function()
-    while v_j0 and task.wait(1) do
-        if v_aa4 and v_aa4.Parent then
-            v_aa4.Text = os.date("%I:%M:%S %p")
+v_pW7(task.spawn(function()
+    while v_fX9 and task.wait(1) do
+        if v_clockLab and v_clockLab.Parent then
+            v_clockLab.Text = os.date("%I:%M:%S %p")
         end
     end
 end))
 
-local function v_aa5(v_y4, v_aa6)
-    local v_y5 = Instance.new("Frame")
-    v_y5.Size = UDim2.new(1, -8, 0, 24)
-    v_y5.BackgroundTransparency = 1
-    v_y5.Parent = v_aa6
+local function v_mkSec(v_txt, v_par)
+    local v_frm = Instance.new("Frame")
+    v_frm.Size = UDim2.new(1, -8, 0, 24)
+    v_frm.BackgroundTransparency = 1
+    v_frm.Parent = v_par
 
-    local v_aa7 = Instance.new("UIListLayout")
-    v_aa7.FillDirection = Enum.FillDirection.Horizontal
-    v_aa7.SortOrder = Enum.SortOrder.LayoutOrder
-    v_aa7.VerticalAlignment = Enum.VerticalAlignment.Center
-    v_aa7.Padding = UDim.new(0, 10)
-    v_aa7.Parent = v_y5
+    local v_lay = Instance.new("UIListLayout")
+    v_lay.FillDirection = Enum.FillDirection.Horizontal
+    v_lay.SortOrder = Enum.SortOrder.LayoutOrder
+    v_lay.VerticalAlignment = Enum.VerticalAlignment.Center
+    v_lay.Padding = UDim.new(0, 10)
+    v_lay.Parent = v_frm
 
-    local v_u9 = Instance.new("TextLabel")
-    v_u9.BackgroundTransparency = 1
-    v_u9.Text = v_y4:upper()
-    v_u9.TextColor3 = Color3.fromRGB(0, 180, 255)
-    v_u9.Font = Enum.Font.GothamBold
-    v_u9.TextSize = 11
-    v_u9.AutomaticSize = Enum.AutomaticSize.X
-    v_u9.Size = UDim2.new(0, 0, 1, 0)
-    v_u9.LayoutOrder = 1
-    v_u9.Parent = v_y5
+    local v_lbl = Instance.new("TextLabel")
+    v_lbl.BackgroundTransparency = 1
+    v_lbl.Text = v_txt:upper()
+    v_lbl.TextColor3 = Color3.fromRGB(0, 180, 255)
+    v_lbl.Font = Enum.Font.GothamBold
+    v_lbl.TextSize = 11
+    v_lbl.AutomaticSize = Enum.AutomaticSize.X
+    v_lbl.Size = UDim2.new(0, 0, 1, 0)
+    v_lbl.LayoutOrder = 1
+    v_lbl.Parent = v_frm
     
-    local v_aa8 = Instance.new("Frame")
-    v_aa8.Size = UDim2.new(1, 0, 0, 1)
-    v_aa8.BackgroundColor3 = Color3.fromRGB(28, 28, 32)
-    v_aa8.BorderSizePixel = 0
-    v_aa8.LayoutOrder = 2
-    v_aa8.Parent = v_y5
+    local v_line = Instance.new("Frame")
+    v_line.Size = UDim2.new(1, 0, 0, 1)
+    v_line.BackgroundColor3 = Color3.fromRGB(28, 28, 32)
+    v_line.BorderSizePixel = 0
+    v_line.LayoutOrder = 2
+    v_line.Parent = v_frm
 
-    v_m3(v_y5:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
-        local v_aa9 = v_u9.AbsoluteSize.X
-        local v_ab1 = v_y5.AbsoluteSize.X
-        local v_ab2 = v_ab1 - v_aa9 - 10
-        if v_ab2 > 0 then
-            v_aa8.Size = UDim2.new(0, v_ab2, 0, 1)
+    v_pW7(v_frm:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
+        local v_lSz = v_lbl.AbsoluteSize.X
+        local v_fSz = v_frm.AbsoluteSize.X
+        local v_rem = v_fSz - v_lSz - 10
+        if v_rem > 0 then
+            v_line.Size = UDim2.new(0, v_rem, 0, 1)
         else
-            v_aa8.Size = UDim2.new(0, 0, 0, 1)
+            v_line.Size = UDim2.new(0, 0, 0, 1)
         end
     end))
 end
 
-local function v_ab3(v_y4, v_ab4, v_aa6, v_ab5)
-    local v_y5 = Instance.new("Frame")
-    v_y5.Size = UDim2.new(1, -8, 0, 36)
-    v_y5.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-    v_y5.BorderSizePixel = 0
-    v_y5.Parent = v_aa6
+local function v_mkTog(v_txt, v_val, v_par, v_cb)
+    local v_frm = Instance.new("Frame")
+    v_frm.Size = UDim2.new(1, -8, 0, 36)
+    v_frm.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+    v_frm.BorderSizePixel = 0
+    v_frm.Parent = v_par
 
-    local v_ab6 = Instance.new("UICorner")
-    v_ab6.CornerRadius = UDim.new(0, 6)
-    v_ab6.Parent = v_y5
+    local v_crn = Instance.new("UICorner")
+    v_crn.CornerRadius = UDim.new(0, 6)
+    v_crn.Parent = v_frm
 
-    local v_ab7 = Instance.new("UIStroke")
-    v_ab7.Color = Color3.fromRGB(28, 28, 32)
-    v_ab7.Thickness = 1
-    v_ab7.Parent = v_y5
+    local v_stk = Instance.new("UIStroke")
+    v_stk.Color = Color3.fromRGB(28, 28, 32)
+    v_stk.Thickness = 1
+    v_stk.Parent = v_frm
 
-    local v_ab8 = Instance.new("TextLabel")
-    v_ab8.Size = UDim2.new(0.7, 0, 1, 0)
-    v_ab8.Position = UDim2.new(0, 12, 0, 0)
-    v_ab8.BackgroundTransparency = 1
-    v_ab8.Text = v_y4
-    v_ab8.TextColor3 = Color3.fromRGB(225, 225, 230)
-    v_ab8.Font = Enum.Font.GothamMedium
-    v_ab8.TextSize = 11
-    v_ab8.TextXAlignment = Enum.TextXAlignment.Left
-    v_ab8.Parent = v_y5
+    local v_lbl = Instance.new("TextLabel")
+    v_lbl.Size = UDim2.new(0.7, 0, 1, 0)
+    v_lbl.Position = UDim2.new(0, 12, 0, 0)
+    v_lbl.BackgroundTransparency = 1
+    v_lbl.Text = v_txt
+    v_lbl.TextColor3 = Color3.fromRGB(225, 225, 230)
+    v_lbl.Font = Enum.Font.GothamMedium
+    v_lbl.TextSize = 11
+    v_lbl.TextXAlignment = Enum.TextXAlignment.Left
+    v_lbl.Parent = v_frm
 
-    local v_z8 = Instance.new("TextButton")
-    v_z8.Size = UDim2.new(0, 32, 0, 16)
-    v_z8.Position = UDim2.new(1, -42, 0.5, -8)
-    v_z8.BackgroundColor3 = v_ab4 and Color3.fromRGB(0, 180, 255) or Color3.fromRGB(45, 45, 50)
-    v_z8.Text = ""
-    v_z8.Parent = v_y5
+    local v_tBtn = Instance.new("TextButton")
+    v_tBtn.Size = UDim2.new(0, 32, 0, 16)
+    v_tBtn.Position = UDim2.new(1, -42, 0.5, -8)
+    v_tBtn.BackgroundColor3 = v_val and Color3.fromRGB(0, 180, 255) or Color3.fromRGB(45, 45, 50)
+    v_tBtn.Text = ""
+    v_tBtn.Parent = v_frm
 
-    local v_ab9 = Instance.new("UICorner")
-    v_ab9.CornerRadius = UDim.new(1, 0)
-    v_ab9.Parent = v_z8
+    local v_tCrn = Instance.new("UICorner")
+    v_tCrn.CornerRadius = UDim.new(1, 0)
+    v_tCrn.Parent = v_tBtn
 
-    local v_ac1 = Instance.new("Frame")
-    v_ac1.Size = UDim2.new(0, 10, 0, 10)
-    v_ac1.Position = v_ab4 and UDim2.new(1, -13, 0.5, -5) or UDim2.new(0, 3, 0.5, -5)
-    v_ac1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    v_ac1.BorderSizePixel = 0
-    v_ac1.Parent = v_z8
+    local v_circ = Instance.new("Frame")
+    v_circ.Size = UDim2.new(0, 10, 0, 10)
+    v_circ.Position = v_val and UDim2.new(1, -13, 0.5, -5) or UDim2.new(0, 3, 0.5, -5)
+    v_circ.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v_circ.BorderSizePixel = 0
+    v_circ.Parent = v_tBtn
 
-    local v_ac2 = Instance.new("UICorner")
-    v_ac2.CornerRadius = UDim.new(1, 0)
-    v_ac2.Parent = v_ac1
+    local v_cCrn2 = Instance.new("UICorner")
+    v_cCrn2.CornerRadius = UDim.new(1, 0)
+    v_cCrn2.Parent = v_circ
 
-    local v_ac3 = v_ab4
-    v_m3(v_z8.MouseButton1Click:Connect(function()
-        if not v_j0 then return end
-        v_ac3 = not v_ac3
-        local v_ac4 = v_ac3 and Color3.fromRGB(0, 255, 180) or Color3.fromRGB(45, 45, 50)
-        local v_ac5 = v_ac3 and UDim2.new(1, -13, 0.5, -5) or UDim2.new(0, 3, 0.5, -5)
+    local v_state = v_val
+    v_pW7(v_tBtn.MouseButton1Click:Connect(function()
+        if not v_fX9 then return end
+        v_state = not v_state
+        local v_col = v_state and Color3.fromRGB(0, 255, 180) or Color3.fromRGB(45, 45, 50)
+        local v_pos = v_state and UDim2.new(1, -13, 0.5, -5) or UDim2.new(0, 3, 0.5, -5)
         
-        v_b2:Create(v_z8, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = v_ac4}):Play()
-        v_b2:Create(v_ac1, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = v_ac5}):Play()
-        v_b2:Create(v_ab7, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Color = v_ac3 and Color3.fromRGB(0, 255, 180) or Color3.fromRGB(28, 28, 32)}):Play()
+        v_4pK:Create(v_tBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = v_col}):Play()
+        v_4pK:Create(v_circ, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = v_pos}):Play()
+        v_4pK:Create(v_stk, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Color = v_state and Color3.fromRGB(0, 255, 180) or Color3.fromRGB(28, 28, 32)}):Play()
         
-        v_ab5(v_ac3)
+        v_cb(v_state)
     end))
 end
 
-local function v_ac6(v_y4, v_aa6, v_ab5)
-    local v_y5 = Instance.new("Frame")
-    v_y5.Size = UDim2.new(1, -8, 0, 36)
-    v_y5.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-    v_y5.Parent = v_aa6
+local function v_mkBtn(v_txt, v_par, v_cb)
+    local v_frm = Instance.new("Frame")
+    v_frm.Size = UDim2.new(1, -8, 0, 36)
+    v_frm.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+    v_frm.Parent = v_par
 
-    local v_ab6 = Instance.new("UICorner")
-    v_ab6.CornerRadius = UDim.new(0, 6)
-    v_ab6.Parent = v_y5
+    local v_crn = Instance.new("UICorner")
+    v_crn.CornerRadius = UDim.new(0, 6)
+    v_crn.Parent = v_frm
 
-    local v_ab7 = Instance.new("UIStroke")
-    v_ab7.Color = Color3.fromRGB(28, 28, 32)
-    v_ab7.Thickness = 1
-    v_ab7.Parent = v_y5
+    local v_stk = Instance.new("UIStroke")
+    v_stk.Color = Color3.fromRGB(28, 28, 32)
+    v_stk.Thickness = 1
+    v_stk.Parent = v_frm
 
-    local v_ac7 = Instance.new("TextButton")
-    v_ac7.Size = UDim2.new(1, 0, 1, 0)
-    v_ac7.BackgroundTransparency = 1
-    v_ac7.Text = v_y4
-    v_ac7.TextColor3 = Color3.fromRGB(225, 225, 230)
-    v_ac7.Font = Enum.Font.GothamMedium
-    v_ac7.TextSize = 11
-    v_ac7.Parent = v_y5
+    local v_btn = Instance.new("TextButton")
+    v_btn.Size = UDim2.new(1, 0, 1, 0)
+    v_btn.BackgroundTransparency = 1
+    v_btn.Text = v_txt
+    v_btn.TextColor3 = Color3.fromRGB(225, 225, 230)
+    v_btn.Font = Enum.Font.GothamMedium
+    v_btn.TextSize = 11
+    v_btn.Parent = v_frm
 
-    v_m3(v_ac7.MouseButton1Click:Connect(function()
-        if not v_j0 then return end
-        v_b2:Create(v_y5, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(28, 28, 35)}):Play()
-        v_b2:Create(v_ab7, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Color = Color3.fromRGB(0, 180, 255)}):Play()
-        v_ac7.TextColor3 = Color3.fromRGB(0, 255, 200)
+    v_pW7(v_btn.MouseButton1Click:Connect(function()
+        if not v_fX9 then return end
+        v_4pK:Create(v_frm, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(28, 28, 35)}):Play()
+        v_4pK:Create(v_stk, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+        v_btn.TextColor3 = Color3.fromRGB(0, 255, 200)
         task.wait(0.12)
-        if not v_j0 then return end
-        v_b2:Create(v_y5, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(20, 20, 24)}):Play()
-        v_b2:Create(v_ab7, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Color = Color3.fromRGB(28, 28, 32)}):Play()
-        v_ac7.TextColor3 = Color3.fromRGB(225, 225, 230)
-        v_ab5()
+        if not v_fX9 then return end
+        v_4pK:Create(v_frm, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(20, 20, 24)}):Play()
+        v_4pK:Create(v_stk, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+        v_btn.TextColor3 = Color3.fromRGB(225, 225, 230)
+        v_cb()
     end))
 end
 
-local function v_ac8(v_y4, v_ab4, v_aa6, v_ab5)
-    local v_y5 = Instance.new("Frame")
-    v_y5.Size = UDim2.new(1, -8, 0, 36)
-    v_y5.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-    v_y5.Parent = v_aa6
+local function v_mkBox(v_txt, v_val, v_par, v_cb)
+    local v_frm = Instance.new("Frame")
+    v_frm.Size = UDim2.new(1, -8, 0, 36)
+    v_frm.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+    v_frm.Parent = v_par
 
-    local v_ab6 = Instance.new("UICorner")
-    v_ab6.CornerRadius = UDim.new(0, 6)
-    v_ab6.Parent = v_y5
+    local v_crn = Instance.new("UICorner")
+    v_crn.CornerRadius = UDim.new(0, 6)
+    v_crn.Parent = v_frm
 
-    local v_ab7 = Instance.new("UIStroke")
-    v_ab7.Color = Color3.fromRGB(28, 28, 32)
-    v_ab7.Thickness = 1
-    v_ab7.Parent = v_y5
+    local v_stk = Instance.new("UIStroke")
+    v_stk.Color = Color3.fromRGB(28, 28, 32)
+    v_stk.Thickness = 1
+    v_stk.Parent = v_frm
 
-    local v_ab8 = Instance.new("TextLabel")
-    v_ab8.Size = UDim2.new(0.6, 0, 1, 0)
-    v_ab8.Position = UDim2.new(0, 12, 0, 0)
-    v_ab8.BackgroundTransparency = 1
-    v_ab8.Text = v_y4
-    v_ab8.TextColor3 = Color3.fromRGB(225, 225, 230)
-    v_ab8.Font = Enum.Font.GothamMedium
-    v_ab8.TextSize = 11
-    v_ab8.TextXAlignment = Enum.TextXAlignment.Left
-    v_ab8.Parent = v_y5
+    local v_lbl = Instance.new("TextLabel")
+    v_lbl.Size = UDim2.new(0.6, 0, 1, 0)
+    v_lbl.Position = UDim2.new(0, 12, 0, 0)
+    v_lbl.BackgroundTransparency = 1
+    v_lbl.Text = v_txt
+    v_lbl.TextColor3 = Color3.fromRGB(225, 225, 230)
+    v_lbl.Font = Enum.Font.GothamMedium
+    v_lbl.TextSize = 11
+    v_lbl.TextXAlignment = Enum.TextXAlignment.Left
+    v_lbl.Parent = v_frm
 
-    local v_ac9 = Instance.new("TextBox")
-    v_ac9.Size = UDim2.new(0, 46, 0, 20)
-    v_ac9.Position = UDim2.new(1, -54, 0.5, -10)
-    v_ac9.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-    v_ac9.Text = tostring(v_ab4)
-    v_ac9.TextColor3 = Color3.fromRGB(255, 255, 255)
-    v_ac9.Font = Enum.Font.GothamBold
-    v_ac9.TextSize = 10
-    v_ac9.Parent = v_y5
+    local v_box = Instance.new("TextBox")
+    v_box.Size = UDim2.new(0, 46, 0, 20)
+    v_box.Position = UDim2.new(1, -54, 0.5, -10)
+    v_box.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+    v_box.Text = tostring(v_val)
+    v_box.TextColor3 = Color3.fromRGB(255, 255, 255)
+    v_box.Font = Enum.Font.GothamBold
+    v_box.TextSize = 10
+    v_box.Parent = v_frm
 
-    local v_ad1 = Instance.new("UICorner")
-    v_ad1.CornerRadius = UDim.new(0, 4)
-    v_ad1.Parent = v_ac9
+    local v_bCrn2 = Instance.new("UICorner")
+    v_bCrn2.CornerRadius = UDim.new(0, 4)
+    v_bCrn2.Parent = v_box
     
-    local v_ad2 = Instance.new("UIStroke")
-    v_ad2.Color = Color3.fromRGB(45, 45, 50)
-    v_ad2.Thickness = 1
-    v_ad2.Parent = v_ac9
+    local v_bStk2 = Instance.new("UIStroke")
+    v_bStk2.Color = Color3.fromRGB(45, 45, 50)
+    v_bStk2.Thickness = 1
+    v_bStk2.Parent = v_box
 
-    v_m3(v_ac9.Focused:Connect(function()
-        v_b2:Create(v_ad2, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+    v_pW7(v_box.Focused:Connect(function()
+        v_4pK:Create(v_bStk2, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
     end))
 
-    v_m3(v_ac9.FocusLost:Connect(function()
-        v_b2:Create(v_ad2, TweenInfo.new(0.15), {Color = Color3.fromRGB(45, 45, 50)}):Play()
-        local v_ad3 = tonumber(v_ac9.Text)
-        if v_ad3 then
-            v_ab5(v_ad3)
+    v_pW7(v_box.FocusLost:Connect(function()
+        v_4pK:Create(v_bStk2, TweenInfo.new(0.15), {Color = Color3.fromRGB(45, 45, 50)}):Play()
+        local v_num = tonumber(v_box.Text)
+        if v_num then
+            v_cb(v_num)
         else
-            v_ac9.Text = tostring(v_ab4)
+            v_box.Text = tostring(v_val)
         end
     end))
 end
 
-local function v_ad4()
-    local v_ad5 = v_i9.Character
-    if not v_ad5 then return nil, nil, nil end
-    local v_ad6 = v_ad5:FindFirstChild("HumanoidRootPart")
-    local v_ad7 = v_ad5:FindFirstChildOfClass("Humanoid")
-    return v_ad5, v_ad6, v_ad7
+local function v_getChar()
+    local v_char = v_0vB.Character
+    if not v_char then return nil, nil, nil end
+    local v_hrp = v_char:FindFirstChild("HumanoidRootPart")
+    local v_hum = v_char:FindFirstChildOfClass("Humanoid")
+    return v_char, v_hrp, v_hum
 end
 
-local v_ad8 = false
-local v_ad9 = 50
+local v_speedEnabled = false
+local v_speedVal = 50
 
-v_aa5("Movement", v_y7)
+v_mkSec("Movement", v_pMain)
 
-v_ab3("Enable Speed Hack", false, v_y7, function(v_ac3)
-    v_ad8 = v_ac3
-    local _, _, v_ad7 = v_ad4()
-    if v_ad7 then v_ad7.WalkSpeed = v_ac3 and v_ad9 or 16 end
+v_mkTog("Enable Speed Hack", false, v_pMain, function(v_state)
+    v_speedEnabled = v_state
+    local _, _, v_hum = v_getChar()
+    if v_hum then v_hum.WalkSpeed = v_state and v_speedVal or 16 end
 end)
 
-v_ac8("Walk Speed", 50, v_y7, function(v_ab4)
-    v_ad9 = v_ab4
-    local _, _, v_ad7 = v_ad4()
-    if v_ad8 and v_ad7 then v_ad7.WalkSpeed = v_ab4 end
+v_mkBox("Walk Speed", 50, v_pMain, function(v_val)
+    v_speedVal = v_val
+    local _, _, v_hum = v_getChar()
+    if v_speedEnabled and v_hum then v_hum.WalkSpeed = v_val end
 end)
 
-v_m3(v_d4.Heartbeat:Connect(function()
-    if v_j0 and v_ad8 then
-        local _, _, v_ad7 = v_ad4()
-        if v_ad7 and v_ad7.WalkSpeed ~= v_ad9 then
-            v_ad7.WalkSpeed = v_ad9
+v_pW7(v_2mR.Heartbeat:Connect(function()
+    if v_fX9 and v_speedEnabled then
+        local _, _, v_hum = v_getChar()
+        if v_hum and v_hum.WalkSpeed ~= v_speedVal then
+            v_hum.WalkSpeed = v_speedVal
         end
     end
 end))
 
-local v_ae1 = false
-v_m3(v_d4.Stepped:Connect(function()
-    if v_j0 and v_ae1 and v_i9.Character then
-        for _, v_ae2 in pairs(v_i9.Character:GetDescendants()) do
-            if v_ae2:IsA("BasePart") then v_ae2.CanCollide = false end
+local v_noclipEnabled = false
+v_pW7(v_2mR.Stepped:Connect(function()
+    if v_fX9 and v_noclipEnabled and v_0vB.Character then
+        for _, v_part in pairs(v_0vB.Character:GetDescendants()) do
+            if v_part:IsA("BasePart") then v_part.CanCollide = false end
         end
     end
 end))
 
-v_ab3("Enable Noclip", false, v_y7, function(v_ac3) v_ae1 = v_ac3 end)
+v_mkTog("Enable Noclip", false, v_pMain, function(v_state) v_noclipEnabled = v_state end)
 
-local v_ae3 = false
-local v_ae4 = 50
-local v_ae5 = nil
+local v_flyEnabled = false
+local v_flySpeed = 50
+local v_flyPos = nil
 
-v_ab3("Enable Fly Mode", false, v_y7, function(v_ac3)
-    v_ae3 = v_ac3
-    v_ae5 = nil
-    local _, v_ad6, v_ad7 = v_ad4()
-    if v_ad7 then
-        v_ad7.PlatformStand = v_ac3
+v_mkTog("Enable Fly Mode", false, v_pMain, function(v_state)
+    v_flyEnabled = v_state
+    v_flyPos = nil
+    local _, _, v_hum = v_getChar()
+    if v_hum then
+        v_hum.PlatformStand = v_state
     end
-    if not v_ac3 and v_ad6 then
-        v_ad6.Velocity = Vector3.new(0,0,0)
+    if not v_state then
+        local _, v_hrp = v_getChar()
+        if v_hrp then v_hrp.Velocity = Vector3.new(0,0,0) end
     end
 end)
 
-v_ac8("Fly Speed", 50, v_y7, function(v_ab4)
-    v_ae4 = v_ab4
+v_mkBox("Fly Speed", 50, v_pMain, function(v_val)
+    v_flySpeed = v_val
 end)
 
-v_m3(v_d4.Heartbeat:Connect(function()
-    if v_j0 and v_ae3 then
-        local _, v_ad6, v_ad7 = v_ad4()
-        if v_ad6 and v_ad7 then
-            v_ad7.PlatformStand = true
+v_pW7(v_2mR.Heartbeat:Connect(function()
+    if v_fX9 and v_flyEnabled then
+        local _, v_hrp, v_hum = v_getChar()
+        if v_hrp and v_hum then
+            v_hum.PlatformStand = true
             
-            local v_ae6 = v_e5.CurrentCamera
-            if v_ae6 then
-                local v_ae7 = v_ad7.MoveDirection
-                local v_ae8 = v_ae6.CFrame.LookVector
+            local v_cam = v_5wN.CurrentCamera
+            if v_cam then
+                local v_moveDir = v_hum.MoveDirection
+                local v_look = v_cam.CFrame.LookVector
                 
-                if v_ae7.Magnitude > 0 then
-                    v_ae5 = nil
-                    local v_ae9 = v_ae6.CFrame.RightVector
-                    local v_af1 = v_ae6.CFrame:VectorToObjectSpace(v_ae7)
-                    local v_af2 = Vector3.new(v_af1.X, 0, v_af1.Z).Unit
-                    local v_af3 = ((v_ae8 * -v_af2.Z) + (v_ae9 * v_af2.X)).Unit
+                if v_moveDir.Magnitude > 0 then
+                    v_flyPos = nil
+                    local v_right = v_cam.CFrame.RightVector
+                    local v_objSpace = v_cam.CFrame:VectorToObjectSpace(v_moveDir)
+                    local v_flat = Vector3.new(v_objSpace.X, 0, v_objSpace.Z).Unit
+                    local v_dir = ((v_look * -v_flat.Z) + (v_right * v_flat.X)).Unit
                     
-                    v_ad6.Velocity = v_af3 * v_ae4
-                    v_ad6.CFrame = CFrame.new(v_ad6.Position, v_ad6.Position + v_ae8)
+                    v_hrp.Velocity = v_dir * v_flySpeed
+                    v_hrp.CFrame = CFrame.new(v_hrp.Position, v_hrp.Position + v_look)
                 else
-                    if not v_ae5 then
-                        v_ae5 = v_ad6.Position
+                    if not v_flyPos then
+                        v_flyPos = v_hrp.Position
                     end
-                    v_ad6.Velocity = Vector3.new(0, 0, 0)
-                    v_ad6.CFrame = CFrame.new(v_ae5, v_ae5 + v_ae8)
+                    v_hrp.Velocity = Vector3.new(0, 0, 0)
+                    v_hrp.CFrame = CFrame.new(v_flyPos, v_flyPos + v_look)
                 end
             end
         end
     end
 end))
 
-v_aa5("Stealth & Visuals", v_y7)
+v_mkSec("Stealth & Visuals", v_pMain)
 
-v_ab3("Day Mode", false, v_y7, function(v_ac3)
-    if v_ac3 then
-        v_f6.ClockTime = 14
+v_mkTog("Day Mode", false, v_pMain, function(v_state)
+    if v_state then
+        v_7hZ.ClockTime = 14
     end
 end)
 
-v_ab3("Night Mode", false, v_y7, function(v_ac3)
-    if v_ac3 then
-        v_f6.ClockTime = 0
+v_mkTog("Night Mode", false, v_pMain, function(v_state)
+    if v_state then
+        v_7hZ.ClockTime = 0
     else
-        v_f6.ClockTime = 14
+        v_7hZ.ClockTime = 14
     end
 end)
 
-local v_af4 = false
+local v_espEnabled = false
 
-local function v_af5(v_af6)
-    if v_af6 == v_i9 then return end
+local function v_setupESP(v_plr)
+    if v_plr == v_0vB then return end
     
-    local function v_af7()
-        if not v_j0 then return end
-        local v_ad5 = v_af6.Character or v_af6.CharacterAdded:Wait()
-        local v_af8 = v_ad5:WaitForChild("Head", 5)
-        if not v_af8 or not v_j0 then return end
+    local function v_applyESP()
+        if not v_fX9 then return end
+        local v_char = v_plr.Character or v_plr.CharacterAdded:Wait()
+        local v_head = v_char:WaitForChild("Head", 5)
+        if not v_head or not v_fX9 then return end
 
-        if v_ad5:FindFirstChild("ESPHighlight") then v_ad5.ESPHighlight:Destroy() end
-        if v_af8:FindFirstChild("ESPBBG") then v_af8.ESPBBG:Destroy() end
+        if v_char:FindFirstChild("ESPHighlight") then v_char.ESPHighlight:Destroy() end
+        if v_head:FindFirstChild("ESPBBG") then v_head.ESPBBG:Destroy() end
 
-        local v_af9 = Instance.new("Highlight")
-        v_af9.Name = "ESPHighlight"
-        v_af9.FillTransparency = 0.6
-        v_af9.FillColor = Color3.fromRGB(0, 255, 150)
-        v_af9.OutlineColor = Color3.fromRGB(255, 255, 255)
-        v_af9.Enabled = v_af4
-        v_af9.Parent = v_ad5
+        local v_hl = Instance.new("Highlight")
+        v_hl.Name = "ESPHighlight"
+        v_hl.FillTransparency = 0.6
+        v_hl.FillColor = Color3.fromRGB(0, 255, 150)
+        v_hl.OutlineColor = Color3.fromRGB(255, 255, 255)
+        v_hl.Enabled = v_espEnabled
+        v_hl.Parent = v_char
 
-        local v_ag1 = Instance.new("BillboardGui")
-        v_ag1.Name = "ESPBBG"
-        v_ag1.Size = UDim2.new(0, 200, 0, 50)
-        v_ag1.AlwaysOnTop = true
-        v_ag1.ExtentsOffset = Vector3.new(0, 3, 0)
-        v_ag1.Enabled = v_af4
-        v_ag1.Parent = v_af8
+        local v_bbg = Instance.new("BillboardGui")
+        v_bbg.Name = "ESPBBG"
+        v_bbg.Size = UDim2.new(0, 200, 0, 50)
+        v_bbg.AlwaysOnTop = true
+        v_bbg.ExtentsOffset = Vector3.new(0, 3, 0)
+        v_bbg.Enabled = v_espEnabled
+        v_bbg.Parent = v_head
 
-        local v_u9 = Instance.new("TextLabel")
-        v_u9.Size = UDim2.new(1, 0, 1, 0)
-        v_u9.BackgroundTransparency = 1
-        v_u9.Text = v_af6.DisplayName
-        v_u9.TextColor3 = Color3.fromRGB(255, 50, 50)
-        v_u9.Font = Enum.Font.GothamBold
-        v_u9.TextSize = 14
-        v_u9.Parent = v_ag1
+        local v_lbl = Instance.new("TextLabel")
+        v_lbl.Size = UDim2.new(1, 0, 1, 0)
+        v_lbl.BackgroundTransparency = 1
+        v_lbl.Text = v_plr.DisplayName
+        v_lbl.TextColor3 = Color3.fromRGB(255, 50, 50)
+        v_lbl.Font = Enum.Font.GothamBold
+        v_lbl.TextSize = 14
+        v_lbl.Parent = v_bbg
     end
 
-    v_af7()
-    v_m3(v_af6.CharacterAdded:Connect(v_af7))
+    v_applyESP()
+    v_pW7(v_plr.CharacterAdded:Connect(v_applyESP))
 end
 
-v_ab3("Enable Player ESP", false, v_y7, function(v_ac3)
-    v_af4 = v_ac3
-    for _, v_ag2 in pairs(v_a1:GetPlayers()) do
-        if v_ag2.Character then
-            local v_af9 = v_ag2.Character:FindFirstChild("ESPHighlight")
-            local v_af8 = v_ag2.Character:FindFirstChild("Head")
-            local v_ag1 = v_af8 and v_af8:FindFirstChild("ESPBBG")
-            if v_af9 then v_af9.Enabled = v_ac3 end
-            if v_ag1 then v_ag1.Enabled = v_ac3 end
+v_mkTog("Enable Player ESP", false, v_pMain, function(v_state)
+    v_espEnabled = v_state
+    for _, v_plr in pairs(v_9xQ:GetPlayers()) do
+        if v_plr.Character then
+            local v_hl = v_plr.Character:FindFirstChild("ESPHighlight")
+            local v_head = v_plr.Character:FindFirstChild("Head")
+            local v_bbg = v_head and v_head:FindFirstChild("ESPBBG")
+            if v_hl then v_hl.Enabled = v_state end
+            if v_bbg then v_bbg.Enabled = v_state end
         end
     end
 end)
 
-for _, v_ag2 in pairs(v_a1:GetPlayers()) do v_af5(v_ag2) end
-v_m3(v_a1.PlayerAdded:Connect(v_af5))
+for _, v_plr in pairs(v_9xQ:GetPlayers()) do v_setupESP(v_plr) end
+v_pW7(v_9xQ.PlayerAdded:Connect(v_setupESP))
 
-v_ac6("Anti-Lag (FPS Boost)", v_y7, function()
-    for _, v_ag3 in pairs(v_e5:GetDescendants()) do
-        if v_ag3:IsA("BasePart") and not v_ag3:IsDescendantOf(v_i9.Character) then
-            v_ag3.Material = Enum.Material.SmoothPlastic
-            if v_ag3:IsA("MeshPart") or v_ag3:IsA("UnionOperation") then v_ag3.Reflectance = 0 end
-        elseif v_ag3:IsA("Decal") or v_ag3:IsA("Texture") then
-            v_ag3.Transparency = 1
-        elseif v_ag3:IsA("ParticleEmitter") or v_ag3:IsA("Trail") then
-            v_ag3.Enabled = false
+v_mkBtn("Anti-Lag (FPS Boost)", v_pMain, function()
+    for _, v_desc in pairs(v_5wN:GetDescendants()) do
+        if v_desc:IsA("BasePart") and not v_desc:IsDescendantOf(v_0vB.Character) then
+            v_desc.Material = Enum.Material.SmoothPlastic
+            if v_desc:IsA("MeshPart") or v_desc:IsA("UnionOperation") then v_desc.Reflectance = 0 end
+        elseif v_desc:IsA("Decal") or v_desc:IsA("Texture") then
+            v_desc.Transparency = 1
+        elseif v_desc:IsA("ParticleEmitter") or v_desc:IsA("Trail") then
+            v_desc.Enabled = false
         end
     end
-    v_u3("Anti-Lag Applied!", Color3.fromRGB(0, 255, 200))
+    v_notify("Anti-Lag Applied!", Color3.fromRGB(0, 255, 200))
 end)
 
-local function v_ag4()
-    for _, v_ag2 in pairs(v_a1:GetPlayers()) do
-        if v_ag2.Character then
-            local v_af9 = v_ag2.Character:FindFirstChild("ESPHighlight")
-            if v_af9 then v_af9:Destroy() end
-            local v_af8 = v_ag2.Character:FindFirstChild("Head")
-            local v_ag1 = v_af8 and v_af8:FindFirstChild("ESPBBG")
-            if v_ag1 then v_ag1:Destroy() end
+local function v_clearESP()
+    for _, v_plr in pairs(v_9xQ:GetPlayers()) do
+        if v_plr.Character then
+            local v_hl = v_plr.Character:FindFirstChild("ESPHighlight")
+            if v_hl then v_hl:Destroy() end
+            local v_head = v_plr.Character:FindFirstChild("Head")
+            local v_bbg = v_head and v_head:FindFirstChild("ESPBBG")
+            if v_bbg then v_bbg:Destroy() end
         end
     end
 end
 
-v_m3(v_v7.MouseButton1Click:Connect(function()
-    v_ae3 = false
-    v_ad8 = false
-    v_ae1 = false
-    v_af4 = false
-    v_ae5 = nil
+v_pW7(v_btnClose.MouseButton1Click:Connect(function()
+    v_flyEnabled = false
+    v_speedEnabled = false
+    v_noclipEnabled = false
+    v_espEnabled = false
+    v_flyPos = nil
     
-    for _, conn in ipairs(v_k1) do
-        pcall(function() conn:Disconnect() end)
+    for _, v_conn in ipairs(v_dL2) do
+        pcall(function() v_conn:Disconnect() end)
     end
-    v_k1 = {}
+    v_dL2 = {}
 
-    v_ag4()
+    v_clearESP()
     
-    local _, v_ad6, v_ad7 = v_ad4()
-    if v_ad7 then
-        v_ad7.PlatformStand = false
-        v_ad7.WalkSpeed = 16
+    local _, v_hrp, v_hum = v_getChar()
+    if v_hum then
+        v_hum.PlatformStand = false
+        v_hum.WalkSpeed = 16
     end
-    if v_ad6 then
-        v_ad6.Velocity = Vector3.new(0,0,0)
+    if v_hrp then
+        v_hrp.Velocity = Vector3.new(0,0,0)
     end
     
-    v_b2:Create(v_r8, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0), Position = UDim2.new(0.5, 0, 0.5, -35), BackgroundTransparency = 1}):Play()
+    v_4pK:Create(v_qL3, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0), Position = UDim2.new(0.5, 0, 0.5, -35), BackgroundTransparency = 1}):Play()
     task.wait(0.2)
-    v_q7:Destroy()
+    v_mQ5:Destroy()
 end))
 
-local function v_ag5(v_ag6, v_y4, v_ag7)
-    v_m3(task.spawn(function()
-        local v_ag8 = false
-        local v_w4, v_ag9 = pcall(function()
-            if not v_j0 then return end
-            if v_ag7 then
-                loadstring(game:HttpGet(v_ag6))("Spider Script")
+local function v_execScript(v_url, v_name, v_isR6)
+    v_pW7(task.spawn(function()
+        local v_success = false
+        local v_ok, v_err = pcall(function()
+            if not v_fX9 then return end
+            if v_isR6 then
+                loadstring(game:HttpGet(v_url))("Spider Script")
             else
-                loadstring(game:HttpGet(v_ag6))()
+                loadstring(game:HttpGet(v_url))()
             end
-            v_ag8 = true
+            v_success = true
         end)
         
-        if v_w4 and v_ag8 then
-            v_u3("💥 " .. v_y4:upper() .. " ACTIVE 💥", Color3.fromRGB(0, 255, 200))
+        if v_ok and v_success then
+            v_notify("💥 " .. v_name:upper() .. " ACTIVE 💥", Color3.fromRGB(0, 255, 200))
         else
-            v_u3("Execution Failed!", Color3.fromRGB(255, 80, 80))
-            warn("Failed structural execution stack: " .. tostring(v_ag9))
+            v_notify("Execution Failed!", Color3.fromRGB(255, 80, 80))
+            warn("Failed structural execution stack: " .. tostring(v_err))
         end
     end))
 end
 
-v_aa5("Custom Scripts", v_y8)
+v_mkSec("Custom Scripts", v_pCust)
 
-for _, v_ah1 in pairs(v_o5) do
-    v_ac6(v_ah1.Name, v_y8, function()
-        v_ag5(v_ah1.URL, v_ah1.Name, v_ah1.IsR6)
+for _, v_item in pairs(v_zY2) do
+    v_mkBtn(v_item.Name, v_pCust, function()
+        v_execScript(v_item.URL, v_item.Name, v_item.IsR6)
     end)
 end
 
-v_aa5("Selected Target", v_y9)
+v_mkSec("Selected Target", v_pTele)
 
-local v_ah2 = nil
-local v_ah3 = Instance.new("TextLabel")
-v_ah3.Size = UDim2.new(1, -8, 0, 36)
-v_ah3.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-v_ah3.TextColor3 = Color3.fromRGB(0, 255, 200)
-v_ah3.Font = Enum.Font.GothamBold
-v_ah3.TextSize = 11
-v_ah3.Text = "  Selected: None"
-v_ah3.TextXAlignment = Enum.TextXAlignment.Left
-v_ah3.Parent = v_y9
-Instance.new("UICorner", v_ah3).CornerRadius = UDim.new(0, 6)
-local v_ah4 = Instance.new("UIStroke", v_ah3)
-v_ah4.Color = Color3.fromRGB(28, 28, 32)
-v_ah4.Thickness = 1
+local v_selPlayer = nil
+local v_selLab = Instance.new("TextLabel")
+v_selLab.Size = UDim2.new(1, -8, 0, 36)
+v_selLab.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+v_selLab.TextColor3 = Color3.fromRGB(0, 255, 200)
+v_selLab.Font = Enum.Font.GothamBold
+v_selLab.TextSize = 11
+v_selLab.Text = "  Selected: None"
+v_selLab.TextXAlignment = Enum.TextXAlignment.Left
+v_selLab.Parent = v_pTele
+Instance.new("UICorner", v_selLab).CornerRadius = UDim.new(0, 6)
+local v_selStk = Instance.new("UIStroke", v_selLab)
+v_selStk.Color = Color3.fromRGB(28, 28, 32)
+v_selStk.Thickness = 1
 
-v_aa5("Search Players", v_y9)
+v_mkSec("Search Players", v_pTele)
 
-local v_ah5 = Instance.new("TextBox")
-v_ah5.Size = UDim2.new(1, -8, 0, 32)
-v_ah5.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-v_ah5.PlaceholderText = "Search player name..."
-v_ah5.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
-v_ah5.Text = ""
-v_ah5.TextColor3 = Color3.fromRGB(255, 255, 255)
-v_ah5.Font = Enum.Font.GothamMedium
-v_ah5.TextSize = 11
-v_ah5.TextXAlignment = Enum.TextXAlignment.Left
-v_ah5.Parent = v_y9
-Instance.new("UICorner", v_ah5).CornerRadius = UDim.new(0, 6)
-local v_ah6 = Instance.new("UIStroke", v_ah5)
-v_ah6.Color = Color3.fromRGB(28, 28, 32)
-v_ah6.Thickness = 1
+local v_searchBox = Instance.new("TextBox")
+v_searchBox.Size = UDim2.new(1, -8, 0, 32)
+v_searchBox.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+v_searchBox.PlaceholderText = "Search player name..."
+v_searchBox.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+v_searchBox.Text = ""
+v_searchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+v_searchBox.Font = Enum.Font.GothamMedium
+v_searchBox.TextSize = 11
+v_searchBox.TextXAlignment = Enum.TextXAlignment.Left
+v_searchBox.Parent = v_pTele
+Instance.new("UICorner", v_searchBox).CornerRadius = UDim.new(0, 6)
+local v_searchStk = Instance.new("UIStroke", v_searchBox)
+v_searchStk.Color = Color3.fromRGB(28, 28, 32)
+v_searchStk.Thickness = 1
 
-v_m3(v_ah5.Focused:Connect(function()
-    v_b2:Create(v_ah6, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+v_pW7(v_searchBox.Focused:Connect(function()
+    v_4pK:Create(v_searchStk, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
 end))
 
-v_m3(v_ah5.FocusLost:Connect(function()
-    v_b2:Create(v_ah6, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+v_pW7(v_searchBox.FocusLost:Connect(function()
+    v_4pK:Create(v_searchStk, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
 end))
 
-v_aa5("Player List", v_y9)
+v_mkSec("Player List", v_pTele)
 
-local v_ah7 = Instance.new("ScrollingFrame")
-v_ah7.Size = UDim2.new(1, -8, 0, 110)
-v_ah7.BackgroundTransparency = 1
-v_ah7.CanvasSize = UDim2.new(0, 0, 0, 0)
-v_ah7.ScrollBarThickness = 3
-v_ah7.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-v_ah7.Parent = v_y9
+local v_pListScroll = Instance.new("ScrollingFrame")
+v_pListScroll.Size = UDim2.new(1, -8, 0, 110)
+v_pListScroll.BackgroundTransparency = 1
+v_pListScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+v_pListScroll.ScrollBarThickness = 3
+v_pListScroll.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+v_pListScroll.Parent = v_pTele
 
-local v_ah8 = Instance.new("UIListLayout")
-v_ah8.Padding = UDim.new(0, 4)
-v_ah8.SortOrder = Enum.SortOrder.LayoutOrder
-v_ah8.Parent = v_ah7
+local v_pListLay = Instance.new("UIListLayout")
+v_pListLay.Padding = UDim.new(0, 4)
+v_pListLay.SortOrder = Enum.SortOrder.LayoutOrder
+v_pListLay.Parent = v_pListScroll
 
-v_m3(v_ah8:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    v_ah7.CanvasSize = UDim2.new(0, 0, 0, v_ah8.AbsoluteContentSize.Y + 5)
+v_pW7(v_pListLay:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    v_pListScroll.CanvasSize = UDim2.new(0, 0, 0, v_pListLay.AbsoluteContentSize.Y + 5)
 end))
 
-local function v_ah9()
-    for _, v_ai1 in pairs(v_ah7:GetChildren()) do
-        if v_ai1:IsA("TextButton") then
-            v_ai1:Destroy()
+local function v_refreshPlayers()
+    for _, v_child in pairs(v_pListScroll:GetChildren()) do
+        if v_child:IsA("TextButton") then
+            v_child:Destroy()
         end
     end
     
-    local v_ai2 = v_ah5.Text:lower()
+    local v_query = v_searchBox.Text:lower()
     
-    for _, v_ag2 in pairs(v_a1:GetPlayers()) do
-        if v_ag2 ~= v_i9 then
-            local v_ai3 = v_ag2.DisplayName
-            local v_ai4 = v_ag2.Name
-            local v_ai5 = (v_ai3 .. " " .. v_ai4):lower()
+    for _, v_plr in pairs(v_9xQ:GetPlayers()) do
+        if v_plr ~= v_0vB then
+            local v_dName = v_plr.DisplayName
+            local v_name = v_plr.Name
+            local v_combo = (v_dName .. " " .. v_name):lower()
             
-            if v_ai2 == "" or string.find(v_ai5, v_ai2, 1, true) then
-                local v_ai6 = Instance.new("TextButton")
-                v_ai6.Size = UDim2.new(1, 0, 0, 32)
-                v_ai6.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-                v_ai6.Text = "  " .. v_ai3 .. " (@" .. v_ai4 .. ")"
-                v_ai6.TextColor3 = Color3.fromRGB(225, 225, 230)
-                v_ai6.Font = Enum.Font.GothamMedium
-                v_ai6.TextSize = 11
-                v_ai6.TextXAlignment = Enum.TextXAlignment.Left
-                v_ai6.Parent = v_ah7
+            if v_query == "" or string.find(v_combo, v_query, 1, true) then
+                local v_pBtn = Instance.new("TextButton")
+                v_pBtn.Size = UDim2.new(1, 0, 0, 32)
+                v_pBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+                v_pBtn.Text = "  " .. v_dName .. " (@" .. v_name .. ")"
+                v_pBtn.TextColor3 = Color3.fromRGB(225, 225, 230)
+                v_pBtn.Font = Enum.Font.GothamMedium
+                v_pBtn.TextSize = 11
+                v_pBtn.TextXAlignment = Enum.TextXAlignment.Left
+                v_pBtn.Parent = v_pListScroll
                 
-                local v_ai7 = Instance.new("UICorner", v_ai6)
-                v_ai7.CornerRadius = UDim.new(0, 6)
-                local v_ai8 = Instance.new("UIStroke", v_ai6)
-                v_ai8.Color = Color3.fromRGB(28, 28, 32)
-                v_ai8.Thickness = 1
+                Instance.new("UICorner", v_pBtn).CornerRadius = UDim.new(0, 6)
+                local v_pStk = Instance.new("UIStroke", v_pBtn)
+                v_pStk.Color = Color3.fromRGB(28, 28, 32)
+                v_pStk.Thickness = 1
                 
-                v_m3(v_ai6.MouseButton1Click:Connect(function()
-                    if not v_j0 then return end
-                    v_ah2 = v_ag2
-                    v_ah3.Text = "  Selected: " .. v_ai3
-                    v_b2:Create(v_ai8, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+                v_pW7(v_pBtn.MouseButton1Click:Connect(function()
+                    if not v_fX9 then return end
+                    v_selPlayer = v_plr
+                    v_selLab.Text = "  Selected: " .. v_dName
+                    v_4pK:Create(v_pStk, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 180, 255)}):Play()
                 end))
             end
         end
     end
 end
 
-v_m3(v_ah5:GetPropertyChangedSignal("Text"):Connect(function()
-    v_ah9()
+v_pW7(v_searchBox:GetPropertyChangedSignal("Text"):Connect(function()
+    v_refreshPlayers()
 end))
 
-v_ac6("Refresh Player List", v_y9, function()
-    v_ah9()
+v_mkBtn("Refresh Player List", v_pTele, function()
+    v_refreshPlayers()
 end)
 
-v_aa5("Teleport & Spectate Actions", v_y9)
+v_mkSec("Teleport & Spectate Actions", v_pTele)
 
-local v_ai9 = false
-local v_aj1 = 0.4
+local v_loopTween = false
+local v_tweenDur = 0.4
 
-v_ac8("Tween Duration", 0.4, v_y9, function(v_ab4)
-    v_aj1 = v_ab4
+v_mkBox("Tween Duration", 0.4, v_pTele, function(v_val)
+    v_tweenDur = v_val
 end)
 
-v_ab3("Enable Loop Tween to Target", false, v_y9, function(v_ac3)
-    v_ai9 = v_ac3
-    if v_ac3 then
-        v_m3(task.spawn(function()
-            while v_ai9 and v_j0 do
-                if v_ah2 and v_ah2.Character then
-                    local v_aj2 = v_ah2.Character:FindFirstChild("HumanoidRootPart")
-                    local _, v_aj3, _ = v_ad4()
-                    if v_aj2 and v_aj3 then
-                        local v_aj4 = TweenInfo.new(v_aj1, Enum.EasingStyle.Linear)
-                        local v_aj5 = v_b2:Create(v_aj3, v_aj4, {CFrame = v_aj2.CFrame + Vector3.new(0, 3, 0)})
-                        v_aj5:Play()
+v_mkTog("Enable Loop Tween to Target", false, v_pTele, function(v_state)
+    v_loopTween = v_state
+    if v_state then
+        v_pW7(task.spawn(function()
+            while v_loopTween and v_fX9 do
+                if v_selPlayer and v_selPlayer.Character then
+                    local v_targetHrp = v_selPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    local _, v_myHrp, _ = v_getChar()
+                    if v_targetHrp and v_myHrp then
+                        local v_tInfo = TweenInfo.new(v_tweenDur, Enum.EasingStyle.Linear)
+                        local v_tw = v_4pK:Create(v_myHrp, v_tInfo, {CFrame = v_targetHrp.CFrame + Vector3.new(0, 3, 0)})
+                        v_tw:Play()
                         
-                        local v_aj6 = false
-                        local v_aj7
-                        v_aj7 = v_aj5.Completed:Connect(function()
-                            v_aj6 = true
-                            if v_aj7 then v_aj7:Disconnect() end
+                        local v_done = false
+                        local v_conn
+                        v_conn = v_tw.Completed:Connect(function()
+                            v_done = true
+                            if v_conn then v_conn:Disconnect() end
                         end)
                         
-                        while not v_aj6 and v_ai9 and v_j0 do
+                        while not v_done and v_loopTween and v_fX9 do
                             task.wait(0.05)
                         end
-                        if not v_ai9 then
-                            v_aj5:Cancel()
-                            if v_aj7 then v_aj7:Disconnect() end
+                        if not v_loopTween then
+                            v_tw:Cancel()
+                            if v_conn then v_conn:Disconnect() end
                         end
                     else
                         task.wait(0.2)
@@ -1058,727 +1045,727 @@ v_ab3("Enable Loop Tween to Target", false, v_y9, function(v_ac3)
     end
 end)
 
-v_ac6("Teleport to Target (Once)", v_y9, function()
-    if v_ah2 and v_ah2.Character then
-        local v_aj2 = v_ah2.Character:FindFirstChild("HumanoidRootPart")
-        local _, v_aj3, _ = v_ad4()
-        if v_aj2 and v_aj3 then
-            v_aj3.CFrame = v_aj2.CFrame + Vector3.new(0, 3, 0)
-            v_u3("Teleported to " .. v_ah2.DisplayName, Color3.fromRGB(0, 255, 200))
+v_mkBtn("Teleport to Target (Once)", v_pTele, function()
+    if v_selPlayer and v_selPlayer.Character then
+        local v_targetHrp = v_selPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local _, v_myHrp, _ = v_getChar()
+        if v_targetHrp and v_myHrp then
+            v_myHrp.CFrame = v_targetHrp.CFrame + Vector3.new(0, 3, 0)
+            v_notify("Teleported to " .. v_selPlayer.DisplayName, Color3.fromRGB(0, 255, 200))
         else
-            v_u3("Target has no character!", Color3.fromRGB(255, 80, 80))
+            v_notify("Target has no character!", Color3.fromRGB(255, 80, 80))
         end
     else
-        v_u3("No player selected or offline!", Color3.fromRGB(255, 80, 80))
+        v_notify("No player selected or offline!", Color3.fromRGB(255, 80, 80))
     end
 end)
 
-local v_aj8 = false
-v_ab3("Enable Spectate", false, v_y9, function(v_ac3)
-    v_aj8 = v_ac3
-    local v_ae6 = v_e5.CurrentCamera
-    if v_ae6 then
-        if v_ac3 then
-            if v_ah2 and v_ah2.Character then
-                local v_ad7 = v_ah2.Character:FindFirstChildOfClass("Humanoid")
-                if v_ad7 then
-                    v_ae6.CameraSubject = v_ad7
-                    v_u3("Spectating " .. v_ah2.DisplayName, Color3.fromRGB(0, 255, 200))
+local v_spectating = false
+v_mkTog("Enable Spectate", false, v_pTele, function(v_state)
+    v_spectating = v_state
+    local v_cam = v_5wN.CurrentCamera
+    if v_cam then
+        if v_state then
+            if v_selPlayer and v_selPlayer.Character then
+                local v_hum = v_selPlayer.Character:FindFirstChildOfClass("Humanoid")
+                if v_hum then
+                    v_cam.CameraSubject = v_hum
+                    v_notify("Spectating " .. v_selPlayer.DisplayName, Color3.fromRGB(0, 255, 200))
                 else
-                    v_ae6.CameraSubject = v_ah2.Character
+                    v_cam.CameraSubject = v_selPlayer.Character
                 end
             else
-                v_u3("No player selected for spectate!", Color3.fromRGB(255, 80, 80))
+                v_notify("No player selected for spectate!", Color3.fromRGB(255, 80, 80))
             end
         else
-            local _, _, v_ad7 = v_ad4()
-            if v_ad7 then
-                v_ae6.CameraSubject = v_ad7
+            local _, _, v_hum = v_getChar()
+            if v_hum then
+                v_cam.CameraSubject = v_hum
             end
-            v_u3("Spectate Disabled", Color3.fromRGB(0, 180, 255))
+            v_notify("Spectate Disabled", Color3.fromRGB(0, 180, 255))
         end
     end
 end)
 
-v_ah9()
+v_refreshPlayers()
 
-v_aa5("Boombox Control", v_z1)
+v_mkSec("Boombox Control", v_pBoom)
 
-local v_aj9 = false
-local v_ak1 = {} 
+local v_boomEnabled = false
+local v_loggedIDs = {} 
 
-local v_ak2 = Instance.new("Sound")
-v_ak2.Name = "VulnSec_AudioPreview"
-v_ak2.Parent = game:GetService("SoundService")
-local v_ak3 = nil
+local v_previewSound = Instance.new("Sound")
+v_previewSound.Name = "VulnSec_AudioPreview"
+v_previewSound.Parent = game:GetService("SoundService")
+local v_playingID = nil
 
-v_ab3("Enable Boombox Logger", false, v_z1, function(v_ac3)
-    v_aj9 = v_ac3
-    if v_ac3 then
-        v_u3("Boombox Logger Active", Color3.fromRGB(0, 255, 200))
+v_mkTog("Enable Boombox Logger", false, v_pBoom, function(v_state)
+    v_boomEnabled = v_state
+    if v_state then
+        v_notify("Boombox Logger Active", Color3.fromRGB(0, 255, 200))
     else
-        v_u3("Boombox Logger Paused", Color3.fromRGB(255, 180, 50))
-        if v_ak2.IsPlaying then
-            v_ak2:Stop()
+        v_notify("Boombox Logger Paused", Color3.fromRGB(255, 180, 50))
+        if v_previewSound.IsPlaying then
+            v_previewSound:Stop()
         end
     end
 end)
 
-v_aa5("Search Boombox Logs", v_z1)
+v_mkSec("Search Boombox Logs", v_pBoom)
 
-local v_ak4 = Instance.new("TextBox")
-v_ak4.Size = UDim2.new(1, -8, 0, 32)
-v_ak4.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-v_ak4.PlaceholderText = "Search player or song..."
-v_ak4.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
-v_ak4.Text = ""
-v_ak4.TextColor3 = Color3.fromRGB(255, 255, 255)
-v_ak4.Font = Enum.Font.GothamMedium
-v_ak4.TextSize = 11
-v_ak4.TextXAlignment = Enum.TextXAlignment.Left
-v_ak4.Parent = v_z1
-Instance.new("UICorner", v_ak4).CornerRadius = UDim.new(0, 6)
-local v_ak5 = Instance.new("UIStroke", v_ak4)
-v_ak5.Color = Color3.fromRGB(28, 28, 32)
-v_ak5.Thickness = 1
+local v_logSearch = Instance.new("TextBox")
+v_logSearch.Size = UDim2.new(1, -8, 0, 32)
+v_logSearch.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+v_logSearch.PlaceholderText = "Search player or song..."
+v_logSearch.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+v_logSearch.Text = ""
+v_logSearch.TextColor3 = Color3.fromRGB(255, 255, 255)
+v_logSearch.Font = Enum.Font.GothamMedium
+v_logSearch.TextSize = 11
+v_logSearch.TextXAlignment = Enum.TextXAlignment.Left
+v_logSearch.Parent = v_pBoom
+Instance.new("UICorner", v_logSearch).CornerRadius = UDim.new(0, 6)
+local v_logStk = Instance.new("UIStroke", v_logSearch)
+v_logStk.Color = Color3.fromRGB(28, 28, 32)
+v_logStk.Thickness = 1
 
-v_m3(v_ak4.Focused:Connect(function()
-    v_b2:Create(v_ak5, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+v_pW7(v_logSearch.Focused:Connect(function()
+    v_4pK:Create(v_logStk, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
 end))
 
-v_m3(v_ak4.FocusLost:Connect(function()
-    v_b2:Create(v_ak5, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+v_pW7(v_logSearch.FocusLost:Connect(function()
+    v_4pK:Create(v_logStk, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
 end))
 
-v_aa5("Logged IDs & Songs", v_z1)
+v_mkSec("Logged IDs & Songs", v_pBoom)
 
-local v_ak6 = Instance.new("ScrollingFrame")
-v_ak6.Size = UDim2.new(1, -8, 0, 80)
-v_ak6.BackgroundTransparency = 1
-v_ak6.CanvasSize = UDim2.new(0, 0, 0, 0)
-v_ak6.ScrollBarThickness = 3
-v_ak6.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-v_ak6.Parent = v_z1
+local v_logScroll = Instance.new("ScrollingFrame")
+v_logScroll.Size = UDim2.new(1, -8, 0, 80)
+v_logScroll.BackgroundTransparency = 1
+v_logScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+v_logScroll.ScrollBarThickness = 3
+v_logScroll.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+v_logScroll.Parent = v_pBoom
 
-local v_ak7 = Instance.new("UIListLayout")
-v_ak7.Padding = UDim.new(0, 4)
-v_ak7.SortOrder = Enum.SortOrder.LayoutOrder
-v_ak7.Parent = v_ak6
+local v_logLay = Instance.new("UIListLayout")
+v_logLay.Padding = UDim.new(0, 4)
+v_logLay.SortOrder = Enum.SortOrder.LayoutOrder
+v_logLay.Parent = v_logScroll
 
-v_m3(v_ak7:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    v_ak6.CanvasSize = UDim2.new(0, 0, 0, v_ak7.AbsoluteContentSize.Y + 5)
+v_pW7(v_logLay:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    v_logScroll.CanvasSize = UDim2.new(0, 0, 0, v_logLay.AbsoluteContentSize.Y + 5)
 end))
 
-local function v_ak8()
-    local v_ai2 = v_ak4.Text:lower()
-    for _, v_ak9 in ipairs(v_ak1) do
-        if v_ak9.Frame and v_ak9.Frame.Parent then
-            local v_al1 = (v_ak9.Player .. " " .. v_ak9.Title .. " " .. v_ak9.ID):lower()
-            if v_ai2 == "" or string.find(v_al1, v_ai2, 1, true) then
-                v_ak9.Frame.Visible = true
+local function v_filterLogs()
+    local v_query = v_logSearch.Text:lower()
+    for _, v_entry in ipairs(v_loggedIDs) do
+        if v_entry.Frame and v_entry.Frame.Parent then
+            local v_full = (v_entry.Player .. " " .. v_entry.Title .. " " .. v_entry.ID):lower()
+            if v_query == "" or string.find(v_full, v_query, 1, true) then
+                v_entry.Frame.Visible = true
             else
-                v_ak9.Frame.Visible = false
+                v_entry.Frame.Visible = false
             end
         end
     end
 end
 
-v_m3(v_ak4:GetPropertyChangedSignal("Text"):Connect(function()
-    v_ak8()
+v_pW7(v_logSearch:GetPropertyChangedSignal("Text"):Connect(function()
+    v_filterLogs()
 end))
 
-local function v_al2(v_al3, v_al4)
-    if not v_j0 then return end
-    local v_al5 = v_al4:match("%d+")
-    if not v_al5 or v_al5 == "" then return end
+local function v_addLogEntry(v_pName, v_rawId)
+    if not v_fX9 then return end
+    local v_cleanId = v_rawId:match("%d+")
+    if not v_cleanId or v_cleanId == "" then return end
     
-    for _, v_al6 in ipairs(v_ak1) do
-        if v_al6.ID == v_al5 then return end
+    for _, v_entry in ipairs(v_loggedIDs) do
+        if v_entry.ID == v_cleanId then return end
     end
     
-    local v_al7 = Instance.new("Frame")
-    v_al7.Size = UDim2.new(1, 0, 0, 32)
-    v_al7.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-    v_al7.Parent = v_ak6
+    local v_frm = Instance.new("Frame")
+    v_frm.Size = UDim2.new(1, 0, 0, 32)
+    v_frm.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+    v_frm.Parent = v_logScroll
     
-    Instance.new("UICorner", v_al7).CornerRadius = UDim.new(0, 6)
-    local v_ab7 = Instance.new("UIStroke", v_al7)
-    v_ab7.Color = Color3.fromRGB(28, 28, 32)
-    v_ab7.Thickness = 1
+    Instance.new("UICorner", v_frm).CornerRadius = UDim.new(0, 6)
+    local v_stk = Instance.new("UIStroke", v_frm)
+    v_stk.Color = Color3.fromRGB(28, 28, 32)
+    v_stk.Thickness = 1
     
-    local v_al8 = Instance.new("TextButton")
-    v_al8.Size = UDim2.new(1, -64, 1, 0)
-    v_al8.BackgroundTransparency = 1
-    v_al8.Text = "  " .. v_al3 .. " -> Loading Song..."
-    v_al8.TextColor3 = Color3.fromRGB(0, 255, 200)
-    v_al8.Font = Enum.Font.GothamMedium
-    v_al8.TextSize = 11
-    v_al8.TextXAlignment = Enum.TextXAlignment.Left
-    v_al8.Parent = v_al7
+    local v_lbl = Instance.new("TextButton")
+    v_lbl.Size = UDim2.new(1, -64, 1, 0)
+    v_lbl.BackgroundTransparency = 1
+    v_lbl.Text = "  " .. v_pName .. " -> Loading Song..."
+    v_lbl.TextColor3 = Color3.fromRGB(0, 255, 200)
+    v_lbl.Font = Enum.Font.GothamMedium
+    v_lbl.TextSize = 11
+    v_lbl.TextXAlignment = Enum.TextXAlignment.Left
+    v_lbl.Parent = v_frm
     
-    local v_al9 = Instance.new("TextButton")
-    v_al9.Size = UDim2.new(0, 24, 0, 24)
-    v_al9.Position = UDim2.new(1, -56, 0.5, -12)
-    v_al9.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-    v_al9.Text = "📋"
-    v_al9.TextColor3 = Color3.fromRGB(0, 255, 200)
-    v_al9.Font = Enum.Font.GothamBold
-    v_al9.TextSize = 10
-    v_al9.Parent = v_al7
-    Instance.new("UICorner", v_al9).CornerRadius = UDim.new(0, 4)
-    local v_am1 = Instance.new("UIStroke", v_al9)
-    v_am1.Color = Color3.fromRGB(45, 45, 50)
-    v_am1.Thickness = 1
+    local v_copyBtn = Instance.new("TextButton")
+    v_copyBtn.Size = UDim2.new(0, 24, 0, 24)
+    v_copyBtn.Position = UDim2.new(1, -56, 0.5, -12)
+    v_copyBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+    v_copyBtn.Text = "📋"
+    v_copyBtn.TextColor3 = Color3.fromRGB(0, 255, 200)
+    v_copyBtn.Font = Enum.Font.GothamBold
+    v_copyBtn.TextSize = 10
+    v_copyBtn.Parent = v_frm
+    Instance.new("UICorner", v_copyBtn).CornerRadius = UDim.new(0, 4)
+    local v_cStk = Instance.new("UIStroke", v_copyBtn)
+    v_cStk.Color = Color3.fromRGB(45, 45, 50)
+    v_cStk.Thickness = 1
 
-    local v_am2 = Instance.new("TextButton")
-    v_am2.Size = UDim2.new(0, 24, 0, 24)
-    v_am2.Position = UDim2.new(1, -28, 0.5, -12)
-    v_am2.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-    v_am2.Text = "▶"
-    v_am2.TextColor3 = Color3.fromRGB(0, 255, 200)
-    v_am2.Font = Enum.Font.GothamBold
-    v_am2.TextSize = 10
-    v_am2.Parent = v_al7
-    Instance.new("UICorner", v_am2).CornerRadius = UDim.new(0, 4)
-    local v_am3 = Instance.new("UIStroke", v_am2)
-    v_am3.Color = Color3.fromRGB(45, 45, 50)
-    v_am3.Thickness = 1
+    local v_playBtn = Instance.new("TextButton")
+    v_playBtn.Size = UDim2.new(0, 24, 0, 24)
+    v_playBtn.Position = UDim2.new(1, -28, 0.5, -12)
+    v_playBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+    v_playBtn.Text = "▶"
+    v_playBtn.TextColor3 = Color3.fromRGB(0, 255, 200)
+    v_playBtn.Font = Enum.Font.GothamBold
+    v_playBtn.TextSize = 10
+    v_playBtn.Parent = v_frm
+    Instance.new("UICorner", v_playBtn).CornerRadius = UDim.new(0, 4)
+    local v_pStk = Instance.new("UIStroke", v_playBtn)
+    v_pStk.Color = Color3.fromRGB(45, 45, 50)
+    v_pStk.Thickness = 1
 
-    local v_am4 = {Player = v_al3, Title = "Loading Song...", ID = v_al5, Frame = v_al7}
-    table.insert(v_ak1, v_am4)
-    v_ak8()
+    local v_data = {Player = v_pName, Title = "Loading Song...", ID = v_cleanId, Frame = v_frm}
+    table.insert(v_loggedIDs, v_data)
+    v_filterLogs()
     
-    v_n4(task.spawn(function()
-        local v_w4, v_am5 = pcall(function()
-            return v_g7:GetProductInfo(tonumber(v_al5))
+    v_kL8(task.spawn(function()
+        local v_ok, v_info = pcall(function()
+            return v_3bX:GetProductInfo(tonumber(v_cleanId))
         end)
-        if v_w4 and v_am5 and v_am5.Name and v_j0 then
-            v_am4.Title = v_am5.Name
-            if v_al8 and v_al8.Parent then
-                v_al8.Text = "  " .. v_al3 .. " -> " .. v_am5.Name .. " (" .. v_al5 .. ")"
+        if v_ok and v_info and v_info.Name and v_fX9 then
+            v_data.Title = v_info.Name
+            if v_lbl and v_lbl.Parent then
+                v_lbl.Text = "  " .. v_pName .. " -> " .. v_info.Name .. " (" .. v_cleanId .. ")"
             end
-        elseif v_j0 then
-            v_am4.Title = "Unknown Song"
-            if v_al8 and v_al8.Parent then
-                v_al8.Text = "  " .. v_al3 .. " -> ID: " .. v_al5
+        elseif v_fX9 then
+            v_data.Title = "Unknown Song"
+            if v_lbl and v_lbl.Parent then
+                v_lbl.Text = "  " .. v_pName .. " -> ID: " .. v_cleanId
             end
         end
-        v_ak8()
+        v_filterLogs()
     end))
     
-    v_m3(v_al9.MouseButton1Click:Connect(function()
+    v_pW7(v_copyBtn.MouseButton1Click:Connect(function()
         pcall(function()
             if setclipboard then
-                setclipboard(v_al5)
-                v_u3("Copied ID: " .. v_al5, Color3.fromRGB(0, 255, 200))
+                setclipboard(v_cleanId)
+                v_notify("Copied ID: " .. v_cleanId, Color3.fromRGB(0, 255, 200))
             end
         end)
     end))
     
-    v_m3(v_am2.MouseButton1Click:Connect(function()
-        if v_ak2.IsPlaying and v_ak3 == v_al5 then
-            v_ak2:Stop()
-            v_ak3 = nil
-            v_am2.Text = "▶"
+    v_pW7(v_playBtn.MouseButton1Click:Connect(function()
+        if v_previewSound.IsPlaying and v_playingID == v_cleanId then
+            v_previewSound:Stop()
+            v_playingID = nil
+            v_playBtn.Text = "▶"
         else
-            v_ak2.SoundId = "rbxassetid://" .. v_al5
-            v_ak2:Play()
-            v_ak3 = v_al5
-            v_am2.Text = "⏹"
+            v_previewSound.SoundId = "rbxassetid://" .. v_cleanId
+            v_previewSound:Play()
+            v_playingID = v_cleanId
+            v_playBtn.Text = "⏹"
         end
     end))
 end
 
-local function v_am6(v_am7)
-    if v_am7:IsA("Sound") then
-        local function processSound()
-            if not v_j0 or not v_aj9 then return end
-            if v_am7.SoundId ~= "" and v_am7.Playing then
-                local v_am9 = v_am7.Parent
-                local v_an1 = "Game / Ambient"
+local function v_hookSound(v_snd)
+    if v_snd:IsA("Sound") then
+        local function evaluate()
+            if not v_fX9 or not v_boomEnabled then return end
+            if v_snd.SoundId ~= "" and v_snd.Playing then
+                local v_parent = v_snd.Parent
+                local v_owner = "Game / Ambient"
                 
-                while v_am9 and v_am9 ~= game do
-                    if v_am9:IsA("Model") and v_a1:GetPlayerFromCharacter(v_am9) then
-                        v_an1 = v_a1:GetPlayerFromCharacter(v_am9).Name
+                while v_parent and v_parent ~= game do
+                    if v_parent:IsA("Model") and v_9xQ:GetPlayerFromCharacter(v_parent) then
+                        v_owner = v_9xQ:GetPlayerFromCharacter(v_parent).Name
                         break
-                    elseif v_am9:IsA("Player") then
-                        v_an1 = v_am9.Name
+                    elseif v_parent:IsA("Player") then
+                        v_owner = v_parent.Name
                         break
-                    elseif v_am9 == SoundService then
-                        v_an1 = "SoundService (BGM)"
+                    elseif v_parent == v_6jK then
+                        v_owner = "SoundService (BGM)"
                         break
                     end
-                    v_am9 = v_am9.Parent
+                    v_parent = v_parent.Parent
                 end
                 
-                if v_an1 == "Game / Ambient" and v_am7:IsDescendantOf(v_i9.Character or workspace) then
-                    v_an1 = v_i9.Name
+                if v_owner == "Game / Ambient" and v_snd:IsDescendantOf(v_0vB.Character or workspace) then
+                    v_owner = v_0vB.Name
                 end
                 
-                v_al2(v_an1, v_am7.SoundId)
+                v_addLogEntry(v_owner, v_snd.SoundId)
             end
         end
 
-        v_n4(v_am7.Changed:Connect(function(v_am8)
-            if v_am8 == "SoundId" or v_am8 == "Playing" then
-                if v_am7.Playing then
-                    processSound()
+        v_kL8(v_snd.Changed:Connect(function(v_prop)
+            if v_prop == "SoundId" or v_prop == "Playing" then
+                if v_snd.Playing then
+                    evaluate()
                 end
             end
         end))
         
-        if v_am7.Playing then
-            processSound()
+        if v_snd.Playing then
+            evaluate()
         end
     end
 end
 
-for _, v_an2 in pairs(v_e5:GetDescendants()) do
-    v_am6(v_an2)
+for _, v_obj in pairs(v_5wN:GetDescendants()) do
+    v_hookSound(v_obj)
 end
-v_n4(v_e5.DescendantAdded:Connect(v_am6))
+v_kL8(v_5wN.DescendantAdded:Connect(v_hookSound))
 
-for _, v_an2 in pairs(SoundService:GetDescendants()) do
-    v_am6(v_an2)
+for _, v_obj in pairs(v_6jK:GetDescendants()) do
+    v_hookSound(v_obj)
 end
-v_n4(SoundService.DescendantAdded:Connect(v_am6))
+v_kL8(v_6jK.DescendantAdded:Connect(v_hookSound))
 
-v_ac6("Copy All Logged IDs", v_z1, function()
-    local v_an3 = {}
-    for _, v_ak9 in ipairs(v_ak1) do
-        table.insert(v_an3, v_ak9.Title .. " - " .. v_ak9.ID)
+v_mkBtn("Copy All Logged IDs", v_pBoom, function()
+    local v_arr = {}
+    for _, v_item in ipairs(v_loggedIDs) do
+        table.insert(v_arr, v_item.Title .. " - " .. v_item.ID)
     end
-    local v_al1 = table.concat(v_an3, "\n")
+    local v_txt = table.concat(v_arr, "\n")
     pcall(function()
         if setclipboard then
-            setclipboard(v_al1)
-            v_u3("Songs & IDs Copied!", Color3.fromRGB(0, 255, 200))
+            setclipboard(v_txt)
+            v_notify("Songs & IDs Copied!", Color3.fromRGB(0, 255, 200))
         end
     end)
 end)
 
-v_ac6("Clear Log List", v_z1, function()
-    if v_ak2.IsPlaying then
-        v_ak2:Stop()
+v_mkBtn("Clear Log List", v_pBoom, function()
+    if v_previewSound.IsPlaying then
+        v_previewSound:Stop()
     end
-    v_ak1 = {}
-    for _, v_ai1 in pairs(v_ak6:GetChildren()) do
-        if v_ai1:IsA("Frame") then
-            v_ai1:Destroy()
+    v_loggedIDs = {}
+    for _, v_child in pairs(v_logScroll:GetChildren()) do
+        if v_child:IsA("Frame") then
+            v_child:Destroy()
         end
     end
-    v_u3("Logs Cleared!", Color3.fromRGB(255, 180, 50))
+    v_notify("Logs Cleared!", Color3.fromRGB(255, 180, 50))
 end)
 
-v_aa5("Boombox IDs", v_z2)
+v_mkSec("Boombox IDs", v_pBIDs)
 
-local v_an4 = Instance.new("TextBox")
-v_an4.Size = UDim2.new(1, -8, 0, 32)
-v_an4.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-v_an4.PlaceholderText = "Search IDs or songs..."
-v_an4.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
-v_an4.Text = ""
-v_an4.TextColor3 = Color3.fromRGB(255, 255, 255)
-v_an4.Font = Enum.Font.GothamMedium
-v_an4.TextSize = 11
-v_an4.TextXAlignment = Enum.TextXAlignment.Left
-v_an4.Parent = v_z2
-Instance.new("UICorner", v_an4).CornerRadius = UDim.new(0, 6)
-local v_an5 = Instance.new("UIStroke", v_an4)
-v_an5.Color = Color3.fromRGB(28, 28, 32)
-v_an5.Thickness = 1
+local v_idSearch = Instance.new("TextBox")
+v_idSearch.Size = UDim2.new(1, -8, 0, 32)
+v_idSearch.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+v_idSearch.PlaceholderText = "Search IDs or songs..."
+v_idSearch.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+v_idSearch.Text = ""
+v_idSearch.TextColor3 = Color3.fromRGB(255, 255, 255)
+v_idSearch.Font = Enum.Font.GothamMedium
+v_idSearch.TextSize = 11
+v_idSearch.TextXAlignment = Enum.TextXAlignment.Left
+v_idSearch.Parent = v_pBIDs
+Instance.new("UICorner", v_idSearch).CornerRadius = UDim.new(0, 6)
+local v_idStk = Instance.new("UIStroke", v_idSearch)
+v_idStk.Color = Color3.fromRGB(28, 28, 32)
+v_idStk.Thickness = 1
 
-v_m3(v_an4.Focused:Connect(function()
-    v_b2:Create(v_an5, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+v_pW7(v_idSearch.Focused:Connect(function()
+    v_4pK:Create(v_idStk, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
 end))
 
-v_m3(v_an4.FocusLost:Connect(function()
-    v_b2:Create(v_an5, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+v_pW7(v_idSearch.FocusLost:Connect(function()
+    v_4pK:Create(v_idStk, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
 end))
 
-v_aa5("ID List", v_z2)
+v_mkSec("ID List", v_pBIDs)
 
-local v_an6 = Instance.new("ScrollingFrame")
-v_an6.Size = UDim2.new(1, -8, 0, 140)
-v_an6.BackgroundTransparency = 1
-v_an6.CanvasSize = UDim2.new(0, 0, 0, 0)
-v_an6.ScrollBarThickness = 3
-v_an6.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-v_an6.Parent = v_z2
+local v_idScroll = Instance.new("ScrollingFrame")
+v_idScroll.Size = UDim2.new(1, -8, 0, 140)
+v_idScroll.BackgroundTransparency = 1
+v_idScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+v_idScroll.ScrollBarThickness = 3
+v_idScroll.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+v_idScroll.Parent = v_pBIDs
 
-local v_an7 = Instance.new("UIListLayout")
-v_an7.Padding = UDim.new(0, 4)
-v_an7.SortOrder = Enum.SortOrder.LayoutOrder
-v_an7.Parent = v_an6
+local v_idLay = Instance.new("UIListLayout")
+v_idLay.Padding = UDim.new(0, 4)
+v_idLay.SortOrder = Enum.SortOrder.LayoutOrder
+v_idLay.Parent = v_idScroll
 
-v_m3(v_an7:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    v_an6.CanvasSize = UDim2.new(0, 0, 0, v_an7.AbsoluteContentSize.Y + 5)
+v_pW7(v_idLay:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    v_idScroll.CanvasSize = UDim2.new(0, 0, 0, v_idLay.AbsoluteContentSize.Y + 5)
 end))
 
-local v_an8 = {}
+local v_fetchedIDs = {}
 
-local function v_an9()
-    local v_ai2 = v_an4.Text:lower()
-    for _, v_ak9 in ipairs(v_an8) do
-        if v_ak9.Frame and v_ak9.Frame.Parent then
-            local v_al1 = (v_ak9.Title .. " " .. v_ak9.ID):lower()
-            if v_ai2 == "" or string.find(v_al1, v_ai2, 1, true) then
-                v_ak9.Frame.Visible = true
+local function v_filterIDs()
+    local v_query = v_idSearch.Text:lower()
+    for _, v_entry in ipairs(v_fetchedIDs) do
+        if v_entry.Frame and v_entry.Frame.Parent then
+            local v_full = (v_entry.Title .. " " .. v_entry.ID):lower()
+            if v_query == "" or string.find(v_full, v_query, 1, true) then
+                v_entry.Frame.Visible = true
             else
-                v_ak9.Frame.Visible = false
+                v_entry.Frame.Visible = false
             end
         end
     end
 end
 
-v_m3(v_an4:GetPropertyChangedSignal("Text"):Connect(function()
-    v_an9()
+v_pW7(v_idSearch:GetPropertyChangedSignal("Text"):Connect(function()
+    v_filterIDs()
 end))
 
-local function v_ao1()
-    for _, v_ai1 in pairs(v_an6:GetChildren()) do
-        if v_ai1:IsA("Frame") then
-            v_ai1:Destroy()
+local function v_loadIDs()
+    for _, v_child in pairs(v_idScroll:GetChildren()) do
+        if v_child:IsA("Frame") then
+            v_child:Destroy()
         end
     end
-    v_an8 = {}
+    v_fetchedIDs = {}
     
-    v_n4(task.spawn(function()
-        local v_w4, v_ao2 = pcall(function()
+    v_kL8(task.spawn(function()
+        local v_ok, v_source = pcall(function()
             return game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/ID")
         end)
         
-        if v_w4 and v_ao2 and v_j0 then
-            for v_ao3 in v_ao2:gmatch("[^\r\n]+") do
-                if not v_j0 then break end
-                if v_ao3 ~= "" then
-                    local v_al5 = v_ao3:match("%d+")
-                    if v_al5 then
-                        local v_al7 = Instance.new("Frame")
-                        v_al7.Size = UDim2.new(1, 0, 0, 32)
-                        v_al7.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-                        v_al7.Parent = v_an6
+        if v_ok and v_source and v_fX9 then
+            for v_line in v_source:gmatch("[^\r\n]+") do
+                if not v_fX9 then break end
+                if v_line ~= "" then
+                    local v_cleanId = v_line:match("%d+")
+                    if v_cleanId then
+                        local v_frm = Instance.new("Frame")
+                        v_frm.Size = UDim2.new(1, 0, 0, 32)
+                        v_frm.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+                        v_frm.Parent = v_idScroll
                         
-                        Instance.new("UICorner", v_al7).CornerRadius = UDim.new(0, 6)
-                        local v_ab7 = Instance.new("UIStroke", v_al7)
-                        v_ab7.Color = Color3.fromRGB(28, 28, 32)
-                        v_ab7.Thickness = 1
+                        Instance.new("UICorner", v_frm).CornerRadius = UDim.new(0, 6)
+                        local v_stk = Instance.new("UIStroke", v_frm)
+                        v_stk.Color = Color3.fromRGB(28, 28, 32)
+                        v_stk.Thickness = 1
                         
-                        local v_al8 = Instance.new("TextButton")
-                        v_al8.Size = UDim2.new(1, -64, 1, 0)
-                        v_al8.BackgroundTransparency = 1
-                        v_al8.Text = "  Loading Song... (" .. v_al5 .. ")"
-                        v_al8.TextColor3 = Color3.fromRGB(0, 255, 200)
-                        v_al8.Font = Enum.Font.GothamMedium
-                        v_al8.TextSize = 11
-                        v_al8.TextXAlignment = Enum.TextXAlignment.Left
-                        v_al8.Parent = v_al7
+                        local v_lbl = Instance.new("TextButton")
+                        v_lbl.Size = UDim2.new(1, -64, 1, 0)
+                        v_lbl.BackgroundTransparency = 1
+                        v_lbl.Text = "  Loading Song... (" .. v_cleanId .. ")"
+                        v_lbl.TextColor3 = Color3.fromRGB(0, 255, 200)
+                        v_lbl.Font = Enum.Font.GothamMedium
+                        v_lbl.TextSize = 11
+                        v_lbl.TextXAlignment = Enum.TextXAlignment.Left
+                        v_lbl.Parent = v_frm
                         
-                        local v_al9 = Instance.new("TextButton")
-                        v_al9.Size = UDim2.new(0, 24, 0, 24)
-                        v_al9.Position = UDim2.new(1, -56, 0.5, -12)
-                        v_al9.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-                        v_al9.Text = "📋"
-                        v_al9.TextColor3 = Color3.fromRGB(0, 255, 200)
-                        v_al9.Font = Enum.Font.GothamBold
-                        v_al9.TextSize = 10
-                        v_al9.Parent = v_al7
-                        Instance.new("UICorner", v_al9).CornerRadius = UDim.new(0, 4)
-                        local v_am1 = Instance.new("UIStroke", v_al9)
-                        v_am1.Color = Color3.fromRGB(45, 45, 50)
-                        v_am1.Thickness = 1
+                        local v_copyBtn = Instance.new("TextButton")
+                        v_copyBtn.Size = UDim2.new(0, 24, 0, 24)
+                        v_copyBtn.Position = UDim2.new(1, -56, 0.5, -12)
+                        v_copyBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+                        v_copyBtn.Text = "📋"
+                        v_copyBtn.TextColor3 = Color3.fromRGB(0, 255, 200)
+                        v_copyBtn.Font = Enum.Font.GothamBold
+                        v_copyBtn.TextSize = 10
+                        v_copyBtn.Parent = v_frm
+                        Instance.new("UICorner", v_copyBtn).CornerRadius = UDim.new(0, 4)
+                        local v_cStk = Instance.new("UIStroke", v_copyBtn)
+                        v_cStk.Color = Color3.fromRGB(45, 45, 50)
+                        v_cStk.Thickness = 1
 
-                        local v_am2 = Instance.new("TextButton")
-                        v_am2.Size = UDim2.new(0, 24, 0, 24)
-                        v_am2.Position = UDim2.new(1, -28, 0.5, -12)
-                        v_am2.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-                        v_am2.Text = "▶"
-                        v_am2.TextColor3 = Color3.fromRGB(0, 255, 200)
-                        v_am2.Font = Enum.Font.GothamBold
-                        v_am2.TextSize = 10
-                        v_am2.Parent = v_al7
-                        Instance.new("UICorner", v_am2).CornerRadius = UDim.new(0, 4)
-                        local v_am3 = Instance.new("UIStroke", v_am2)
-                        v_am3.Color = Color3.fromRGB(45, 45, 50)
-                        v_am3.Thickness = 1
+                        local v_playBtn = Instance.new("TextButton")
+                        v_playBtn.Size = UDim2.new(0, 24, 0, 24)
+                        v_playBtn.Position = UDim2.new(1, -28, 0.5, -12)
+                        v_playBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+                        v_playBtn.Text = "▶"
+                        v_playBtn.TextColor3 = Color3.fromRGB(0, 255, 200)
+                        v_playBtn.Font = Enum.Font.GothamBold
+                        v_playBtn.TextSize = 10
+                        v_playBtn.Parent = v_frm
+                        Instance.new("UICorner", v_playBtn).CornerRadius = UDim.new(0, 4)
+                        local v_pStk = Instance.new("UIStroke", v_playBtn)
+                        v_pStk.Color = Color3.fromRGB(45, 45, 50)
+                        v_pStk.Thickness = 1
 
-                        local v_am4 = {Title = "Loading Song...", ID = v_al5, Frame = v_al7}
-                        table.insert(v_an8, v_am4)
-                        v_an9()
+                        local v_data = {Title = "Loading Song...", ID = v_cleanId, Frame = v_frm}
+                        table.insert(v_fetchedIDs, v_data)
+                        v_filterIDs()
                         
-                        v_n4(task.spawn(function()
-                            local v_ao4, v_am5 = pcall(function()
-                                return v_g7:GetProductInfo(tonumber(v_al5))
+                        v_kL8(task.spawn(function()
+                            local v_okInfo, v_info = pcall(function()
+                                return v_3bX:GetProductInfo(tonumber(v_cleanId))
                             end)
-                            if v_ao4 and v_am5 and v_am5.Name and v_j0 then
-                                v_am4.Title = v_am5.Name
-                                if v_al8 and v_al8.Parent then
-                                    v_al8.Text = "  " .. v_am5.Name .. " (" .. v_al5 .. ")"
+                            if v_okInfo and v_info and v_info.Name and v_fX9 then
+                                v_data.Title = v_info.Name
+                                if v_lbl and v_lbl.Parent then
+                                    v_lbl.Text = "  " .. v_info.Name .. " (" .. v_cleanId .. ")"
                                 end
-                            elseif v_j0 then
-                                v_am4.Title = "Unknown Song"
-                                if v_al8 and v_al8.Parent then
-                                    v_al8.Text = "  ID: " .. v_al5
+                            elseif v_fX9 then
+                                v_data.Title = "Unknown Song"
+                                if v_lbl and v_lbl.Parent then
+                                    v_lbl.Text = "  ID: " .. v_cleanId
                                 end
                             end
-                            v_an9()
+                            v_filterIDs()
                         end))
                         
-                        v_m3(v_al9.MouseButton1Click:Connect(function()
+                        v_pW7(v_copyBtn.MouseButton1Click:Connect(function()
                             pcall(function()
                                 if setclipboard then
-                                    setclipboard(v_al5)
-                                    v_u3("Copied ID: " .. v_al5, Color3.fromRGB(0, 255, 200))
+                                    setclipboard(v_cleanId)
+                                    v_notify("Copied ID: " .. v_cleanId, Color3.fromRGB(0, 255, 200))
                                 end
                             end)
                         end))
                         
-                        v_m3(v_am2.MouseButton1Click:Connect(function()
-                            if v_ak2.IsPlaying and v_ak3 == v_al5 then
-                                v_ak2:Stop()
-                                v_ak3 = nil
-                                v_am2.Text = "▶"
+                        v_pW7(v_playBtn.MouseButton1Click:Connect(function()
+                            if v_previewSound.IsPlaying and v_playingID == v_cleanId then
+                                v_previewSound:Stop()
+                                v_playingID = nil
+                                v_playBtn.Text = "▶"
                             else
-                                v_ak2.SoundId = "rbxassetid://" .. v_al5
-                                v_ak2:Play()
-                                v_ak3 = v_al5
-                                v_am2.Text = "⏹"
+                                v_previewSound.SoundId = "rbxassetid://" .. v_cleanId
+                                v_previewSound:Play()
+                                v_playingID = v_cleanId
+                                v_playBtn.Text = "⏹"
                             end
                         end))
                     end
                 end
             end
-            v_an9()
+            v_filterIDs()
         end
     end))
 end
 
-v_ac6("Refresh IDs", v_z2, function()
-    v_ao1()
-    v_u3("IDs Refreshed!", Color3.fromRGB(0, 255, 200))
+v_mkBtn("Refresh IDs", v_pBIDs, function()
+    v_loadIDs()
+    v_notify("IDs Refreshed!", Color3.fromRGB(0, 255, 200))
 end)
 
-v_ao1()
+v_loadIDs()
 
-v_aa5("Changelog & Updates", v_z3)
+v_mkSec("Changelog & Updates", v_pLogs)
 
-local v_ao5 = Instance.new("ScrollingFrame")
-v_ao5.Size = UDim2.new(1, -8, 0, 180)
-v_ao5.BackgroundTransparency = 1
-v_ao5.CanvasSize = UDim2.new(0, 0, 0, 0)
-v_ao5.ScrollBarThickness = 3
-v_ao5.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-v_ao5.Parent = v_z3
+local v_logScrollPage = Instance.new("ScrollingFrame")
+v_logScrollPage.Size = UDim2.new(1, -8, 0, 180)
+v_logScrollPage.BackgroundTransparency = 1
+v_logScrollPage.CanvasSize = UDim2.new(0, 0, 0, 0)
+v_logScrollPage.ScrollBarThickness = 3
+v_logScrollPage.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+v_logScrollPage.Parent = v_pLogs
 
-local v_ao6 = Instance.new("UIListLayout")
-v_ao6.Padding = UDim.new(0, 4)
-v_ao6.SortOrder = Enum.SortOrder.LayoutOrder
-v_ao6.Parent = v_ao5
+local v_logPageLay = Instance.new("UIListLayout")
+v_logPageLay.Padding = UDim.new(0, 4)
+v_logPageLay.SortOrder = Enum.SortOrder.LayoutOrder
+v_logPageLay.Parent = v_logScrollPage
 
-v_m3(v_ao6:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    v_ao5.CanvasSize = UDim2.new(0, 0, 0, v_ao6.AbsoluteContentSize.Y + 5)
+v_pW7(v_logPageLay:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    v_logScrollPage.CanvasSize = UDim2.new(0, 0, 0, v_logPageLay.AbsoluteContentSize.Y + 5)
 end))
 
-local function v_ao7()
-    for _, v_ai1 in pairs(v_ao5:GetChildren()) do
-        if v_ai1:IsA("TextLabel") or v_ai1:IsA("Frame") then
-            v_ai1:Destroy()
+local function v_loadLogs()
+    for _, v_child in pairs(v_logScrollPage:GetChildren()) do
+        if v_child:IsA("TextLabel") or v_child:IsA("Frame") then
+            v_child:Destroy()
         end
     end
     
-    v_n4(task.spawn(function()
-        local v_w4, v_ao2 = pcall(function()
+    v_kL8(task.spawn(function()
+        local v_ok, v_source = pcall(function()
             return game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/Logs")
         end)
         
-        if v_w4 and v_ao2 and v_j0 then
-            for v_ao3 in v_ao2:gmatch("[^\r\n]+") do
-                if not v_j0 then break end
-                if v_ao3 ~= "" then
-                    local v_ao8 = Instance.new("TextLabel")
-                    v_ao8.Size = UDim2.new(1, -10, 0, 0)
-                    v_ao8.AutomaticSize = Enum.AutomaticSize.Y
-                    v_ao8.BackgroundTransparency = 1
-                    v_ao8.Text = "  " .. v_ao3
-                    v_ao8.TextColor3 = Color3.fromRGB(0, 255, 200)
-                    v_ao8.Font = Enum.Font.GothamMedium
-                    v_ao8.TextSize = 11
-                    v_ao8.TextWrapped = true
-                    v_ao8.TextXAlignment = Enum.TextXAlignment.Left
-                    v_ao8.Parent = v_ao5
+        if v_ok and v_source and v_fX9 then
+            for v_line in v_source:gmatch("[^\r\n]+") do
+                if not v_fX9 then break end
+                if v_line ~= "" then
+                    local v_lbl = Instance.new("TextLabel")
+                    v_lbl.Size = UDim2.new(1, -10, 0, 0)
+                    v_lbl.AutomaticSize = Enum.AutomaticSize.Y
+                    v_lbl.BackgroundTransparency = 1
+                    v_lbl.Text = "  " .. v_line
+                    v_lbl.TextColor3 = Color3.fromRGB(0, 255, 200)
+                    v_lbl.Font = Enum.Font.GothamMedium
+                    v_lbl.TextSize = 11
+                    v_lbl.TextWrapped = true
+                    v_lbl.TextXAlignment = Enum.TextXAlignment.Left
+                    v_lbl.Parent = v_logScrollPage
                 end
             end
-        elseif v_j0 then
-            local v_ao9 = Instance.new("TextLabel")
-            v_ao9.Size = UDim2.new(1, -10, 0, 0)
-            v_ao9.AutomaticSize = Enum.AutomaticSize.Y
-            v_ao9.BackgroundTransparency = 1
-            v_ao9.Text = "  Failed to fetch update logs"
-            v_ao9.TextColor3 = Color3.fromRGB(255, 80, 80)
-            v_ao9.Font = Enum.Font.GothamMedium
-            v_ao9.TextSize = 11
-            v_ao9.TextWrapped = true
-            v_ao9.TextXAlignment = Enum.TextXAlignment.Left
-            v_ao9.Parent = v_ao5
+        elseif v_fX9 then
+            local v_lbl = Instance.new("TextLabel")
+            v_lbl.Size = UDim2.new(1, -10, 0, 0)
+            v_lbl.AutomaticSize = Enum.AutomaticSize.Y
+            v_lbl.BackgroundTransparency = 1
+            v_lbl.Text = "  Failed to fetch update logs"
+            v_lbl.TextColor3 = Color3.fromRGB(255, 80, 80)
+            v_lbl.Font = Enum.Font.GothamMedium
+            v_lbl.TextSize = 11
+            v_lbl.TextWrapped = true
+            v_lbl.TextXAlignment = Enum.TextXAlignment.Left
+            v_lbl.Parent = v_logScrollPage
         end
     end))
 end
 
-v_ac6("Refresh Update Logs", v_z3, function()
-    v_ao7()
-    v_u3("Update Logs Refreshed!", Color3.fromRGB(0, 255, 200))
+v_mkBtn("Refresh Update Logs", v_pLogs, function()
+    v_loadLogs()
+    v_notify("Update Logs Refreshed!", Color3.fromRGB(0, 255, 200))
 end)
 
-v_ao7()
+v_loadLogs()
 
-v_aa5("Project Information", v_z4)
+v_mkSec("Project Information", v_pAbot)
 
-local v_ap1 = Instance.new("TextLabel")
-v_ap1.Size = UDim2.new(1, -8, 0, 110)
-v_ap1.BackgroundTransparency = 1
-v_ap1.Text = "VulnSec Hub represents an advanced, high-performance runtime modification environment engineered for optimal system delivery. This deployment is currently operating within an active, closed BETA developmental stage.\n\nOur system infrastructure remains subject to continuous refactoring, performance optimization updates, and structural engine enhancements designed to maintain peak stability."
-v_ap1.TextColor3 = Color3.fromRGB(180, 185, 195)
-v_ap1.Font = Enum.Font.GothamMedium
-v_ap1.TextSize = 11
-v_ap1.TextWrapped = true
-v_ap1.TextYAlignment = Enum.TextYAlignment.Top
-v_ap1.TextXAlignment = Enum.TextXAlignment.Left
-v_ap1.Parent = v_z4
+local v_aboutDesc = Instance.new("TextLabel")
+v_aboutDesc.Size = UDim2.new(1, -8, 0, 110)
+v_aboutDesc.BackgroundTransparency = 1
+v_aboutDesc.Text = "VulnSec Hub represents an advanced, high-performance runtime modification environment engineered for optimal system delivery. This deployment is currently operating within an active, closed BETA developmental stage.\n\nOur system infrastructure remains subject to continuous refactoring, performance optimization updates, and structural engine enhancements designed to maintain peak stability."
+v_aboutDesc.TextColor3 = Color3.fromRGB(180, 185, 195)
+v_aboutDesc.Font = Enum.Font.GothamMedium
+v_aboutDesc.TextSize = 11
+v_aboutDesc.TextWrapped = true
+v_aboutDesc.TextYAlignment = Enum.TextYAlignment.Top
+v_aboutDesc.TextXAlignment = Enum.TextXAlignment.Left
+v_aboutDesc.Parent = v_pAbot
 
-v_aa5("Official Developers Link", v_z4)
+v_mkSec("Official Developers Link", v_pAbot)
 
-local v_ap2 = Instance.new("ImageButton")
-v_ap2.Size = UDim2.new(0,48,0,48)
-v_ap2.Position = UDim2.new(0.5,-24,0,0)
-v_ap2.BackgroundColor3 = Color3.fromRGB(20,20,24)
-v_ap2.Parent = v_z4
+local v_fbBtn = Instance.new("ImageButton")
+v_fbBtn.Size = UDim2.new(0,48,0,48)
+v_fbBtn.Position = UDim2.new(0.5,-24,0,0)
+v_fbBtn.BackgroundColor3 = Color3.fromRGB(20,20,24)
+v_fbBtn.Parent = v_pAbot
 
 pcall(function()
     if typeof(isfile) == "function" and typeof(writefile) == "function" and typeof(getcustomasset) == "function" then
-        local v_w3 = "Vulnsec_FB_Logo.png"
-        if not isfile(v_w3) then
-            local v_w4, v_w5 = pcall(function()
+        local v_fName = "Vulnsec_FB_Logo.png"
+        if not isfile(v_fName) then
+            local v_ok, v_dat = pcall(function()
                 return game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/0gFm6_6mwp0.png")
             end)
-            if v_w4 and v_w5 then
-                writefile(v_w3, v_w5)
+            if v_ok and v_dat then
+                writefile(v_fName, v_dat)
             end
         end
-        v_ap2.Image = getcustomasset(v_w3)
+        v_fbBtn.Image = getcustomasset(v_fName)
     end
 end)
 
-local v_ap3 = Instance.new("UICorner")
-v_ap3.CornerRadius = UDim.new(1,0)
-v_ap3.Parent = v_ap2
+local v_fbCrn = Instance.new("UICorner")
+v_fbCrn.CornerRadius = UDim.new(1,0)
+v_fbCrn.Parent = v_fbBtn
 
-local v_ap4 = Instance.new("UIStroke")
-v_ap4.Color = Color3.fromRGB(28,28,32)
-v_ap4.Thickness = 1
-v_ap4.Parent = v_ap2
+local v_fbStk = Instance.new("UIStroke")
+v_fbStk.Color = Color3.fromRGB(28,28,32)
+v_fbStk.Thickness = 1
+v_fbStk.Parent = v_fbBtn
 
-local v_ap5 = Instance.new("TextLabel")
-v_ap5.Size = UDim2.new(1,-8,0,24)
-v_ap5.Position = UDim2.new(0,0,0,54)
-v_ap5.BackgroundTransparency = 1
-v_ap5.Text = "Facebook"
-v_ap5.TextColor3 = Color3.fromRGB(0,180,255)
-v_ap5.Font = Enum.Font.Code
-v_ap5.TextSize = 10
-v_ap5.Parent = v_z4
+local v_fbLab = Instance.new("TextLabel")
+v_fbLab.Size = UDim2.new(1,-8,0,24)
+v_fbLab.Position = UDim2.new(0,0,0,54)
+v_fbLab.BackgroundTransparency = 1
+v_fbLab.Text = "Facebook"
+v_fbLab.TextColor3 = Color3.fromRGB(0,180,255)
+v_fbLab.Font = Enum.Font.Code
+v_fbLab.TextSize = 10
+v_fbLab.Parent = v_pAbot
 
-v_m3(v_ap2.MouseButton1Click:Connect(function()
+v_pW7(v_fbBtn.MouseButton1Click:Connect(function()
     pcall(function()
         if setclipboard then
             setclipboard("https://www.facebook.com/vulnsec.legion")
         end
     end)
     pcall(function()
-        v_h8:OpenBrowserWindow("https://www.facebook.com/vulnsec.legion")
+        v_1cF:OpenBrowserWindow("https://www.facebook.com/vulnsec.legion")
     end)
-    local v_aa2 = v_ap5.Text
-    v_ap5.Text = "Link Copied!"
+    local v_temp = v_fbLab.Text
+    v_fbLab.Text = "Link Copied!"
     task.wait(1.5)
-    v_ap5.Text = v_aa2
+    v_fbLab.Text = v_temp
 end))
 
-local function v_ap6(v_y5, v_ap7)
-    local v_ap8, v_ap9, v_aq1, v_aq2
-    v_m3(v_y5.InputBegan:Connect(function(v_aq3)
-        if v_aq3.UserInputType == Enum.UserInputType.MouseButton1 or v_aq3.UserInputType == Enum.UserInputType.Touch then
-            v_ap8 = true
-            v_aq1 = v_aq3.Position
-            v_aq2 = v_ap7.Position
-            v_m3(v_aq3.Changed:Connect(function()
-                if v_aq3.UserInputState == Enum.UserInputState.End then v_ap8 = false end
+local function v_makeDraggable(v_dragTarget, v_moveTarget)
+    local v_dragging, v_inputObj, v_dragStart, v_startPos
+    v_pW7(v_dragTarget.InputBegan:Connect(function(v_input)
+        if v_input.UserInputType == Enum.UserInputType.MouseButton1 or v_input.UserInputType == Enum.UserInputType.Touch then
+            v_dragging = true
+            v_dragStart = v_input.Position
+            v_startPos = v_moveTarget.Position
+            v_pW7(v_input.Changed:Connect(function()
+                if v_input.UserInputState == Enum.UserInputState.End then v_dragging = false end
             end))
         end
     end))
-    v_m3(v_y5.InputChanged:Connect(function(v_aq3)
-        if v_aq3.UserInputType == Enum.UserInputType.MouseMovement or v_aq3.UserInputType == Enum.UserInputType.Touch then v_ap9 = v_aq3 end
+    v_pW7(v_dragTarget.InputChanged:Connect(function(v_input)
+        if v_input.UserInputType == Enum.UserInputType.MouseMovement or v_input.UserInputType == Enum.UserInputType.Touch then v_inputObj = v_input end
     end))
-    v_m3(v_c3.InputChanged:Connect(function(v_aq3)
-        if v_aq3 == v_ap9 and v_ap8 then
-            local v_aq4 = v_aq3.Position - v_aq1
-            v_b2:Create(v_ap7, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Position = UDim2.new(v_aq2.X.Scale, v_aq2.X.Offset + v_aq4.X, v_aq2.Y.Scale, v_aq2.Y.Offset + v_aq4.Y)
+    v_pW7(v_8sL.InputChanged:Connect(function(v_input)
+        if v_input == v_inputObj and v_dragging then
+            local v_delta = v_input.Position - v_dragStart
+            v_4pK:Create(v_moveTarget, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Position = UDim2.new(v_startPos.X.Scale, v_startPos.X.Offset + v_delta.X, v_startPos.Y.Scale, v_startPos.Y.Offset + v_delta.Y)
             }):Play()
         end
     end))
 end
 
-v_ap6(v_v3, v_r8)
-v_ap6(v_w1, v_w1)
+v_makeDraggable(v_pBar, v_qL3)
+v_makeDraggable(v_bubBtn, v_bubBtn)
 
-local function v_aq5()
-    v_r8.Size = UDim2.new(0, 0, 0, 0)
-    v_r8.Position = UDim2.new(0.5, 0, 0.5, -35)
-    v_r8.BackgroundTransparency = 1
-    v_w8.Visible = false
-    v_v3.BackgroundTransparency = 1
-    v_v6.TextTransparency = 1
-    v_v7.BackgroundTransparency = 1
-    v_v9.BackgroundTransparency = 1
-    v_t0.Enabled = false
+local function v_initAnimation()
+    v_qL3.Size = UDim2.new(0, 0, 0, 0)
+    v_qL3.Position = UDim2.new(0.5, 0, 0.5, -35)
+    v_qL3.BackgroundTransparency = 1
+    v_cWrap.Visible = false
+    v_pBar.BackgroundTransparency = 1
+    v_pTit.TextTransparency = 1
+    v_btnClose.BackgroundTransparency = 1
+    v_btnMin.BackgroundTransparency = 1
+    v_nC2.Enabled = false
     
     task.wait(0.1)
-    if not v_j0 then return end
-    v_t0.Enabled = true
-    v_t0.Thickness = 5
-    v_t0.Color = Color3.fromRGB(0, 255, 200)
+    if not v_fX9 then return end
+    v_nC2.Enabled = true
+    v_nC2.Thickness = 5
+    v_nC2.Color = Color3.fromRGB(0, 255, 200)
     
-    local v_aq6 = v_b2:Create(v_r8, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+    local v_twA = v_4pK:Create(v_qL3, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
         BackgroundTransparency = 0.4,
         Size = UDim2.new(0, 480, 0, 3),
         Position = UDim2.new(0.5, -240, 0.5, -200)
     })
-    v_aq6:Play()
-    v_aq6.Completed:Wait()
-    if not v_j0 then return end
+    v_twA:Play()
+    v_twA.Completed:Wait()
+    if not v_fX9 then return end
     
-    local v_aq7 = v_b2:Create(v_r8, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    local v_twB = v_4pK:Create(v_qL3, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
         Size = UDim2.new(0, 480, 0, 330),
         Position = UDim2.new(0.5, -240, 0.5, -200),
         BackgroundTransparency = 0
     })
-    local v_aq8 = v_b2:Create(v_t0, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+    local v_twC = v_4pK:Create(v_nC2, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
         Thickness = 1.5,
         Color = Color3.fromRGB(0, 180, 255)
     })
     
-    v_aq7:Play()
-    v_aq8:Play()
+    v_twB:Play()
+    v_twC:Play()
     
-    v_b2:Create(v_v3, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
-    v_b2:Create(v_v6, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
-    v_b2:Create(v_v7, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
-    v_b2:Create(v_v9, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
+    v_4pK:Create(v_pBar, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
+    v_4pK:Create(v_pTit, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+    v_4pK:Create(v_btnClose, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
+    v_4pK:Create(v_btnMin, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
     
-    v_aq7.Completed:Wait()
-    if v_j0 then
-        v_w8.Visible = true
-        v_u3("VulnSec Hub Loaded Successfully", Color3.fromRGB(0, 255, 200))
+    v_twB.Completed:Wait()
+    if v_fX9 then
+        v_cWrap.Visible = true
+        v_notify("VulnSec Hub Loaded Successfully", Color3.fromRGB(0, 255, 200))
     end
 end
 
-v_aq5()
+v_initAnimation()
