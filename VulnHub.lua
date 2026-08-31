@@ -1,4 +1,3 @@
---1
 local queueOnTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 if queueOnTeleport then
     pcall(function()
@@ -1544,17 +1543,6 @@ local function v_ao1()
                 end
             end
             v_an9()
-        else
-            -- FALLBACK: Prevents menu from staying permanently empty if GitHub fails
-            local v_errLabel = Instance.new("TextLabel")
-            v_errLabel.Size = UDim2.new(1, 0, 0, 30)
-            v_errLabel.BackgroundTransparency = 1
-            v_errLabel.Text = "  Failed to load ID list. Check connection."
-            v_errLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
-            v_errLabel.Font = Enum.Font.GothamMedium
-            v_errLabel.TextSize = 11
-            v_errLabel.TextXAlignment = Enum.TextXAlignment.Left
-            v_errLabel.Parent = v_an6
         end
     end))
 end
