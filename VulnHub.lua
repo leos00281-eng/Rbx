@@ -1,4 +1,4 @@
---1--
+--1
 local queueOnTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 if queueOnTeleport then
     pcall(function()
