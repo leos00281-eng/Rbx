@@ -664,10 +664,10 @@ _f7("Auto Exec (Rejoin / Change Game)", false, _v61, function(_p1)
     end
 end)
 
-_f6("Server Info & Player Monitoring", _v61)
+_f6("Server Info", _v61)
 
 local _v111 = Instance.new("Frame")
-_v111.Size = UDim2.new(1, -8, 0, 85)
+_v111.Size = UDim2.new(1, -8, 0, 52)
 _v111.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
 _v111.Parent = _v61
 
@@ -704,35 +704,140 @@ _f8("Rejoin Current Server", _v61, function()
     end)
 end)
 
-local _v115 = {}
+_f6("Friends Joined Count", _v61)
+
+local _v115 = Instance.new("Frame")
+_v115.Size = UDim2.new(1, -8, 0, 36)
+_v115.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+_v115.Parent = _v61
+
+Instance.new("UICorner", _v115).CornerRadius = UDim.new(0, 6)
+local _v116 = Instance.new("UIStroke", _v115)
+_v116.Color = Color3.fromRGB(28, 28, 32)
+_v116.Thickness = 1
+
+local _v117 = Instance.new("TextLabel")
+_v117.Size = UDim2.new(1, -16, 1, 0)
+_v117.Position = UDim2.new(0, 8, 0, 0)
+_v117.BackgroundTransparency = 1
+_v117.TextColor3 = Color3.fromRGB(0, 255, 200)
+_v117.Font = Enum.Font.GothamBold
+_v117.TextSize = 11
+_v117.TextXAlignment = Enum.TextXAlignment.Left
+_v117.Text = "  Friends Joined: 0"
+_v117.Parent = _v115
+
+_f6("Search Friends", _v61)
+
+local _v118 = Instance.new("TextBox")
+_v118.Size = UDim2.new(1, -8, 0, 32)
+_v118.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+_v118.PlaceholderText = "Search joined friend..."
+_v118.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+_v118.Text = ""
+_v118.TextColor3 = Color3.fromRGB(255, 255, 255)
+_v118.Font = Enum.Font.GothamMedium
+_v118.TextSize = 11
+_v118.TextXAlignment = Enum.TextXAlignment.Left
+_v118.Parent = _v61
+Instance.new("UICorner", _v118).CornerRadius = UDim.new(0, 6)
+local _v119 = Instance.new("UIStroke", _v118)
+_v119.Color = Color3.fromRGB(28, 28, 32)
+_v119.Thickness = 1
+
+_f1(_v118.Focused:Connect(function()
+    _v2:Create(_v119, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+end))
+
+_f1(_v118.FocusLost:Connect(function()
+    _v2:Create(_v119, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+end))
+
+_f6("Joined Friends List", _v61)
+
+local _v120 = Instance.new("ScrollingFrame")
+_v120.Size = UDim2.new(1, -8, 0, 90)
+_v120.BackgroundTransparency = 1
+_v120.CanvasSize = UDim2.new(0, 0, 0, 0)
+_v120.ScrollBarThickness = 3
+_v120.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+_v120.Parent = _v61
+
+local _v121 = Instance.new("UIListLayout")
+_v121.Padding = UDim.new(0, 4)
+_v121.SortOrder = Enum.SortOrder.LayoutOrder
+_v121.Parent = _v120
+
+_f1(_v121:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    _v120.CanvasSize = UDim2.new(0, 0, 0, _v121.AbsoluteContentSize.Y + 5)
+end))
 
 local function _f12()
-    local _v116 = _v1:GetPlayers()
-    local _v117 = _v1.MaxPlayers
-    local _v118 = {}
+    local _v122 = _v1:GetPlayers()
+    local _v123 = _v1.MaxPlayers
     
-    for _, _v119 in ipairs(_v116) do
-        if _v119 ~= _v12 then
+    _v113.Text = string.format(
+        "Place ID: %d\nJob ID: %s\nPlayer Count: %d/%d",
+        game.PlaceId,
+        game.JobId ~= "" and game.JobId or "N/A",
+        #_v122,
+        _v123
+    )
+
+    for _, _v124 in pairs(_v120:GetChildren()) do
+        if _v124:IsA("Frame") then
+            _v124:Destroy()
+        end
+    end
+
+    local _v125 = {}
+    for _, _v126 in ipairs(_v122) do
+        if _v126 ~= _v12 then
             pcall(function()
-                if _v12:IsFriendsWith(_v119.UserId) then
-                    table.insert(_v118, _v119.DisplayName .. " (@" .. _v119.Name .. ")")
+                if _v12:IsFriendsWith(_v126.UserId) then
+                    table.insert(_v125, _v126)
                 end
             end)
         end
     end
 
-    local _v120 = #_v118 > 0 and table.concat(_v118, ", ") or "None"
-    
-    _v113.Text = string.format(
-        "Place ID: %d\nJob ID: %s\nPlayer Count: %d/%d\nFriend Count Joined (%d): %s",
-        game.PlaceId,
-        game.JobId ~= "" and game.JobId or "N/A",
-        #_v116,
-        _v117,
-        #_v118,
-        _v120
-    )
+    _v117.Text = "  Friends Joined: " .. tostring(#_v125)
+
+    local _v127 = _v118.Text:lower()
+
+    for _, _v128 in ipairs(_v125) do
+        local _v129 = _v128.DisplayName
+        local _v130 = _v128.Name
+        local _v131 = (_v129 .. " " .. _v130):lower()
+
+        if _v127 == "" or string.find(_v131, _v127, 1, true) then
+            local _v132 = Instance.new("Frame")
+            _v132.Size = UDim2.new(1, 0, 0, 32)
+            _v132.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+            _v132.Parent = _v120
+
+            Instance.new("UICorner", _v132).CornerRadius = UDim.new(0, 6)
+            local _v133 = Instance.new("UIStroke", _v132)
+            _v133.Color = Color3.fromRGB(28, 28, 32)
+            _v133.Thickness = 1
+
+            local _v134 = Instance.new("TextLabel")
+            _v134.Size = UDim2.new(1, -12, 1, 0)
+            _v134.Position = UDim2.new(0, 6, 0, 0)
+            _v134.BackgroundTransparency = 1
+            _v134.Text = "  " .. _v129 .. " (@" .. _v130 .. ")"
+            _v134.TextColor3 = Color3.fromRGB(0, 255, 180)
+            _v134.Font = Enum.Font.GothamMedium
+            _v134.TextSize = 11
+            _v134.TextXAlignment = Enum.TextXAlignment.Left
+            _v134.Parent = _v132
+        end
+    end
 end
+
+_f1(_v118:GetPropertyChangedSignal("Text"):Connect(function()
+    _f12()
+end))
 
 _f1(_v1.PlayerAdded:Connect(function(_p1)
     task.wait(1)
@@ -759,82 +864,82 @@ _f6("Movement", _v61)
 
 _f7("Enable Speed Hack", false, _v61, function(_p1)
     _v108 = _p1
-    local _, _, _v121 = _f10()
-    if _v121 then _v121.WalkSpeed = _p1 and _v109 or 16 end
+    local _, _, _v135 = _f10()
+    if _v135 then _v135.WalkSpeed = _p1 and _v109 or 16 end
 end)
 
 _f9("Walk Speed", 50, _v61, function(_p1)
     _v109 = _p1
-    local _, _, _v122 = _f10()
-    if _v108 and _v122 then _v122.WalkSpeed = _p1 end
+    local _, _, _v136 = _f10()
+    if _v108 and _v136 then _v136.WalkSpeed = _p1 end
 end)
 
 _f1(_v4.Heartbeat:Connect(function()
     if _v13 and _v108 then
-        local _, _, _v123 = _f10()
-        if _v123 and _v123.WalkSpeed ~= _v109 then
-            _v123.WalkSpeed = _v109
+        local _, _, _v137 = _f10()
+        if _v137 and _v137.WalkSpeed ~= _v109 then
+            _v137.WalkSpeed = _v109
         end
     end
 end))
 
-local _v124 = false
+local _v138 = false
 _f1(_v4.Stepped:Connect(function()
-    if _v13 and _v124 and _v12.Character then
-        for _, _v125 in pairs(_v12.Character:GetDescendants()) do
-            if _v125:IsA("BasePart") then _v125.CanCollide = false end
+    if _v13 and _v138 and _v12.Character then
+        for _, _v139 in pairs(_v12.Character:GetDescendants()) do
+            if _v139:IsA("BasePart") then _v139.CanCollide = false end
         end
     end
 end))
 
-_f7("Enable Noclip", false, _v61, function(_p1) _v124 = _p1 end)
+_f7("Enable Noclip", false, _v61, function(_p1) _v138 = _p1 end)
 
-local _v126 = false
-local _v127 = 50
-local _v128 = nil
+local _v140 = false
+local _v141 = 50
+local _v142 = nil
 
 _f7("Enable Fly Mode", false, _v61, function(_p1)
-    _v126 = _p1
-    _v128 = nil
-    local _, _v129, _v130 = _f10()
-    if _v130 then
-        _v130.PlatformStand = _p1
+    _v140 = _p1
+    _v142 = nil
+    local _, _v143, _v144 = _f10()
+    if _v144 then
+        _v144.PlatformStand = _p1
     end
-    if not _p1 and _v129 then
-        _v129.Velocity = Vector3.new(0,0,0)
+    if not _p1 and _v143 then
+        _v143.Velocity = Vector3.new(0,0,0)
     end
 end)
 
 _f9("Fly Speed", 50, _v61, function(_p1)
-    _v127 = _p1
+    _v141 = _p1
 end)
 
 _f1(_v4.Heartbeat:Connect(function()
-    if _v13 and _v126 then
-        local _, _v131, _v132 = _f10()
-        if _v131 and _v132 then
-            _v132.PlatformStand = true
+    if _v13 and _v140 then
+        local _, _v145, _v146 = _f10()
+        if _v145 and _v146 then
+            _v146.PlatformStand = true
             
-            local _v133 = _v5.CurrentCamera
-            if _v133 then
-                local _v134 = _v132.MoveDirection
-                local _v135 = _v133.CFrame.LookVector
+            local _v147 = _v5.CurrentCamera
+            if _v147 then
+                local _v148 = _v146.MoveDirection
+                local _v149 = _v147.CFrame.LookVector
                 
-                if _v134.Magnitude > 0 then
-                    _v128 = nil
-                    local _v136 = _v133.CFrame.RightVector
-                    local _v137 = _v133.CFrame:VectorToObjectSpace(_v134)
-                    local _v138 = Vector3.new(_v137.X, 0, _v137.Z).Unit
-                    local _v139 = ((_v135 * -_v138.Z) + (_v136 * _v138.X)).Unit
+                if _v148.Magnitude > 0 then
+                    _v142 = nil
+                    local _v150 = _v147.CFrame.RightVector
+                    local _v151 = _v147.CFrame:VectorToObjectSpace(_v148)
+                    local _v152 = Vector3.new(_v151.X, 0, _v151.Z).Unit
+                    local _v153 = ((_v149 * -_v152.Z) + (_v150 * _v152.X)).Unit
                     
-                    _v131.Velocity = _v139 * _v127
-                    _v131.CFrame = CFrame.new(_v131.Position, _v131.Position + _v135)
+                    _v145.Velocity = _v153 * _v141
+                    _v145.CFrame = CFrame.new(_v145.Position, _v145.Position + _v149)
                 else
-                    if not _v128 then
-                        _v128 = _v131.Position
+                    if not _v142 then
+                        _v142 = _v145.Position
                     end
-                    _v131.Velocity = Vector3.new(0, 0, 0)
-                    _v131.CFrame = CFrame.new(_v128, _v128 + _v135)
+                    _v145.Velocity = Vector3.new(0, 0, 0)
+                    _v145.CFrame = CFrame.new(_v142, _v142 + _v149)
                 end
             end
         end
@@ -857,113 +962,113 @@ _f7("Night Mode", false, _v61, function(_p1)
     end
 end)
 
-local _v140 = false
+local _v154 = false
 
 local function _f13(_p1)
     if _p1 == _v12 then return end
     
-    local function _v141()
+    local function _v155()
         if not _v13 then return end
-        local _v142 = _p1.Character or _p1.CharacterAdded:Wait()
-        local _v143 = _v142:WaitForChild("Head", 5)
-        if not _v143 or not _v13 then return end
+        local _v156 = _p1.Character or _p1.CharacterAdded:Wait()
+        local _v157 = _v156:WaitForChild("Head", 5)
+        if not _v157 or not _v13 then return end
 
-        if _v142:FindFirstChild("ESPHighlight") then _v142.ESPHighlight:Destroy() end
-        if _v143:FindFirstChild("ESPBBG") then _v143.ESPBBG:Destroy() end
+        if _v156:FindFirstChild("ESPHighlight") then _v156.ESPHighlight:Destroy() end
+        if _v157:FindFirstChild("ESPBBG") then _v157.ESPBBG:Destroy() end
 
-        local _v144 = Instance.new("Highlight")
-        _v144.Name = "ESPHighlight"
-        _v144.FillTransparency = 0.6
-        _v144.FillColor = Color3.fromRGB(0, 255, 150)
-        _v144.OutlineColor = Color3.fromRGB(255, 255, 255)
-        _v144.Enabled = _v140
-        _v144.Parent = _v142
+        local _v158 = Instance.new("Highlight")
+        _v158.Name = "ESPHighlight"
+        _v158.FillTransparency = 0.6
+        _v158.FillColor = Color3.fromRGB(0, 255, 150)
+        _v158.OutlineColor = Color3.fromRGB(255, 255, 255)
+        _v158.Enabled = _v154
+        _v158.Parent = _v156
 
-        local _v145 = Instance.new("BillboardGui")
-        _v145.Name = "ESPBBG"
-        _v145.Size = UDim2.new(0, 200, 0, 50)
-        _v145.AlwaysOnTop = true
-        _v145.ExtentsOffset = Vector3.new(0, 3, 0)
-        _v145.Enabled = _v140
-        _v145.Parent = _v143
+        local _v159 = Instance.new("BillboardGui")
+        _v159.Name = "ESPBBG"
+        _v159.Size = UDim2.new(0, 200, 0, 50)
+        _v159.AlwaysOnTop = true
+        _v159.ExtentsOffset = Vector3.new(0, 3, 0)
+        _v159.Enabled = _v154
+        _v159.Parent = _v157
 
-        local _v146 = Instance.new("TextLabel")
-        _v146.Size = UDim2.new(1, 0, 1, 0)
-        _v146.BackgroundTransparency = 1
-        _v146.Text = _p1.DisplayName
-        _v146.TextColor3 = Color3.fromRGB(255, 50, 50)
-        _v146.Font = Enum.Font.GothamBold
-        _v146.TextSize = 14
-        _v146.Parent = _v145
+        local _v160 = Instance.new("TextLabel")
+        _v160.Size = UDim2.new(1, 0, 1, 0)
+        _v160.BackgroundTransparency = 1
+        _v160.Text = _p1.DisplayName
+        _v160.TextColor3 = Color3.fromRGB(255, 50, 50)
+        _v160.Font = Enum.Font.GothamBold
+        _v160.TextSize = 14
+        _v160.Parent = _v159
     end
 
-    _v141()
-    _f1(_p1.CharacterAdded:Connect(_v141))
+    _v155()
+    _f1(_p1.CharacterAdded:Connect(_v155))
 end
 
 _f7("Enable Player ESP", false, _v61, function(_p1)
-    _v140 = _p1
-    for _, _v147 in pairs(_v1:GetPlayers()) do
-        if _v147.Character then
-            local _v148 = _v147.Character:FindFirstChild("ESPHighlight")
-            local _v149 = _v147.Character:FindFirstChild("Head")
-            local _v150 = _v149 and _v149:FindFirstChild("ESPBBG")
-            if _v148 then _v148.Enabled = _p1 end
-            if _v150 then _v150.Enabled = _p1 end
+    _v154 = _p1
+    for _, _v161 in pairs(_v1:GetPlayers()) do
+        if _v161.Character then
+            local _v162 = _v161.Character:FindFirstChild("ESPHighlight")
+            local _v163 = _v161.Character:FindFirstChild("Head")
+            local _v164 = _v163 and _v163:FindFirstChild("ESPBBG")
+            if _v162 then _v162.Enabled = _p1 end
+            if _v164 then _v164.Enabled = _p1 end
         end
     end
 end)
 
-for _, _v151 in pairs(_v1:GetPlayers()) do _f13(_v151) end
+for _, _v165 in pairs(_v1:GetPlayers()) do _f13(_v165) end
 _f1(_v1.PlayerAdded:Connect(_f13))
 
 _f8("Anti-Lag (FPS Boost)", _v61, function()
-    for _, _v152 in pairs(_v5:GetDescendants()) do
-        if _v152:IsA("BasePart") and not _v152:IsDescendantOf(_v12.Character) then
-            _v152.Material = Enum.Material.SmoothPlastic
-            if _v152:IsA("MeshPart") or _v152:IsA("UnionOperation") then _v152.Reflectance = 0 end
-        elseif _v152:IsA("Decal") or _v152:IsA("Texture") then
-            _v152.Transparency = 1
-        elseif _v152:IsA("ParticleEmitter") or _v152:IsA("Trail") then
-            _v152.Enabled = false
+    for _, _v166 in pairs(_v5:GetDescendants()) do
+        if _v166:IsA("BasePart") and not _v166:IsDescendantOf(_v12.Character) then
+            _v166.Material = Enum.Material.SmoothPlastic
+            if _v166:IsA("MeshPart") or _v166:IsA("UnionOperation") then _v166.Reflectance = 0 end
+        elseif _v166:IsA("Decal") or _v166:IsA("Texture") then
+            _v166.Transparency = 1
+        elseif _v166:IsA("ParticleEmitter") or _v166:IsA("Trail") then
+            _v166.Enabled = false
         end
     end
     _f3("Anti-Lag Applied!", Color3.fromRGB(0, 255, 200))
 end)
 
 local function _f14()
-    for _, _v153 in pairs(_v1:GetPlayers()) do
-        if _v153.Character then
-            local _v154 = _v153.Character:FindFirstChild("ESPHighlight")
-            if _v154 then _v154:Destroy() end
-            local _v155 = _v153.Character:FindFirstChild("Head")
-            local _v156 = _v155 and _v155:FindFirstChild("ESPBBG")
-            if _v156 then _v156:Destroy() end
+    for _, _v167 in pairs(_v1:GetPlayers()) do
+        if _v167.Character then
+            local _v168 = _v167.Character:FindFirstChild("ESPHighlight")
+            if _v168 then _v168:Destroy() end
+            local _v169 = _v167.Character:FindFirstChild("Head")
+            local _v170 = _v169 and _v169:FindFirstChild("ESPBBG")
+            if _v170 then _v170:Destroy() end
         end
     end
 end
 
 _f1(_v36.MouseButton1Click:Connect(function()
-    _v126 = false
-    _v108 = false
-    _v124 = false
     _v140 = false
-    _v128 = nil
+    _v108 = false
+    _v138 = false
+    _v154 = false
+    _v142 = nil
     
-    for _, _v157 in ipairs(_v14) do
-        pcall(function() _v157:Disconnect() end)
+    for _, _v171 in ipairs(_v14) do
+        pcall(function() _v171:Disconnect() end)
     end
     _v14 = {}
 
     _f14()
     
-    local _, _v158, _v159 = _f10()
-    if _v159 then
-        _v159.PlatformStand = false
-        _v159.WalkSpeed = 16
+    local _, _v172, _v173 = _f10()
+    if _v173 then
+        _v173.PlatformStand = false
+        _v173.WalkSpeed = 16
     end
-    if _v158 then
-        _v158.Velocity = Vector3.new(0,0,0)
+    if _v172 then
+        _v172.Velocity = Vector3.new(0,0,0)
     end
     
     _v2:Create(_v20, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0), Position = UDim2.new(0.5, 0, 0.5, -35), BackgroundTransparency = 1}):Play()
@@ -973,139 +1078,139 @@ end))
 
 local function _f15(_p1, _p2, _p3)
     _f1(task.spawn(function()
-        local _v160 = false
-        local _v161, _v162 = pcall(function()
+        local _v174 = false
+        local _v175, _v176 = pcall(function()
             if not _v13 then return end
             if _p3 then
                 loadstring(game:HttpGet(_p1))("Spider Script")
             else
                 loadstring(game:HttpGet(_p1))()
             end
-            _v160 = true
+            _v174 = true
         end)
         
-        if _v161 and _v160 then
+        if _v175 and _v174 then
             _f3("💥 " .. _p2:upper() .. " ACTIVE 💥", Color3.fromRGB(0, 255, 200))
         else
             _f3("Execution Failed!", Color3.fromRGB(255, 80, 80))
-            warn("Failed structural execution stack: " .. tostring(_v162))
+            warn("Failed structural execution stack: " .. tostring(_v176))
         end
     end))
 end
 
 _f6("Custom Scripts", _v62)
 
-for _, _v163 in pairs(_v17) do
-    _f8(_v163.Name, _v62, function()
-        _f15(_v163.URL, _v163.Name, _v163.IsR6)
+for _, _v177 in pairs(_v17) do
+    _f8(_v177.Name, _v62, function()
+        _f15(_v177.URL, _v177.Name, _v177.IsR6)
     end)
 end
 
 _f6("Selected Target", _v63)
 
-local _v164 = nil
-local _v165 = Instance.new("TextLabel")
-_v165.Size = UDim2.new(1, -8, 0, 36)
-_v165.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-_v165.TextColor3 = Color3.fromRGB(0, 255, 200)
-_v165.Font = Enum.Font.GothamBold
-_v165.TextSize = 11
-_v165.Text = "  Selected: None"
-_v165.TextXAlignment = Enum.TextXAlignment.Left
-_v165.Parent = _v63
-Instance.new("UICorner", _v165).CornerRadius = UDim.new(0, 6)
-local _v166 = Instance.new("UIStroke", _v165)
-_v166.Color = Color3.fromRGB(28, 28, 32)
-_v166.Thickness = 1
+local _v178 = nil
+local _v179 = Instance.new("TextLabel")
+_v179.Size = UDim2.new(1, -8, 0, 36)
+_v179.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+_v179.TextColor3 = Color3.fromRGB(0, 255, 200)
+_v179.Font = Enum.Font.GothamBold
+_v179.TextSize = 11
+_v179.Text = "  Selected: None"
+_v179.TextXAlignment = Enum.TextXAlignment.Left
+_v179.Parent = _v63
+Instance.new("UICorner", _v179).CornerRadius = UDim.new(0, 6)
+local _v180 = Instance.new("UIStroke", _v179)
+_v180.Color = Color3.fromRGB(28, 28, 32)
+_v180.Thickness = 1
 
 _f6("Search Players", _v63)
 
-local _v167 = Instance.new("TextBox")
-_v167.Size = UDim2.new(1, -8, 0, 32)
-_v167.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-_v167.PlaceholderText = "Search player name..."
-_v167.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
-_v167.Text = ""
-_v167.TextColor3 = Color3.fromRGB(255, 255, 255)
-_v167.Font = Enum.Font.GothamMedium
-_v167.TextSize = 11
-_v167.TextXAlignment = Enum.TextXAlignment.Left
-_v167.Parent = _v63
-Instance.new("UICorner", _v167).CornerRadius = UDim.new(0, 6)
-local _v168 = Instance.new("UIStroke", _v167)
-_v168.Color = Color3.fromRGB(28, 28, 32)
-_v168.Thickness = 1
+local _v181 = Instance.new("TextBox")
+_v181.Size = UDim2.new(1, -8, 0, 32)
+_v181.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+_v181.PlaceholderText = "Search player name..."
+_v181.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+_v181.Text = ""
+_v181.TextColor3 = Color3.fromRGB(255, 255, 255)
+_v181.Font = Enum.Font.GothamMedium
+_v181.TextSize = 11
+_v181.TextXAlignment = Enum.TextXAlignment.Left
+_v181.Parent = _v63
+Instance.new("UICorner", _v181).CornerRadius = UDim.new(0, 6)
+local _v182 = Instance.new("UIStroke", _v181)
+_v182.Color = Color3.fromRGB(28, 28, 32)
+_v182.Thickness = 1
 
-_f1(_v167.Focused:Connect(function()
-    _v2:Create(_v168, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+_f1(_v181.Focused:Connect(function()
+    _v2:Create(_v182, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
 end))
 
-_f1(_v167.FocusLost:Connect(function()
-    _v2:Create(_v168, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+_f1(_v181.FocusLost:Connect(function()
+    _v2:Create(_v182, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
 end))
 
 _f6("Player List", _v63)
 
-local _v169 = Instance.new("ScrollingFrame")
-_v169.Size = UDim2.new(1, -8, 0, 110)
-_v169.BackgroundTransparency = 1
-_v169.CanvasSize = UDim2.new(0, 0, 0, 0)
-_v169.ScrollBarThickness = 3
-_v169.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-_v169.Parent = _v63
+local _v183 = Instance.new("ScrollingFrame")
+_v183.Size = UDim2.new(1, -8, 0, 110)
+_v183.BackgroundTransparency = 1
+_v183.CanvasSize = UDim2.new(0, 0, 0, 0)
+_v183.ScrollBarThickness = 3
+_v183.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+_v183.Parent = _v63
 
-local _v170 = Instance.new("UIListLayout")
-_v170.Padding = UDim.new(0, 4)
-_v170.SortOrder = Enum.SortOrder.LayoutOrder
-_v170.Parent = _v169
+local _v184 = Instance.new("UIListLayout")
+_v184.Padding = UDim.new(0, 4)
+_v184.SortOrder = Enum.SortOrder.LayoutOrder
+_v184.Parent = _v183
 
-_f1(_v170:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    _v169.CanvasSize = UDim2.new(0, 0, 0, _v170.AbsoluteContentSize.Y + 5)
+_f1(_v184:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    _v183.CanvasSize = UDim2.new(0, 0, 0, _v184.AbsoluteContentSize.Y + 5)
 end))
 
 local function _f16()
-    for _, _v171 in pairs(_v169:GetChildren()) do
-        if _v171:IsA("TextButton") then
-            _v171:Destroy()
+    for _, _v185 in pairs(_v183:GetChildren()) do
+        if _v185:IsA("TextButton") then
+            _v185:Destroy()
         end
     end
     
-    local _v172 = _v167.Text:lower()
+    local _v186 = _v181.Text:lower()
     
-    for _, _v173 in pairs(_v1:GetPlayers()) do
-        if _v173 ~= _v12 then
-            local _v174 = _v173.DisplayName
-            local _v175 = _v173.Name
-            local _v176 = (_v174 .. " " .. _v175):lower()
+    for _, _v187 in pairs(_v1:GetPlayers()) do
+        if _v187 ~= _v12 then
+            local _v188 = _v187.DisplayName
+            local _v189 = _v187.Name
+            local _v190 = (_v188 .. " " .. _v189):lower()
             
-            if _v172 == "" or string.find(_v176, _v172, 1, true) then
-                local _v177 = Instance.new("TextButton")
-                _v177.Size = UDim2.new(1, 0, 0, 32)
-                _v177.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-                _v177.Text = "  " .. _v174 .. " (@" .. _v175 .. ")"
-                _v177.TextColor3 = Color3.fromRGB(225, 225, 230)
-                _v177.Font = Enum.Font.GothamMedium
-                _v177.TextSize = 11
-                _v177.TextXAlignment = Enum.TextXAlignment.Left
-                _v177.Parent = _v169
+            if _v186 == "" or string.find(_v190, _v186, 1, true) then
+                local _v191 = Instance.new("TextButton")
+                _v191.Size = UDim2.new(1, 0, 0, 32)
+                _v191.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+                _v191.Text = "  " .. _v188 .. " (@" .. _v189 .. ")"
+                _v191.TextColor3 = Color3.fromRGB(225, 225, 230)
+                _v191.Font = Enum.Font.GothamMedium
+                _v191.TextSize = 11
+                _v191.TextXAlignment = Enum.TextXAlignment.Left
+                _v191.Parent = _v183
                 
-                Instance.new("UICorner", _v177).CornerRadius = UDim.new(0, 6)
-                local _v178 = Instance.new("UIStroke", _v177)
-                _v178.Color = Color3.fromRGB(28, 28, 32)
-                _v178.Thickness = 1
+                Instance.new("UICorner", _v191).CornerRadius = UDim.new(0, 6)
+                local _v192 = Instance.new("UIStroke", _v191)
+                _v192.Color = Color3.fromRGB(28, 28, 32)
+                _v192.Thickness = 1
                 
-                _f1(_v177.MouseButton1Click:Connect(function()
+                _f1(_v191.MouseButton1Click:Connect(function()
                     if not _v13 then return end
-                    _v164 = _v173
-                    _v165.Text = "  Selected: " .. _v174
-                    _v2:Create(_v178, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+                    _v178 = _v187
+                    _v179.Text = "  Selected: " .. _v188
+                    _v2:Create(_v192, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 180, 255)}):Play()
                 end))
             end
         end
     end
 end
 
-_f1(_v167:GetPropertyChangedSignal("Text"):Connect(function()
+_f1(_v181:GetPropertyChangedSignal("Text"):Connect(function()
     _f16()
 end))
 
@@ -1115,39 +1220,39 @@ end)
 
 _f6("Teleport & Spectate Actions", _v63)
 
-local _v179 = false
-local _v180 = 0.4
+local _v193 = false
+local _v194 = 0.4
 
 _f9("Tween Duration", 0.4, _v63, function(_p1)
-    _v180 = _p1
+    _v194 = _p1
 end)
 
 _f7("Enable Loop Tween to Target", false, _v63, function(_p1)
-    _v179 = _p1
+    _v193 = _p1
     if _p1 then
         _f1(task.spawn(function()
-            while _v179 and _v13 do
-                if _v164 and _v164.Character then
-                    local _v181 = _v164.Character:FindFirstChild("HumanoidRootPart")
-                    local _, _v182, _ = _f10()
-                    if _v181 and _v182 then
-                        local _v183 = TweenInfo.new(_v180, Enum.EasingStyle.Linear)
-                        local _v184 = _v2:Create(_v182, _v183, {CFrame = _v181.CFrame + Vector3.new(0, 3, 0)})
-                        _v184:Play()
+            while _v193 and _v13 do
+                if _v178 and _v178.Character then
+                    local _v195 = _v178.Character:FindFirstChild("HumanoidRootPart")
+                    local _, _v196, _ = _f10()
+                    if _v195 and _v196 then
+                        local _v197 = TweenInfo.new(_v194, Enum.EasingStyle.Linear)
+                        local _v198 = _v2:Create(_v196, _v197, {CFrame = _v195.CFrame + Vector3.new(0, 3, 0)})
+                        _v198:Play()
                         
-                        local _v185 = false
-                        local _v186
-                        _v186 = _v184.Completed:Connect(function()
-                            _v185 = true
-                            if _v186 then _v186:Disconnect() end
+                        local _v199 = false
+                        local _v200
+                        _v200 = _v198.Completed:Connect(function()
+                            _v199 = true
+                            if _v200 then _v200:Disconnect() end
                         end)
                         
-                        while not _v185 and _v179 and _v13 do
+                        while not _v199 and _v193 and _v13 do
                             task.wait(0.05)
                         end
-                        if not _v179 then
-                            _v184:Cancel()
-                            if _v186 then _v186:Disconnect() end
+                        if not _v193 then
+                            _v198:Cancel()
+                            if _v200 then _v200:Disconnect() end
                         end
                     else
                         task.wait(0.2)
@@ -1161,12 +1266,12 @@ _f7("Enable Loop Tween to Target", false, _v63, function(_p1)
 end)
 
 _f8("Teleport to Target (Once)", _v63, function()
-    if _v164 and _v164.Character then
-        local _v187 = _v164.Character:FindFirstChild("HumanoidRootPart")
-        local _, _v188, _ = _f10()
-        if _v187 and _v188 then
-            _v188.CFrame = _v187.CFrame + Vector3.new(0, 3, 0)
-            _f3("Teleported to " .. _v164.DisplayName, Color3.fromRGB(0, 255, 200))
+    if _v178 and _v178.Character then
+        local _v201 = _v178.Character:FindFirstChild("HumanoidRootPart")
+        local _, _v202, _ = _f10()
+        if _v201 and _v202 then
+            _v202.CFrame = _v201.CFrame + Vector3.new(0, 3, 0)
+            _f3("Teleported to " .. _v178.DisplayName, Color3.fromRGB(0, 255, 200))
         else
             _f3("Target has no character!", Color3.fromRGB(255, 80, 80))
         end
@@ -1175,27 +1280,27 @@ _f8("Teleport to Target (Once)", _v63, function()
     end
 end)
 
-local _v189 = false
+local _v203 = false
 _f7("Enable Spectate", false, _v63, function(_p1)
-    _v189 = _p1
-    local _v190 = _v5.CurrentCamera
-    if _v190 then
+    _v203 = _p1
+    local _v204 = _v5.CurrentCamera
+    if _v204 then
         if _p1 then
-            if _v164 and _v164.Character then
-                local _v191 = _v164.Character:FindFirstChildOfClass("Humanoid")
-                if _v191 then
-                    _v190.CameraSubject = _v191
-                    _f3("Spectating " .. _v164.DisplayName, Color3.fromRGB(0, 255, 200))
+            if _v178 and _v178.Character then
+                local _v205 = _v178.Character:FindFirstChildOfClass("Humanoid")
+                if _v205 then
+                    _v204.CameraSubject = _v205
+                    _f3("Spectating " .. _v178.DisplayName, Color3.fromRGB(0, 255, 200))
                 else
-                    _v190.CameraSubject = _v164.Character
+                    _v204.CameraSubject = _v178.Character
                 end
             else
                 _f3("No player selected for spectate!", Color3.fromRGB(255, 80, 80))
             end
         else
-            local _, _, _v192 = _f10()
-            if _v192 then
-                _v190.CameraSubject = _v192
+            local _, _, _v206 = _f10()
+            if _v206 then
+                _v204.CameraSubject = _v206
             end
             _f3("Spectate Disabled", Color3.fromRGB(0, 180, 255))
         end
@@ -1206,267 +1311,267 @@ _f16()
 
 _f6("Boombox Control", _v64)
 
-local _v193 = false
-local _v194 = {} 
+local _v207 = false
+local _v208 = {} 
 
-local _v195 = Instance.new("Sound")
-_v195.Name = "VulnSec_AudioPreview"
-_v195.Parent = game:GetService("SoundService")
-local _v196 = nil
+local _v209 = Instance.new("Sound")
+_v209.Name = "VulnSec_AudioPreview"
+_v209.Parent = game:GetService("SoundService")
+local _v210 = nil
 
 _f7("Enable Boombox Logger", false, _v64, function(_p1)
-    _v193 = _p1
+    _v207 = _p1
     if _p1 then
         _f3("Boombox Logger Active", Color3.fromRGB(0, 255, 200))
     else
         _f3("Boombox Logger Paused", Color3.fromRGB(255, 180, 50))
-        if _v195.IsPlaying then
-            _v195:Stop()
+        if _v209.IsPlaying then
+            _v209:Stop()
         end
     end
 end)
 
 _f6("Search Boombox Logs", _v64)
 
-local _v197 = Instance.new("TextBox")
-_v197.Size = UDim2.new(1, -8, 0, 32)
-_v197.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-_v197.PlaceholderText = "Search player or song..."
-_v197.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
-_v197.Text = ""
-_v197.TextColor3 = Color3.fromRGB(255, 255, 255)
-_v197.Font = Enum.Font.GothamMedium
-_v197.TextSize = 11
-_v197.TextXAlignment = Enum.TextXAlignment.Left
-_v197.Parent = _v64
-Instance.new("UICorner", _v197).CornerRadius = UDim.new(0, 6)
-local _v198 = Instance.new("UIStroke", _v197)
-_v198.Color = Color3.fromRGB(28, 28, 32)
-_v198.Thickness = 1
+local _v211 = Instance.new("TextBox")
+_v211.Size = UDim2.new(1, -8, 0, 32)
+_v211.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+_v211.PlaceholderText = "Search player or song..."
+_v211.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+_v211.Text = ""
+_v211.TextColor3 = Color3.fromRGB(255, 255, 255)
+_v211.Font = Enum.Font.GothamMedium
+_v211.TextSize = 11
+_v211.TextXAlignment = Enum.TextXAlignment.Left
+_v211.Parent = _v64
+Instance.new("UICorner", _v211).CornerRadius = UDim.new(0, 6)
+local _v212 = Instance.new("UIStroke", _v211)
+_v212.Color = Color3.fromRGB(28, 28, 32)
+_v212.Thickness = 1
 
-_f1(_v197.Focused:Connect(function()
-    _v2:Create(_v198, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+_f1(_v211.Focused:Connect(function()
+    _v2:Create(_v212, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
 end))
 
-_f1(_v197.FocusLost:Connect(function()
-    _v2:Create(_v198, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+_f1(_v211.FocusLost:Connect(function()
+    _v2:Create(_v212, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
 end))
 
 _f6("Logged IDs & Songs", _v64)
 
-local _v199 = Instance.new("ScrollingFrame")
-_v199.Size = UDim2.new(1, -8, 0, 80)
-_v199.BackgroundTransparency = 1
-_v199.CanvasSize = UDim2.new(0, 0, 0, 0)
-_v199.ScrollBarThickness = 3
-_v199.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-_v199.Parent = _v64
+local _v213 = Instance.new("ScrollingFrame")
+_v213.Size = UDim2.new(1, -8, 0, 80)
+_v213.BackgroundTransparency = 1
+_v213.CanvasSize = UDim2.new(0, 0, 0, 0)
+_v213.ScrollBarThickness = 3
+_v213.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+_v213.Parent = _v64
 
-local _v200 = Instance.new("UIListLayout")
-_v200.Padding = UDim.new(0, 4)
-_v200.SortOrder = Enum.SortOrder.LayoutOrder
-_v200.Parent = _v199
+local _v214 = Instance.new("UIListLayout")
+_v214.Padding = UDim.new(0, 4)
+_v214.SortOrder = Enum.SortOrder.LayoutOrder
+_v214.Parent = _v213
 
-_f1(_v200:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    _v199.CanvasSize = UDim2.new(0, 0, 0, _v200.AbsoluteContentSize.Y + 5)
+_f1(_v214:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    _v213.CanvasSize = UDim2.new(0, 0, 0, _v214.AbsoluteContentSize.Y + 5)
 end))
 
 local function _f17()
-    local _v201 = _v197.Text:lower()
-    for _, _v202 in ipairs(_v194) do
-        if _v202.Frame and _v202.Frame.Parent then
-            local _v203 = (_v202.Player .. " " .. _v202.Title .. " " .. _v202.ID):lower()
-            if _v201 == "" or string.find(_v203, _v201, 1, true) then
-                _v202.Frame.Visible = true
+    local _v215 = _v211.Text:lower()
+    for _, _v216 in ipairs(_v208) do
+        if _v216.Frame and _v216.Frame.Parent then
+            local _v217 = (_v216.Player .. " " .. _v216.Title .. " " .. _v216.ID):lower()
+            if _v215 == "" or string.find(_v217, _v215, 1, true) then
+                _v216.Frame.Visible = true
             else
-                _v202.Frame.Visible = false
+                _v216.Frame.Visible = false
             end
         end
     end
 end
 
-_f1(_v197:GetPropertyChangedSignal("Text"):Connect(function()
+_f1(_v211:GetPropertyChangedSignal("Text"):Connect(function()
     _f17()
 end))
 
 local function _f18(_p1, _p2)
     if not _v13 then return end
-    local _v204 = _p2:match("%d+")
-    if not _v204 or _v204 == "" then return end
+    local _v218 = _p2:match("%d+")
+    if not _v218 or _v218 == "" then return end
     
-    for _, _v205 in ipairs(_v194) do
-        if _v205.ID == _v204 then return end
+    for _, _v219 in ipairs(_v208) do
+        if _v219.ID == _v218 then return end
     end
     
-    local _v206 = Instance.new("Frame")
-    _v206.Size = UDim2.new(1, 0, 0, 32)
-    _v206.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-    _v206.Parent = _v199
+    local _v220 = Instance.new("Frame")
+    _v220.Size = UDim2.new(1, 0, 0, 32)
+    _v220.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+    _v220.Parent = _v213
     
-    Instance.new("UICorner", _v206).CornerRadius = UDim.new(0, 6)
-    local _v207 = Instance.new("UIStroke", _v206)
-    _v207.Color = Color3.fromRGB(28, 28, 32)
-    _v207.Thickness = 1
+    Instance.new("UICorner", _v220).CornerRadius = UDim.new(0, 6)
+    local _v221 = Instance.new("UIStroke", _v220)
+    _v221.Color = Color3.fromRGB(28, 28, 32)
+    _v221.Thickness = 1
     
-    local _v208 = Instance.new("TextButton")
-    _v208.Size = UDim2.new(1, -64, 1, 0)
-    _v208.BackgroundTransparency = 1
-    _v208.Text = "  " .. _p1 .. " -> Loading Song..."
-    _v208.TextColor3 = Color3.fromRGB(0, 255, 200)
-    _v208.Font = Enum.Font.GothamMedium
-    _v208.TextSize = 11
-    _v208.TextXAlignment = Enum.TextXAlignment.Left
-    _v208.Parent = _v206
+    local _v222 = Instance.new("TextButton")
+    _v222.Size = UDim2.new(1, -64, 1, 0)
+    _v222.BackgroundTransparency = 1
+    _v222.Text = "  " .. _p1 .. " -> Loading Song..."
+    _v222.TextColor3 = Color3.fromRGB(0, 255, 200)
+    _v222.Font = Enum.Font.GothamMedium
+    _v222.TextSize = 11
+    _v222.TextXAlignment = Enum.TextXAlignment.Left
+    _v222.Parent = _v220
     
-    local _v209 = Instance.new("TextButton")
-    _v209.Size = UDim2.new(0, 24, 0, 24)
-    _v209.Position = UDim2.new(1, -56, 0.5, -12)
-    _v209.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-    _v209.Text = "📋"
-    _v209.TextColor3 = Color3.fromRGB(0, 255, 200)
-    _v209.Font = Enum.Font.GothamBold
-    _v209.TextSize = 10
-    _v209.Parent = _v206
-    Instance.new("UICorner", _v209).CornerRadius = UDim.new(0, 4)
-    local _v210 = Instance.new("UIStroke", _v209)
-    _v210.Color = Color3.fromRGB(45, 45, 50)
-    _v210.Thickness = 1
+    local _v223 = Instance.new("TextButton")
+    _v223.Size = UDim2.new(0, 24, 0, 24)
+    _v223.Position = UDim2.new(1, -56, 0.5, -12)
+    _v223.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+    _v223.Text = "📋"
+    _v223.TextColor3 = Color3.fromRGB(0, 255, 200)
+    _v223.Font = Enum.Font.GothamBold
+    _v223.TextSize = 10
+    _v223.Parent = _v220
+    Instance.new("UICorner", _v223).CornerRadius = UDim.new(0, 4)
+    local _v224 = Instance.new("UIStroke", _v223)
+    _v224.Color = Color3.fromRGB(45, 45, 50)
+    _v224.Thickness = 1
 
-    local _v211 = Instance.new("TextButton")
-    _v211.Size = UDim2.new(0, 24, 0, 24)
-    _v211.Position = UDim2.new(1, -28, 0.5, -12)
-    _v211.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-    _v211.Text = "▶"
-    _v211.TextColor3 = Color3.fromRGB(0, 255, 200)
-    _v211.Font = Enum.Font.GothamBold
-    _v211.TextSize = 10
-    _v211.Parent = _v206
-    Instance.new("UICorner", _v211).CornerRadius = UDim.new(0, 4)
-    local _v212 = Instance.new("UIStroke", _v211)
-    _v212.Color = Color3.fromRGB(45, 45, 50)
-    _v212.Thickness = 1
+    local _v225 = Instance.new("TextButton")
+    _v225.Size = UDim2.new(0, 24, 0, 24)
+    _v225.Position = UDim2.new(1, -28, 0.5, -12)
+    _v225.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+    _v225.Text = "▶"
+    _v225.TextColor3 = Color3.fromRGB(0, 255, 200)
+    _v225.Font = Enum.Font.GothamBold
+    _v225.TextSize = 10
+    _v225.Parent = _v220
+    Instance.new("UICorner", _v225).CornerRadius = UDim.new(0, 4)
+    local _v226 = Instance.new("UIStroke", _v225)
+    _v226.Color = Color3.fromRGB(45, 45, 50)
+    _v226.Thickness = 1
 
-    local _v213 = {Player = _p1, Title = "Loading Song...", ID = _v204, Frame = _v206}
-    table.insert(_v194, _v213)
+    local _v227 = {Player = _p1, Title = "Loading Song...", ID = _v218, Frame = _v220}
+    table.insert(_v208, _v227)
     _f17()
     
     _f2(task.spawn(function()
-        local _v214, _v215 = pcall(function()
-            return _v7:GetProductInfo(tonumber(_v204))
+        local _v228, _v229 = pcall(function()
+            return _v7:GetProductInfo(tonumber(_v218))
         end)
-        if _v214 and _v215 and _v215.Name and _v13 then
-            _v213.Title = _v215.Name
-            if _v208 and _v208.Parent then
-                _v208.Text = "  " .. _p1 .. " -> " .. _v215.Name .. " (" .. _v204 .. ")"
+        if _v228 and _v229 and _v229.Name and _v13 then
+            _v227.Title = _v229.Name
+            if _v222 and _v222.Parent then
+                _v222.Text = "  " .. _p1 .. " -> " .. _v229.Name .. " (" .. _v218 .. ")"
             end
         elseif _v13 then
-            _v213.Title = "Unknown Song"
-            if _v208 and _v208.Parent then
-                _v208.Text = "  " .. _p1 .. " -> ID: " .. _v204
+            _v227.Title = "Unknown Song"
+            if _v222 and _v222.Parent then
+                _v222.Text = "  " .. _p1 .. " -> ID: " .. _v218
             end
         end
         _f17()
     end))
     
-    _f1(_v209.MouseButton1Click:Connect(function()
+    _f1(_v223.MouseButton1Click:Connect(function()
         pcall(function()
             if setclipboard then
-                setclipboard(_v204)
-                _f3("Copied ID: " .. _v204, Color3.fromRGB(0, 255, 200))
+                setclipboard(_v218)
+                _f3("Copied ID: " .. _v218, Color3.fromRGB(0, 255, 200))
             end
         end)
     end))
     
-    _f1(_v211.MouseButton1Click:Connect(function()
-        if _v195.IsPlaying and _v196 == _v204 then
-            _v195:Stop()
-            _v196 = nil
-            _v211.Text = "▶"
+    _f1(_v225.MouseButton1Click:Connect(function()
+        if _v209.IsPlaying and _v210 == _v218 then
+            _v209:Stop()
+            _v210 = nil
+            _v225.Text = "▶"
         else
-            _v195.SoundId = "rbxassetid://" .. _v204
-            _v195:Play()
-            _v196 = _v204
-            _v211.Text = "⏹"
+            _v209.SoundId = "rbxassetid://" .. _v218
+            _v209:Play()
+            _v210 = _v218
+            _v225.Text = "⏹"
         end
     end))
 end
 
 local function _f19(_p1)
     if _p1:IsA("Sound") then
-        local function _v216()
-            if not _v13 or not _v193 then return end
+        local function _v230()
+            if not _v13 or not _v207 then return end
             if _p1.SoundId ~= "" and _p1.Playing then
-                local _v217 = _p1.Parent
-                local _v218 = "Game / Ambient"
+                local _v231 = _p1.Parent
+                local _v232 = "Game / Ambient"
                 
-                while _v217 and _v217 ~= game do
-                    if _v217:IsA("Model") and _v1:GetPlayerFromCharacter(_v217) then
-                        _v218 = _v1:GetPlayerFromCharacter(_v217).Name
+                while _v231 and _v231 ~= game do
+                    if _v231:IsA("Model") and _v1:GetPlayerFromCharacter(_v231) then
+                        _v232 = _v1:GetPlayerFromCharacter(_v231).Name
                         break
-                    elseif _v217:IsA("Player") then
-                        _v218 = _v217.Name
+                    elseif _v231:IsA("Player") then
+                        _v232 = _v231.Name
                         break
-                    elseif _v217 == _v9 then
-                        _v218 = "SoundService (BGM)"
+                    elseif _v231 == _v9 then
+                        _v232 = "SoundService (BGM)"
                         break
                     end
-                    _v217 = _v217.Parent
+                    _v231 = _v231.Parent
                 end
                 
-                if _v218 == "Game / Ambient" and _p1:IsDescendantOf(_v12.Character or workspace) then
-                    _v218 = _v12.Name
+                if _v232 == "Game / Ambient" and _p1:IsDescendantOf(_v12.Character or workspace) then
+                    _v232 = _v12.Name
                 end
                 
-                _f18(_v218, _p1.SoundId)
+                _f18(_v232, _p1.SoundId)
             end
         end
 
         _f2(_p1.Changed:Connect(function(_p2)
             if _p2 == "SoundId" or _p2 == "Playing" then
                 if _p1.Playing then
-                    _v216()
+                    _v230()
                 end
             end
         end))
         
         if _p1.Playing then
-            _v216()
+            _v230()
         end
     end
 end
 
-for _, _v219 in pairs(_v5:GetDescendants()) do
-    _f19(_v219)
+for _, _v233 in pairs(_v5:GetDescendants()) do
+    _f19(_v233)
 end
 _f2(_v5.DescendantAdded:Connect(_f19))
 
-for _, _v220 in pairs(_v9:GetDescendants()) do
-    _f19(_v220)
+for _, _v234 in pairs(_v9:GetDescendants()) do
+    _f19(_v234)
 end
 _f2(_v9.DescendantAdded:Connect(_f19))
 
 _f8("Copy All Logged IDs", _v64, function()
-    local _v221 = {}
-    for _, _v222 in ipairs(_v194) do
-        table.insert(_v221, _v222.Title .. " - " .. _v222.ID)
+    local _v235 = {}
+    for _, _v236 in ipairs(_v208) do
+        table.insert(_v235, _v236.Title .. " - " .. _v236.ID)
     end
-    local _v223 = table.concat(_v221, "\n")
+    local _v237 = table.concat(_v235, "\n")
     pcall(function()
         if setclipboard then
-            setclipboard(_v223)
+            setclipboard(_v237)
             _f3("Songs & IDs Copied!", Color3.fromRGB(0, 255, 200))
         end
     end)
 end)
 
 _f8("Clear Log List", _v64, function()
-    if _v195.IsPlaying then
-        _v195:Stop()
+    if _v209.IsPlaying then
+        _v209:Stop()
     end
-    _v194 = {}
-    for _, _v224 in pairs(_v199:GetChildren()) do
-        if _v224:IsA("Frame") then
-            _v224:Destroy()
+    _v208 = {}
+    for _, _v238 in pairs(_v213:GetChildren()) do
+        if _v238:IsA("Frame") then
+            _v238:Destroy()
         end
     end
     _f3("Logs Cleared!", Color3.fromRGB(255, 180, 50))
@@ -1474,177 +1579,177 @@ end)
 
 _f6("Boombox IDs", _v65)
 
-local _v225 = Instance.new("TextBox")
-_v225.Size = UDim2.new(1, -8, 0, 32)
-_v225.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-_v225.PlaceholderText = "Search IDs or songs..."
-_v225.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
-_v225.Text = ""
-_v225.TextColor3 = Color3.fromRGB(255, 255, 255)
-_v225.Font = Enum.Font.GothamMedium
-_v225.TextSize = 11
-_v225.TextXAlignment = Enum.TextXAlignment.Left
-_v225.Parent = _v65
-Instance.new("UICorner", _v225).CornerRadius = UDim.new(0, 6)
-local _v226 = Instance.new("UIStroke", _v225)
-_v226.Color = Color3.fromRGB(28, 28, 32)
-_v226.Thickness = 1
+local _v239 = Instance.new("TextBox")
+_v239.Size = UDim2.new(1, -8, 0, 32)
+_v239.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+_v239.PlaceholderText = "Search IDs or songs..."
+_v239.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+_v239.Text = ""
+_v239.TextColor3 = Color3.fromRGB(255, 255, 255)
+_v239.Font = Enum.Font.GothamMedium
+_v239.TextSize = 11
+_v239.TextXAlignment = Enum.TextXAlignment.Left
+_v239.Parent = _v65
+Instance.new("UICorner", _v239).CornerRadius = UDim.new(0, 6)
+local _v240 = Instance.new("UIStroke", _v239)
+_v240.Color = Color3.fromRGB(28, 28, 32)
+_v240.Thickness = 1
 
-_f1(_v225.Focused:Connect(function()
-    _v2:Create(_v226, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
+_f1(_v239.Focused:Connect(function()
+    _v2:Create(_v240, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 180, 255)}):Play()
 end))
 
-_f1(_v225.FocusLost:Connect(function()
-    _v2:Create(_v226, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
+_f1(_v239.FocusLost:Connect(function()
+    _v2:Create(_v240, TweenInfo.new(0.15), {Color = Color3.fromRGB(28, 28, 32)}):Play()
 end))
 
 _f6("ID List", _v65)
 
-local _v227 = Instance.new("ScrollingFrame")
-_v227.Size = UDim2.new(1, -8, 0, 140)
-_v227.BackgroundTransparency = 1
-_v227.CanvasSize = UDim2.new(0, 0, 0, 0)
-_v227.ScrollBarThickness = 3
-_v227.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-_v227.Parent = _v65
+local _v241 = Instance.new("ScrollingFrame")
+_v241.Size = UDim2.new(1, -8, 0, 140)
+_v241.BackgroundTransparency = 1
+_v241.CanvasSize = UDim2.new(0, 0, 0, 0)
+_v241.ScrollBarThickness = 3
+_v241.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+_v241.Parent = _v65
 
-local _v228 = Instance.new("UIListLayout")
-_v228.Padding = UDim.new(0, 4)
-_v228.SortOrder = Enum.SortOrder.LayoutOrder
-_v228.Parent = _v227
+local _v242 = Instance.new("UIListLayout")
+_v242.Padding = UDim.new(0, 4)
+_v242.SortOrder = Enum.SortOrder.LayoutOrder
+_v242.Parent = _v241
 
-_f1(_v228:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    _v227.CanvasSize = UDim2.new(0, 0, 0, _v228.AbsoluteContentSize.Y + 5)
+_f1(_v242:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    _v241.CanvasSize = UDim2.new(0, 0, 0, _v242.AbsoluteContentSize.Y + 5)
 end))
 
-local _v229 = {}
+local _v243 = {}
 
 local function _f20()
-    local _v230 = _v225.Text:lower()
-    for _, _v231 in ipairs(_v229) do
-        if _v231.Frame and _v231.Frame.Parent then
-            local _v232 = (_v231.Title .. " " .. _v231.ID):lower()
-            if _v230 == "" or string.find(_v232, _v230, 1, true) then
-                _v231.Frame.Visible = true
+    local _v244 = _v239.Text:lower()
+    for _, _v245 in ipairs(_v243) do
+        if _v245.Frame and _v245.Frame.Parent then
+            local _v246 = (_v245.Title .. " " .. _v245.ID):lower()
+            if _v244 == "" or string.find(_v246, _v244, 1, true) then
+                _v245.Frame.Visible = true
             else
-                _v231.Frame.Visible = false
+                _v245.Frame.Visible = false
             end
         end
     end
 end
 
-_f1(_v225:GetPropertyChangedSignal("Text"):Connect(function()
+_f1(_v239:GetPropertyChangedSignal("Text"):Connect(function()
     _f20()
 end))
 
 local function _f21()
-    for _, _v233 in pairs(_v227:GetChildren()) do
-        if _v233:IsA("Frame") then
-            _v233:Destroy()
+    for _, _v247 in pairs(_v241:GetChildren()) do
+        if _v247:IsA("Frame") then
+            _v247:Destroy()
         end
     end
-    _v229 = {}
+    _v243 = {}
     
     _f2(task.spawn(function()
-        local _v234, _v235 = pcall(function()
+        local _v248, _v249 = pcall(function()
             return game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/ID")
         end)
         
-        if _v234 and _v235 and _v13 then
-            for _v236 in _v235:gmatch("[^\r\n]+") do
+        if _v248 and _v249 and _v13 then
+            for _v250 in _v249:gmatch("[^\r\n]+") do
                 if not _v13 then break end
-                if _v236 ~= "" then
-                    local _v237 = _v236:match("%d+")
-                    if _v237 then
-                        local _v238 = Instance.new("Frame")
-                        _v238.Size = UDim2.new(1, 0, 0, 32)
-                        _v238.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-                        _v238.Parent = _v227
+                if _v250 ~= "" then
+                    local _v251 = _v250:match("%d+")
+                    if _v251 then
+                        local _v252 = Instance.new("Frame")
+                        _v252.Size = UDim2.new(1, 0, 0, 32)
+                        _v252.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+                        _v252.Parent = _v241
                         
-                        Instance.new("UICorner", _v238).CornerRadius = UDim.new(0, 6)
-                        local _v239 = Instance.new("UIStroke", _v238)
-                        _v239.Color = Color3.fromRGB(28, 28, 32)
-                        _v239.Thickness = 1
+                        Instance.new("UICorner", _v252).CornerRadius = UDim.new(0, 6)
+                        local _v253 = Instance.new("UIStroke", _v252)
+                        _v253.Color = Color3.fromRGB(28, 28, 32)
+                        _v253.Thickness = 1
                         
-                        local _v240 = Instance.new("TextButton")
-                        _v240.Size = UDim2.new(1, -64, 1, 0)
-                        _v240.BackgroundTransparency = 1
-                        _v240.Text = "  Loading Song... (" .. _v237 .. ")"
-                        _v240.TextColor3 = Color3.fromRGB(0, 255, 200)
-                        _v240.Font = Enum.Font.GothamMedium
-                        _v240.TextSize = 11
-                        _v240.TextXAlignment = Enum.TextXAlignment.Left
-                        _v240.Parent = _v238
+                        local _v254 = Instance.new("TextButton")
+                        _v254.Size = UDim2.new(1, -64, 1, 0)
+                        _v254.BackgroundTransparency = 1
+                        _v254.Text = "  Loading Song... (" .. _v251 .. ")"
+                        _v254.TextColor3 = Color3.fromRGB(0, 255, 200)
+                        _v254.Font = Enum.Font.GothamMedium
+                        _v254.TextSize = 11
+                        _v254.TextXAlignment = Enum.TextXAlignment.Left
+                        _v254.Parent = _v252
                         
-                        local _v241 = Instance.new("TextButton")
-                        _v241.Size = UDim2.new(0, 24, 0, 24)
-                        _v241.Position = UDim2.new(1, -56, 0.5, -12)
-                        _v241.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-                        _v241.Text = "📋"
-                        _v241.TextColor3 = Color3.fromRGB(0, 255, 200)
-                        _v241.Font = Enum.Font.GothamBold
-                        _v241.TextSize = 10
-                        _v241.Parent = _v238
-                        Instance.new("UICorner", _v241).CornerRadius = UDim.new(0, 4)
-                        local _v242 = Instance.new("UIStroke", _v241)
-                        _v242.Color = Color3.fromRGB(45, 45, 50)
-                        _v242.Thickness = 1
+                        local _v255 = Instance.new("TextButton")
+                        _v255.Size = UDim2.new(0, 24, 0, 24)
+                        _v255.Position = UDim2.new(1, -56, 0.5, -12)
+                        _v255.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+                        _v255.Text = "📋"
+                        _v255.TextColor3 = Color3.fromRGB(0, 255, 200)
+                        _v255.Font = Enum.Font.GothamBold
+                        _v255.TextSize = 10
+                        _v255.Parent = _v252
+                        Instance.new("UICorner", _v255).CornerRadius = UDim.new(0, 4)
+                        local _v256 = Instance.new("UIStroke", _v255)
+                        _v256.Color = Color3.fromRGB(45, 45, 50)
+                        _v256.Thickness = 1
 
-                        local _v243 = Instance.new("TextButton")
-                        _v243.Size = UDim2.new(0, 24, 0, 24)
-                        _v243.Position = UDim2.new(1, -28, 0.5, -12)
-                        _v243.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
-                        _v243.Text = "▶"
-                        _v243.TextColor3 = Color3.fromRGB(0, 255, 200)
-                        _v243.Font = Enum.Font.GothamBold
-                        _v243.TextSize = 10
-                        _v243.Parent = _v238
-                        Instance.new("UICorner", _v243).CornerRadius = UDim.new(0, 4)
-                        local _v244 = Instance.new("UIStroke", _v243)
-                        _v244.Color = Color3.fromRGB(45, 45, 50)
-                        _v244.Thickness = 1
+                        local _v257 = Instance.new("TextButton")
+                        _v257.Size = UDim2.new(0, 24, 0, 24)
+                        _v257.Position = UDim2.new(1, -28, 0.5, -12)
+                        _v257.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
+                        _v257.Text = "▶"
+                        _v257.TextColor3 = Color3.fromRGB(0, 255, 200)
+                        _v257.Font = Enum.Font.GothamBold
+                        _v257.TextSize = 10
+                        _v257.Parent = _v252
+                        Instance.new("UICorner", _v257).CornerRadius = UDim.new(0, 4)
+                        local _v258 = Instance.new("UIStroke", _v257)
+                        _v258.Color = Color3.fromRGB(45, 45, 50)
+                        _v258.Thickness = 1
 
-                        local _v245 = {Title = "Loading Song...", ID = _v237, Frame = _v238}
-                        table.insert(_v229, _v245)
+                        local _v259 = {Title = "Loading Song...", ID = _v251, Frame = _v252}
+                        table.insert(_v243, _v259)
                         _f20()
                         
                         _f2(task.spawn(function()
-                            local _v246, _v247 = pcall(function()
-                                return _v7:GetProductInfo(tonumber(_v237))
+                            local _v260, _v261 = pcall(function()
+                                return _v7:GetProductInfo(tonumber(_v251))
                             end)
-                            if _v246 and _v247 and _v247.Name and _v13 then
-                                _v245.Title = _v247.Name
-                                if _v240 and _v240.Parent then
-                                    _v240.Text = "  " .. _v247.Name .. " (" .. _v237 .. ")"
+                            if _v260 and _v261 and _v261.Name and _v13 then
+                                _v259.Title = _v261.Name
+                                if _v254 and _v254.Parent then
+                                    _v254.Text = "  " .. _v261.Name .. " (" .. _v251 .. ")"
                                 end
                             elseif _v13 then
-                                _v245.Title = "Unknown Song"
-                                if _v240 and _v240.Parent then
-                                    _v240.Text = "  ID: " .. _v237
+                                _v259.Title = "Unknown Song"
+                                if _v254 and _v254.Parent then
+                                    _v254.Text = "  ID: " .. _v251
                                 end
                             end
                             _f20()
                         end))
                         
-                        _f1(_v241.MouseButton1Click:Connect(function()
+                        _f1(_v255.MouseButton1Click:Connect(function()
                             pcall(function()
                                 if setclipboard then
-                                    setclipboard(_v237)
-                                    _f3("Copied ID: " .. _v237, Color3.fromRGB(0, 255, 200))
+                                    setclipboard(_v251)
+                                    _f3("Copied ID: " .. _v251, Color3.fromRGB(0, 255, 200))
                                 end
                             end)
                         end))
                         
-                        _f1(_v243.MouseButton1Click:Connect(function()
-                            if _v195.IsPlaying and _v196 == _v237 then
-                                _v195:Stop()
-                                _v196 = nil
-                                _v243.Text = "▶"
+                        _f1(_v257.MouseButton1Click:Connect(function()
+                            if _v209.IsPlaying and _v210 == _v251 then
+                                _v209:Stop()
+                                _v210 = nil
+                                _v257.Text = "▶"
                             else
-                                _v195.SoundId = "rbxassetid://" .. _v237
-                                _v195:Play()
-                                _v196 = _v237
-                                _v243.Text = "⏹"
+                                _v209.SoundId = "rbxassetid://" .. _v251
+                                _v209:Play()
+                                _v210 = _v251
+                                _v257.Text = "⏹"
                             end
                         end))
                     end
@@ -1664,64 +1769,64 @@ _f21()
 
 _f6("Changelog & Updates", _v66)
 
-local _v248 = Instance.new("ScrollingFrame")
-_v248.Size = UDim2.new(1, -8, 0, 180)
-_v248.BackgroundTransparency = 1
-_v248.CanvasSize = UDim2.new(0, 0, 0, 0)
-_v248.ScrollBarThickness = 3
-_v248.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
-_v248.Parent = _v66
+local _v262 = Instance.new("ScrollingFrame")
+_v262.Size = UDim2.new(1, -8, 0, 180)
+_v262.BackgroundTransparency = 1
+_v262.CanvasSize = UDim2.new(0, 0, 0, 0)
+_v262.ScrollBarThickness = 3
+_v262.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 65)
+_v262.Parent = _v66
 
-local _v249 = Instance.new("UIListLayout")
-_v249.Padding = UDim.new(0, 4)
-_v249.SortOrder = Enum.SortOrder.LayoutOrder
-_v249.Parent = _v248
+local _v263 = Instance.new("UIListLayout")
+_v263.Padding = UDim.new(0, 4)
+_v263.SortOrder = Enum.SortOrder.LayoutOrder
+_v263.Parent = _v262
 
-_f1(_v249:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    _v248.CanvasSize = UDim2.new(0, 0, 0, _v249.AbsoluteContentSize.Y + 5)
+_f1(_v263:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    _v262.CanvasSize = UDim2.new(0, 0, 0, _v263.AbsoluteContentSize.Y + 5)
 end))
 
 local function _f22()
-    for _, _v250 in pairs(_v248:GetChildren()) do
-        if _v250:IsA("TextLabel") or _v250:IsA("Frame") then
-            _v250:Destroy()
+    for _, _v264 in pairs(_v262:GetChildren()) do
+        if _v264:IsA("TextLabel") or _v264:IsA("Frame") then
+            _v264:Destroy()
         end
     end
     
     _f2(task.spawn(function()
-        local _v251, _v252 = pcall(function()
+        local _v265, _v266 = pcall(function()
             return game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/Logs")
         end)
         
-        if _v251 and _v252 and _v13 then
-            for _v253 in _v252:gmatch("[^\r\n]+") do
+        if _v265 and _v266 and _v13 then
+            for _v267 in _v266:gmatch("[^\r\n]+") do
                 if not _v13 then break end
-                if _v253 ~= "" then
-                    local _v254 = Instance.new("TextLabel")
-                    _v254.Size = UDim2.new(1, -10, 0, 0)
-                    _v254.AutomaticSize = Enum.AutomaticSize.Y
-                    _v254.BackgroundTransparency = 1
-                    _v254.Text = "  " .. _v253
-                    _v254.TextColor3 = Color3.fromRGB(0, 255, 200)
-                    _v254.Font = Enum.Font.GothamMedium
-                    _v254.TextSize = 11
-                    _v254.TextWrapped = true
-                    _v254.TextXAlignment = Enum.TextXAlignment.Left
-                    _v254.Parent = _v248
+                if _v267 ~= "" then
+                    local _v268 = Instance.new("TextLabel")
+                    _v268.Size = UDim2.new(1, -10, 0, 0)
+                    _v268.AutomaticSize = Enum.AutomaticSize.Y
+                    _v268.BackgroundTransparency = 1
+                    _v268.Text = "  " .. _v267
+                    _v268.TextColor3 = Color3.fromRGB(0, 255, 200)
+                    _v268.Font = Enum.Font.GothamMedium
+                    _v268.TextSize = 11
+                    _v268.TextWrapped = true
+                    _v268.TextXAlignment = Enum.TextXAlignment.Left
+                    _v268.Parent = _v262
                 end
             end
         elseif _v13 then
-            local _v255 = Instance.new("TextLabel")
-            _v255.Size = UDim2.new(1, -10, 0, 0)
-            _v255.AutomaticSize = Enum.AutomaticSize.Y
-            _v255.BackgroundTransparency = 1
-            _v255.Text = "  Failed to fetch update logs"
-            _v255.TextColor3 = Color3.fromRGB(255, 80, 80)
-            _v255.Font = Enum.Font.GothamMedium
-            _v255.TextSize = 11
-            _v255.TextWrapped = true
-            _v255.TextXAlignment = Enum.TextXAlignment.Left
-            _v255.Parent = _v248
+            local _v269 = Instance.new("TextLabel")
+            _v269.Size = UDim2.new(1, -10, 0, 0)
+            _v269.AutomaticSize = Enum.AutomaticSize.Y
+            _v269.BackgroundTransparency = 1
+            _v269.Text = "  Failed to fetch update logs"
+            _v269.TextColor3 = Color3.fromRGB(255, 80, 80)
+            _v269.Font = Enum.Font.GothamMedium
+            _v269.TextSize = 11
+            _v269.TextWrapped = true
+            _v269.TextXAlignment = Enum.TextXAlignment.Left
+            _v269.Parent = _v262
         end
     end))
 end
@@ -1735,61 +1840,61 @@ _f22()
 
 _f6("Project Information", _v67)
 
-local _v256 = Instance.new("TextLabel")
-_v256.Size = UDim2.new(1, -8, 0, 110)
-_v256.BackgroundTransparency = 1
-_v256.Text = "VulnSec Hub represents an advanced, high-performance runtime modification environment engineered for optimal system delivery. This deployment is currently operating within an active, closed BETA developmental stage.\n\nOur system infrastructure remains subject to continuous refactoring, performance optimization updates, and structural engine enhancements designed to maintain peak stability."
-_v256.TextColor3 = Color3.fromRGB(180, 185, 195)
-_v256.Font = Enum.Font.GothamMedium
-_v256.TextSize = 11
-_v256.TextWrapped = true
-_v256.TextYAlignment = Enum.TextYAlignment.Top
-_v256.TextXAlignment = Enum.TextXAlignment.Left
-_v256.Parent = _v67
+local _v270 = Instance.new("TextLabel")
+_v270.Size = UDim2.new(1, -8, 0, 110)
+_v270.BackgroundTransparency = 1
+_v270.Text = "VulnSec Hub represents an advanced, high-performance runtime modification environment engineered for optimal system delivery. This deployment is currently operating within an active, closed BETA developmental stage.\n\nOur system infrastructure remains subject to continuous refactoring, performance optimization updates, and structural engine enhancements designed to maintain peak stability."
+_v270.TextColor3 = Color3.fromRGB(180, 185, 195)
+_v270.Font = Enum.Font.GothamMedium
+_v270.TextSize = 11
+_v270.TextWrapped = true
+_v270.TextYAlignment = Enum.TextYAlignment.Top
+_v270.TextXAlignment = Enum.TextXAlignment.Left
+_v270.Parent = _v67
 
 _f6("Official Developers Link", _v67)
 
-local _v257 = Instance.new("ImageButton")
-_v257.Size = UDim2.new(0,48,0,48)
-_v257.Position = UDim2.new(0.5,-24,0,0)
-_v257.BackgroundColor3 = Color3.fromRGB(20,20,24)
-_v257.Parent = _v67
+local _v271 = Instance.new("ImageButton")
+_v271.Size = UDim2.new(0,48,0,48)
+_v271.Position = UDim2.new(0.5,-24,0,0)
+_v271.BackgroundColor3 = Color3.fromRGB(20,20,24)
+_v271.Parent = _v67
 
 pcall(function()
     if typeof(isfile) == "function" and typeof(writefile) == "function" and typeof(getcustomasset) == "function" then
-        local _v258 = "Vulnsec_FB_Logo.png"
-        if not isfile(_v258) then
-            local _v259, _v260 = pcall(function()
+        local _v272 = "Vulnsec_FB_Logo.png"
+        if not isfile(_v272) then
+            local _v273, _v274 = pcall(function()
                 return game:HttpGet("https://raw.githubusercontent.com/leos00281-eng/Rbx/refs/heads/main/0gFm6_6mwp0.png")
             end)
-            if _v259 and _v260 then
-                writefile(_v258, _v260)
+            if _v273 and _v274 then
+                writefile(_v272, _v274)
             end
         end
-        _v257.Image = getcustomasset(_v258)
+        _v271.Image = getcustomasset(_v272)
     end
 end)
 
-local _v261 = Instance.new("UICorner")
-_v261.CornerRadius = UDim.new(1,0)
-_v261.Parent = _v257
+local _v275 = Instance.new("UICorner")
+_v275.CornerRadius = UDim.new(1,0)
+_v275.Parent = _v271
 
-local _v262 = Instance.new("UIStroke")
-_v262.Color = Color3.fromRGB(28,28,32)
-_v262.Thickness = 1
-_v262.Parent = _v257
+local _v276 = Instance.new("UIStroke")
+_v276.Color = Color3.fromRGB(28,28,32)
+_v276.Thickness = 1
+_v276.Parent = _v271
 
-local _v263 = Instance.new("TextLabel")
-_v263.Size = UDim2.new(1,-8,0,24)
-_v263.Position = UDim2.new(0,0,0,54)
-_v263.BackgroundTransparency = 1
-_v263.Text = "Facebook"
-_v263.TextColor3 = Color3.fromRGB(0,180,255)
-_v263.Font = Enum.Font.Code
-_v263.TextSize = 10
-_v263.Parent = _v67
+local _v277 = Instance.new("TextLabel")
+_v277.Size = UDim2.new(1,-8,0,24)
+_v277.Position = UDim2.new(0,0,0,54)
+_v277.BackgroundTransparency = 1
+_v277.Text = "Facebook"
+_v277.TextColor3 = Color3.fromRGB(0,180,255)
+_v277.Font = Enum.Font.Code
+_v277.TextSize = 10
+_v277.Parent = _v67
 
-_f1(_v257.MouseButton1Click:Connect(function()
+_f1(_v271.MouseButton1Click:Connect(function()
     pcall(function()
         if setclipboard then
             setclipboard("https://www.facebook.com/vulnsec.legion")
@@ -1798,32 +1903,32 @@ _f1(_v257.MouseButton1Click:Connect(function()
     pcall(function()
         _v8:OpenBrowserWindow("https://www.facebook.com/vulnsec.legion")
     end)
-    local _v264 = _v263.Text
-    _v263.Text = "Link Copied!"
+    local _v278 = _v277.Text
+    _v277.Text = "Link Copied!"
     task.wait(1.5)
-    _v263.Text = _v264
+    _v277.Text = _v278
 end))
 
 local function _f23(_p1, _p2)
-    local _v265, _v266, _v267, _v268
+    local _v279, _v280, _v281, _v282
     _f1(_p1.InputBegan:Connect(function(_p3)
         if _p3.UserInputType == Enum.UserInputType.MouseButton1 or _p3.UserInputType == Enum.UserInputType.Touch then
-            _v265 = true
-            _v266 = _p3.Position
-            _v267 = _p2.Position
+            _v279 = true
+            _v280 = _p3.Position
+            _v281 = _p2.Position
             _f1(_p3.Changed:Connect(function()
-                if _p3.UserInputState == Enum.UserInputState.End then _v265 = false end
+                if _p3.UserInputState == Enum.UserInputState.End then _v279 = false end
             end))
         end
     end))
     _f1(_p1.InputChanged:Connect(function(_p3)
-        if _p3.UserInputType == Enum.UserInputType.MouseMovement or _p3.UserInputType == Enum.UserInputType.Touch then _v268 = _p3 end
+        if _p3.UserInputType == Enum.UserInputType.MouseMovement or _p3.UserInputType == Enum.UserInputType.Touch then _v282 = _p3 end
     end))
     _f1(_v3.InputChanged:Connect(function(_p3)
-        if _p3 == _v268 and _v265 then
-            local _v269 = _p3.Position - _v266
+        if _p3 == _v282 and _v279 then
+            local _v283 = _p3.Position - _v280
             _v2:Create(_p2, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Position = UDim2.new(_v267.X.Scale, _v267.X.Offset + _v269.X, _v267.Y.Scale, _v267.Y.Offset + _v269.Y)
+                Position = UDim2.new(_v281.X.Scale, _v281.X.Offset + _v283.X, _v281.Y.Scale, _v281.Y.Offset + _v283.Y)
             }):Play()
         end
     end))
