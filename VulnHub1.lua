@@ -658,13 +658,22 @@ _f11()
 
 _f7("Auto Exec (Rejoin / Change Game)", true, _v61, function(_p1)
     _v16 = _p1
+    local _v110 = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+    
     if _p1 then
         _f11()
         _f3("Auto Exec Enabled", Color3.fromRGB(0, 255, 200))
     else
+        
+        pcall(function()
+            if _v110 then
+                _v110("") 
+            end
+        end)
         _f3("Auto Exec Disabled", Color3.fromRGB(255, 80, 80))
     end
 end)
+
 
 _f6("Server Info", _v61)
 
