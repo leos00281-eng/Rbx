@@ -1,15 +1,16 @@
-😭 SCRIPT UPDATE: VERSION 1.2.0
-Release Date: September 4, 2026
-Developer: VulnSec Legion — Kenzu
-✨ What's New in v1.2.0
-• Fixed Auto-Exec: Now equipped with a seamless Toggle On/Off feature.
-• Friend Join Alerts: Added Auto-Notify for incoming friend joins.
-• Enhanced Server Info:
-    - Real-time player counts display.
-    - Copyable server link button.
-    - Quick rejoin game feature.
-• Friend List Monitoring: Brand new dedicated tracking menu.
+[HEADER] 🚀 SCRIPT UPDATE: VERSION 1.2.0
+[INDENT] Release Date: September 4, 2026
+[INDENT] Developer: VulnSec Legion — Kenzu
 
-🚧 Upcoming Features (Roadmap)
-• Auto-Server Hop: Hop servers if a specified friend joins.
-• Direct Friend Join: Join active games directly.
+[SECTION] ✨ What's New in v1.2.0
+[BULLET] Fixed Auto-Exec: Now equipped with a seamless Toggle On/Off feature.
+[BULLET] Friend Join Alerts: Added Auto-Notify for incoming friend joins.
+[SECTION] Enhanced Server Info:
+[INDENT] Real-time player counts display.
+[INDENT] Copyable server link button.
+[INDENT] Quick rejoin game feature.
+[BULLET] Friend List Monitoring: Brand new dedicated tracking menu.
+
+[SECTION] 🚧 Upcoming Features (Roadmap)
+[BULLET] Auto-Server Hop: Hop servers if a specified friend joins.
+[BULLET] Direct Friend Join: Join active games directly.
