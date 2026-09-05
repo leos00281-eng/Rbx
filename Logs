@@ -1,19 +1,16 @@
-​🚀 SCRIPT UPDATE: VERSION 1.2.0
-​Release Date: September 4, 2026
+🚀 SCRIPT UPDATE: VERSION 1.2.0
+Release Date: September 4, 2026
 Developer: VulnSec Legion — Kenzu
 
-​✨ What's New in v1.2.0
-​Fixed Auto-Exec: Now equipped with a seamless Toggle On/Off feature for better control.
-​Friend Join Alerts: Added Auto-Notify so you instantly know when a friend joins the game.
-​Enhanced Server Info:
-​Real-time player counts display.
-​Copyable server link button.
-​Quick rejoin game feature.
-​Friend List Monitoring: Brand new dedicated menu to keep track of your friends' status.
-​🚧 Upcoming Features (Roadmap)
+✨ What's New in v1.2.0
+• Fixed Auto-Exec: Now equipped with a seamless Toggle On/Off feature.
+• Friend Join Alerts: Added Auto-Notify for incoming friend joins.
+• Enhanced Server Info:
+    - Real-time player counts display.
+    - Copyable server link button.
+    - Quick rejoin game feature.
+• Friend List Monitoring: Brand new dedicated tracking menu.
 
-​Auto-Server Hop: Automatically hop servers if a specified friend username joins your current server.
-​Direct Friend Join: Join a friend's active game directly through the script without needing to manually leave and rejoin.
-​About Script Menu: Completely revamped info menu coming soon!
-​Stay tuned—even more updates are on the way!
-​Found a bug, have a question, or want to suggest a feature? Don't hesitate to reach out to the developer!
+🚧 Upcoming Features (Roadmap)
+• Auto-Server Hop: Hop servers if a specified friend joins.
+• Direct Friend Join: Join active games directly.
