@@ -1,16 +1,18 @@
-[HEADER] 🚀 SCRIPT UPDATE: VERSION 1.2.0
+[HEADER] 🚀 SCRIPT UPDATE: VERSION 1.3.0
 [INDENT] Release Date: September 4, 2026
 [INDENT] Developer: VulnSec Legion — Kenzu
 
-[SECTION] ✨ What's New in v1.2.0
-[BULLET] Fixed Auto-Exec: Now equipped with a seamless Toggle On/Off feature.
-[BULLET] Friend Join Alerts: Added Auto-Notify for incoming friend joins.
-[SECTION] Enhanced Server Info:
-[INDENT] Real-time player counts display.
-[INDENT] Copyable server link button.
-[INDENT] Quick rejoin game feature.
-[BULLET] Friend List Monitoring: Brand new dedicated tracking menu.
+​[SECTION] ✨ What's New in v1.2.0
+[BULLET] Auto-Exec Control: Added a seamless Toggle On/Off switch for precise execution management.
+[BULLET] Smart Auto-Leave: Automatically disconnects from the server the moment a specified target user joins.
+[BULLET] Friend Join Alerts: Integrated instant Auto-Notify push alerts for incoming friend joins.
+[BULLET] Dedicated Friend Tracker: Introduced a brand-new, centralized menu for real-speed friend list monitoring.
 
-[SECTION] 🚧 Upcoming Features (Roadmap)
-[BULLET] Auto-Server Hop: Hop servers if a specified friend joins.
-[BULLET] Direct Friend Join: Join active games directly.
+​[SECTION] 📊 Enhanced Server HUD & Utilities
+[INDENT] Live Telemetry: Real-time, low-latency player count displays.
+[INDENT] Quick-Copy Links: One-tap button to copy clean server invite links instantly.
+[INDENT] Instant Rejoin: Jump right back into your previous session with a single click.
+
+​[SECTION] 🚧 Upcoming Features (Roadmap)
+[BULLET] Direct Friend Join: Bypass menus to join active friend sessions instantly.
+[BULLET] Advanced Anti-AFK: Intelligent heartbeat simulation to prevent idle kicks past the 20-minute threshold.
