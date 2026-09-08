@@ -3,16 +3,16 @@
 [INDENT] Developer: VulnSec Legion — Kenzu
 
 ​[SECTION] ✨ What's New in v1.2.0
-[BULLET] Auto-Exec Control: Added a seamless Toggle On/Off switch for precise execution management.
-[BULLET] Smart Auto-Leave: Automatically disconnects from the server the moment a specified target user joins.
-[BULLET] Friend Join Alerts: Integrated instant Auto-Notify push alerts for incoming friend joins.
-[BULLET] Dedicated Friend Tracker: Introduced a brand-new, centralized menu for real-speed friend list monitoring.
+[BULLET] Easy On/Off Switch: You can now easily turn the Auto-Exec feature on or off whenever you want.
+[BULLET] Auto-Leave Protection: The script will automatically leave the server the moment a specific user you want to avoid joins.
+[BULLET] Friend Join Alerts: Get instant notifications right away when your friends join your server.
+[BULLET] Friend Tracker Menu: A brand-new menu dedicated to easily monitoring your friends list in real time.
 
 ​[SECTION] 📊 Enhanced Server HUD & Utilities
-[INDENT] Live Telemetry: Real-time, low-latency player count displays.
-[INDENT] Quick-Copy Links: One-tap button to copy clean server invite links instantly.
-[INDENT] Instant Rejoin: Jump right back into your previous session with a single click.
+[INDENT] Live Player Counts: See real-time updates on how many players are in the server.
+[INDENT] Copy Server Link: A quick button to instantly copy clean server links.
+[INDENT] Quick Rejoin: Jump right back into your last session with a single click.
 
 ​[SECTION] 🚧 Upcoming Features (Roadmap)
-[BULLET] Direct Friend Join: Bypass menus to join active friend sessions instantly.
-[BULLET] Advanced Anti-AFK: Intelligent heartbeat simulation to prevent idle kicks past the 20-minute threshold.
+[BULLET] Direct Friend Join: Join your friends' active games instantly without going through extra menus.
+[BULLET] Anti-AFK Protection: Prevents you from getting kicked out of the game after being idle for 20 minutes.
