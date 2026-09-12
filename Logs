@@ -1,18 +1,19 @@
-[HEADER] 🚀 SCRIPT UPDATE: VERSION 1.3.0
-[INDENT] Release Date: September 8, 2026
+[HEADER] 🚀 SCRIPT UPDATE: VERSION 1.4.0
+[INDENT] Release Date: September 13, 2026
 [INDENT] Developer: VulnSec Legion — Kenzu
 
-[SECTION] ✨ What's New in v1.3.0
+​[SECTION] ✨ What's New in v1.4.0
+[BULLET] Community Upload ID: Easily submit newly discovered boombax IDs directly through the menu to help expand the public database and improve coverage for everyone.
 [BULLET] Fixed Auto-Exec: Now equipped with a seamless Toggle On/Off feature.
 [BULLET] Auto-Leave if the specified user, join your current server.
 [BULLET] Anti AFK: Prevent you from kick after 20 minutes idle.
-Make it better
 [BULLET] Friend Join Alerts: Added Auto-Notify for incoming friend joins.
+
 [SECTION] Enhanced Server Info:
 [INDENT] Real-time player counts display.
 [INDENT] Copyable server link button.
 [INDENT] Quick rejoin game feature.
 [BULLET] Friend List Monitoring: Brand new dedicated tracking menu.
 
-[SECTION] 🚧 Upcoming Features (Roadmap)
+​[SECTION] 🚧 Upcoming Features (Roadmap)
 [BULLET] Direct Friend Join: Join active games directly.
